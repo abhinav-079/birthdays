@@ -1,0 +1,850 @@
+.page{
+     
+    min-height:100vh;
+    background:#09090B;
+    color:#FAFAFA;
+    overflow:hidden;
+    position:relative;
+ }
+ 
+ .page::before{
+    content:"";
+ 
+    position:absolute;
+    inset:0;
+ 
+    background:
+    radial-gradient(
+       circle at top,
+       rgba(212,175,55,.08),
+       transparent 40%
+    );
+ 
+    pointer-events:none;
+ }
+ 
+ .monthGrid{
+    display:grid;
+ 
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+ 
+    gap:24px;
+ 
+    padding:60px;
+ }
+ 
+ .monthCard{
+ 
+    background:
+    rgba(255,255,255,.03);
+ 
+    backdrop-filter:blur(16px);
+ 
+    border:
+    1px solid rgba(212,175,55,.2);
+ 
+    border-radius:24px;
+ 
+    padding:35px;
+ 
+    transition:
+    transform .45s,
+    box-shadow .45s,
+    border-color .45s;
+ 
+    cursor:pointer;
+ 
+    position:relative;
+ 
+    overflow:hidden;
+ }
+ 
+ .monthCard::before{
+ 
+    content:"";
+ 
+    position:absolute;
+ 
+    top:0;
+    left:-100%;
+ 
+    width:100%;
+    height:100%;
+ 
+    background:
+    linear-gradient(
+       90deg,
+       transparent,
+       rgba(212,175,55,.12),
+       transparent
+    );
+ 
+    transition:1s;
+ }
+ 
+ .monthCard:hover::before{
+    left:100%;
+ }
+ 
+ .monthCard:hover{
+ 
+    transform:
+    translateY(-8px);
+ 
+    border-color:
+    rgba(212,175,55,.7);
+ 
+    box-shadow:
+    0 0 25px rgba(212,175,55,.15),
+    0 0 80px rgba(212,175,55,.08);
+ }
+ .formCard{
+
+    width:min(500px,90%);
+
+    margin:auto;
+
+    padding:40px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+    background:
+    rgba(255,255,255,.03);
+
+    backdrop-filter:
+    blur(18px);
+
+    border:
+    1px solid rgba(212,175,55,.15);
+
+    border-radius:32px;
+
+    box-shadow:
+    0 25px 80px rgba(0,0,0,.5);
+
+    position:relative;
+
+    overflow:hidden;
+
+    animation:
+    formReveal .8s ease;
+}
+
+/* moving golden shine */
+
+.formCard::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-150%;
+
+    width:100%;
+
+    height:100%;
+
+    background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(212,175,55,.08),
+      transparent
+    );
+
+    animation:
+    shine 7s linear infinite;
+}
+
+.formCard input,
+.formCard textarea{
+
+    background:
+    rgba(255,255,255,.03);
+
+    border:
+    1px solid rgba(255,255,255,.08);
+
+    color:#FAFAFA;
+
+    padding:18px 20px;
+
+    border-radius:18px;
+
+    outline:none;
+
+    font-size:1rem;
+
+    transition:
+    all .35s ease;
+}
+
+.formCard textarea{
+
+    min-height:140px;
+
+    resize:none;
+}
+
+.formCard input::placeholder,
+.formCard textarea::placeholder{
+
+    color:
+    rgba(255,255,255,.45);
+}
+
+.formCard input:focus,
+.formCard textarea:focus{
+
+    border:
+    1px solid #D4AF37;
+
+    box-shadow:
+    0 0 20px rgba(212,175,55,.18);
+
+    transform:
+    translateY(-2px);
+}
+
+.goldBtn{
+    position:relative;
+
+    padding:14px 34px;
+
+    border:none;
+    border-radius:18px;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    font-size:16px;
+    font-weight:700;
+
+    letter-spacing:.8px;
+
+    color:#111;
+
+    background:
+    linear-gradient(
+        135deg,
+        #fff8cc,
+        #ffd700,
+        #ffbf00,
+        #c98a00
+    );
+
+    transition:
+    transform .4s ease,
+    box-shadow .4s ease;
+
+    box-shadow:
+    0 7px 30px rgba(255,215,0,.25),
+    0 0 30px rgba(255,215,0,.1);
+}
+
+/* Luxury Shine */
+
+.goldBtn::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-150%;
+
+    width:50%;
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.9),
+        transparent
+    );
+
+    transform:skewX(-25deg);
+
+    transition:left .8s ease;
+}
+
+.goldBtn:hover::before{
+    left:180%;
+}
+
+/* Floating Glow */
+
+.goldBtn::after{
+    content:"";
+
+    position:absolute;
+
+    inset:-3px;
+
+    border-radius:22px;
+
+    background:
+    linear-gradient(
+        135deg,
+        rgba(255,215,0,.7),
+        rgba(255,255,255,.2)
+    );
+
+    filter:blur(18px);
+
+    z-index:-1;
+
+    animation:goldBreath 3s infinite;
+}
+
+@keyframes goldBreath{
+
+    0%,100%{
+        opacity:.5;
+        transform:scale(1);
+    }
+
+    50%{
+        opacity:1;
+        transform:scale(1.08);
+    }
+}
+
+.goldBtn:hover{
+
+    transform:
+    translateY(-6px)
+    scale(1.04);
+
+    box-shadow:
+    0 10px 1rem rgba(255,215,0,.4),
+    0 0 1rem rgba(255,215,0,.35);
+}
+
+.goldBtn:active{
+
+    transform:
+    scale(.95)
+    translateY(3px);
+}
+
+@keyframes shine{
+
+    from{
+        left:-150%;
+    }
+
+    to{
+        left:150%;
+    }
+}
+
+@keyframes formReveal{
+
+    from{
+        opacity:0;
+
+        transform:
+        translateY(40px)
+        scale(.95);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+    }
+}
+hr{
+    opacity: 0.3;
+}
+.data{
+
+    position:relative;
+
+    width:min(500px,95%);
+
+    margin:18px auto;
+
+    padding:24px;
+
+    border-radius:24px;
+
+    background:
+    rgba(255,255,255,.03);
+
+    backdrop-filter:
+    blur(18px);
+
+    border:
+    1px solid rgba(212,175,55,.15);
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    transition:
+    transform .4s ease,
+    box-shadow .4s ease,
+    border-color .4s ease;
+}
+
+/* Luxury golden sweep */
+
+.data::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:-120%;
+
+    width:80%;
+
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(212,175,55,.08),
+        transparent
+    );
+
+    transition:1s;
+}
+
+.data:hover::before{
+    left:150%;
+}
+
+.data:hover{
+
+    transform:
+    translateY(-6px);
+
+    border-color:
+    rgba(212,175,55,.6);
+
+    box-shadow:
+    0 10px 30px rgba(212,175,55,.15),
+    0 0 80px rgba(212,175,55,.05);
+}
+
+.data h3{
+
+    margin:0;
+
+    color:#FAFAFA;
+
+    font-size:1.2rem;
+
+    font-weight:600;
+
+    letter-spacing:.5px;
+}
+
+.date{
+
+    margin-top:12px;
+
+    color:#D4AF37;
+
+    font-size:.95rem;
+
+    font-weight:500;
+}
+
+.note{
+
+    margin-top:12px;
+
+    color:rgba(255,255,255,.7);
+
+    line-height:1.6;
+
+    font-size:.92rem;
+}
+
+/* alert */
+.alert {
+    color: #111;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+  
+    padding: 16px 24px;
+    background: white;
+    border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+    overflow: hidden;
+    letter-spacing: 0.7px;
+  
+    animation: toastLife 5.77s forwards;
+  }
+  
+  .alert::after {
+    content: "";
+  
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  
+    height: 4px;
+    width: 100%;
+  
+    background: #d4af37;
+  
+    animation: progress 5s linear forwards;
+  }
+  
+  @keyframes progress {
+    from {
+      width: 100%;
+    }
+    to {
+      width: 0%;
+    }
+  }
+  
+  @keyframes toastLife {
+    0% {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+  
+    10% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  
+    85% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  
+    100% {
+      opacity: 0;
+      transform: translateX(100%);
+      visibility: hidden;
+    }
+  }
+
+ /* logout btn */
+
+ .logoutBtn{
+    margin-top: 1rem;
+    position:relative;
+
+    padding:14px 38px;
+
+    border:none;
+    border-radius:18px;
+
+    background:linear-gradient(
+        135deg,
+        #fff4b0 0%,
+        #ffd700 30%,
+        #f5b800 65%,
+        #c98a00 100%
+    );
+
+    color:#111;
+
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    transition:all .4s ease;
+
+    box-shadow:
+        0 7px 15px rgba(255,215,0,.35),
+        0 0 30px rgba(255,215,0,.15);
+}
+
+/* Luxury Shine Sweep */
+
+.logoutBtn::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-120%;
+
+    width:60%;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.8),
+        transparent
+    );
+
+    transform:skewX(-25deg);
+
+    transition:left .9s ease;
+}
+
+.logoutBtn:hover::before{
+    left:150%;
+}
+
+/* Golden Aura */
+
+.logoutBtn::after{
+    content:"";
+
+    position:absolute;
+
+    inset:-4px;
+
+    border-radius:22px;
+
+    background:linear-gradient(
+        135deg,
+        rgba(255,215,0,.7),
+        rgba(255,248,180,.3)
+    );
+
+    filter:blur(18px);
+
+    z-index:-1;
+
+    animation:goldPulse 3s infinite ease-in-out;
+}
+
+@keyframes goldPulse{
+    0%{
+        opacity:.4;
+        transform:scale(1);
+    }
+    50%{
+        opacity:1;
+        transform:scale(1.08);
+    }
+    100%{
+        opacity:.4;
+        transform:scale(1);
+    }
+}
+
+/* Hover Effect */
+
+.logoutBtn:hover{
+    transform:
+        translateY(-5px)
+        scale(1.04);
+
+    box-shadow:
+        0 7px 1rem rgba(255,215,0,.55),
+        0 7px 1.4rem rgba(255,215,0,.4);
+}
+
+/* Click Animation */
+
+.logoutBtn:active{
+    transform:
+        translateY(2px)
+        scale(.96);
+}
+
+
+
+
+/* responsive */
+/* ==========================
+   TABLETS
+========================== */
+
+@media (max-width: 1024px){
+
+    .monthGrid{
+        padding:40px;
+        gap:20px;
+    }
+
+    .formCard{
+        width:90%;
+    }
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+@media (max-width: 768px){
+
+    .monthGrid{
+
+        grid-template-columns:1fr;
+
+        padding:20px;
+
+        gap:16px;
+    }
+
+    .monthCard{
+
+        padding:24px;
+
+        border-radius:20px;
+    }
+
+    .formCard{
+
+        width:95%;
+
+        padding:24px;
+
+        border-radius:24px;
+
+        gap:16px;
+    }
+
+    .formCard input,
+    .formCard textarea{
+
+        padding:15px;
+
+        font-size:15px;
+    }
+
+    .data{
+
+        width:95%;
+
+        padding:18px;
+
+        border-radius:20px;
+    }
+
+    .data h3{
+
+        font-size:1rem;
+    }
+
+    .date{
+
+        font-size:.85rem;
+    }
+
+    .note{
+
+        font-size:.85rem;
+    }
+
+    .goldBtn,
+    .logoutBtn{
+
+        width:100%;
+
+        padding:15px;
+
+        font-size:15px;
+    }
+
+    .alert{
+
+        top:15px;
+
+        left:50%;
+
+        right:auto;
+
+        transform:translateX(-50%);
+
+        width:90%;
+
+        text-align:center;
+
+        font-size:.9rem;
+
+        padding:14px;
+    }
+}
+
+/* ==========================
+   SMALL PHONES
+========================== */
+
+@media (max-width: 480px){
+
+    .page{
+        overflow-x:hidden;
+    }
+
+    .monthGrid{
+        padding:15px;
+    }
+
+    .monthCard{
+
+        padding:18px;
+
+        border-radius:18px;
+    }
+
+    .formCard{
+
+        width:96%;
+
+        padding:18px;
+
+        border-radius:20px;
+    }
+
+    .formCard input,
+    .formCard textarea{
+
+        padding:14px;
+
+        font-size:14px;
+    }
+
+    .data{
+
+        width:96%;
+
+        padding:16px;
+    }
+
+    .goldBtn,
+    .logoutBtn{
+
+        width:100%;
+
+        font-size:14px;
+
+        padding:14px;
+    }
+
+    .alert{
+
+        width:95%;
+
+        font-size:.85rem;
+    }
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+}
