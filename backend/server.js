@@ -265,8 +265,7 @@ app.post("/login",async(req,res)=>{
     //logic for checking the user is there in db or not
     let checkUser=await dbManager.find({username:username});
     console.log(checkUser);
-     let userMail=(checkUser[0]).email;
-     console.log(checkUser,userMail)
+     
     if((!checkUser[0])){
         
          res.json({
@@ -274,8 +273,10 @@ app.post("/login",async(req,res)=>{
          });
     }
     else{
-       forgotOtp[userMail]=otp;
+       forgotOtp[username]=otp;
        // Test in your route (same as before)
+       let userMail=(checkUser[0]).email;
+     console.log(checkUser,userMail)
  await sendGmail(
     userMail, // ANY email (not just yours!)
     "Password Reset OTP",
