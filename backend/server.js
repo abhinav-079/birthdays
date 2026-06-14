@@ -260,10 +260,11 @@ app.post("/login",async(req,res)=>{
     let otp=getOtp.getOtp();
      
     
-   let{username,email}=req.body;
+   let{username}=req.body;
     //logic for checking the user is there in db or not
     let checkUser=await dbManager.find({username:username});
-     let userMail=email;
+    console.log(checkUser);
+     let userMail=(checkUser[0]).email;
      console.log(checkUser,userMail)
     if((!checkUser[0])){
         
