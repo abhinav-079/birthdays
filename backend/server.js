@@ -285,9 +285,7 @@ app.post("/login",async(req,res)=>{
   
   res.json({ notice: "OTP sent successfully!" });
        //otp send
-       res.json({
-          notice:"Sending OTP",
-       })
+        
        
  
     }
