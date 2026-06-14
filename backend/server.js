@@ -1,5 +1,9 @@
+require("dotenv").config({
+    path: "../.env"
+});
 const express = require("express");
 require("./db.js")
+ 
 const app = express();
 const port = process.env.PORT || 4000;
 const cors=require("cors");
@@ -9,8 +13,7 @@ const dbManager=require("./db.js");
 const{getOtp} =require("./otp.js");
 const {sendGmail}=require("./emailService.js");
 const bcrypt=require("bcrypt");
-const { emit } = require("cluster");
-const { send } = require("process");
+ 
 const HandleError=require("./error.js");
 app.use(cors());  
 app.use(express.json());

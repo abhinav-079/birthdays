@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 let axiosManager=axios.create({
-    baseURL:"http://localhost:4000"
+    baseURL:"https://birthdays-639v.onrender.com"
 });
 
 export {axiosManager};

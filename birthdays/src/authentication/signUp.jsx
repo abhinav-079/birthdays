@@ -2,7 +2,7 @@ import style from "./signUp.module.css"
 import { useState } from "react";
  import {Link, Navigate} from "react-router-dom"
 import { axiosManager } from "./axiosManager";
- 
+ import {Otp} from "../Otp"
 
  
 function SignUpForm() {
@@ -57,16 +57,19 @@ function SignUpForm() {
     }
   };
 let sendOtp=async ()=>{
-  
+  setOtpSucess(null);
+  setOtpFail(null);
   let sendingOtp=await axiosManager.post("/signup-checkpost-two",{
     otp,name,username,password
   });
   console.log(typeof(otp))
   if(sendingOtp.data.isValidOtp){
-    setOtpSucess(  " Account created, Please Login" )
+    setTimeout(()=>{setOtpSucess(  " Account created, Please Login" )},0)
+    
   }
   else{
-    setOtpFail ( "Please enter valid otp.")
+    
+    setTimeout(()=>{setOtpFail ( "Please enter valid otp.")},0)
   }
 }
   return (
@@ -284,9 +287,7 @@ let sendOtp=async ()=>{
             }
             
             
-            <input type="number" placeholder="enter OTP" className={style.name} value={otp} onChange={(e)=>{
-              setOtp(e.target.value)
-            }}></input>
+            <Otp stylist={style}/>
             <button onClick={sendOtp} className={style.loginBtn}>verify otp</button>
             <Link to={"/login"} className={style.links}> 
             Account created? 

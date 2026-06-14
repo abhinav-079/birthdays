@@ -32,7 +32,7 @@
                                 let editId=props.element.id;
                                 let userId=props.userId;
                                 let token=localStorage.getItem("token");
-                                let deleteRequest=await axios.put("http://localhost:4000/delete-event",{
+                                let deleteRequest=await axios.put("https://birthdays-639v.onrender.com/delete-event",{
                                     userId,editId,token
                                 });
     
@@ -48,7 +48,7 @@
                                     e.preventDefault();
                                     console.log("editDone");
                                     let nameOfPersonId=props.element.id;
-                                    let editReq=await axios.put("http://localhost:4000/edit-event",{
+                                    let editReq=await axios.put("https://birthdays-639v.onrender.com/edit-event",{
                                         nameOfPersonId,
                                         userId:props.userId,
                                         editName:props.editName,

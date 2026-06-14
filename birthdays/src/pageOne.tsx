@@ -45,7 +45,7 @@ const navigate=useNavigate();
                
            }
            else{
-           let response=await axios.post("http://localhost:4000/authorise",{
+           let response=await axios.post("https://birthdays-639v.onrender.com/authorise",{
                
                    token
                
@@ -78,7 +78,7 @@ const navigate=useNavigate();
                 setUpdate("Login.")
                 return;
              }
-            const get=await axios.get("http://localhost:4000/get-data",{
+            const get=await axios.get("https://birthdays-639v.onrender.com/get-data",{
                 params:{
                     userId,
                     token
@@ -107,7 +107,7 @@ const navigate=useNavigate();
                 setUpdate("Login.")
                 return;
              }
-            const get=await axios.get("http://localhost:4000/every-month-data",{
+            const get=await axios.get("https://birthdays-639v.onrender.com/every-month-data",{
                 params:{
                     userId,
                     token
@@ -159,7 +159,7 @@ const saveEveryMonth=async()=>{
     const nameOfPerson:string=name;
     console.log((dob));
     let token=localStorage.getItem("token")
-    const addData=await axios.post("http://localhost:4000/set-every-month",{
+    const addData=await axios.post("https://birthdays-639v.onrender.com/set-every-month",{
         userId,nameOfPerson,dob,note,token
     })
     console.log(addData);
@@ -188,7 +188,7 @@ const saveData=async()=>{
     const nameOfPerson:string=name;
     console.log((dob));
     let token=localStorage.getItem("token")
-    const addData=await axios.post("http://localhost:4000/add-data",{
+    const addData=await axios.post("https://birthdays-639v.onrender.com/add-data",{
         userId,nameOfPerson,dob,note,token
     })
     console.log(addData);
@@ -219,7 +219,7 @@ const saveData=async()=>{
  }
  let sendMails=async()=>{
     let token=localStorage.getItem("token");
-    let sendMail=await axios.get("http://localhost:4000/send-mail",{
+    let sendMail=await axios.get("https://birthdays-639v.onrender.com/send-mail",{
         params:{
             token
         }
@@ -712,7 +712,7 @@ const saveData=async()=>{
                                 let editId=element.id;
                                 
                                 let token=localStorage.getItem("token");
-                                let deleteRequest=await axios.put("http://localhost:4000/delete-every-month-event",{
+                                let deleteRequest=await axios.put("https://birthdays-639v.onrender.com/delete-every-month-event",{
                                     userId,editId,token
                                 });
     
@@ -728,7 +728,7 @@ const saveData=async()=>{
                                     e.preventDefault();
                                     console.log("editDone");
                                     let nameOfPersonId=element.id;
-                                    let editReq=await axios.put("http://localhost:4000/edit-every-month-event",{
+                                    let editReq=await axios.put("https://birthdays-639v.onrender.com/edit-every-month-event",{
                                         nameOfPersonId,
                                         userId:userId,
                                         editName:editName,

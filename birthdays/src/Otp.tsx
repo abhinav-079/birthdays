@@ -21,6 +21,7 @@ let Otp=(props)=>{
     else if(autoFocus[3]==true){
         b4.current.focus()
     }
+    else{ b4.current.focus()}
 },[autoFocus])
 
 useEffect(()=>{
@@ -42,6 +43,7 @@ useEffect(()=>{
          
         
     }
+    b4.current.focus()
     
 },[values])
     return(
