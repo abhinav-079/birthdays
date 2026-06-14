@@ -36,7 +36,7 @@ let navigate=useNavigate();
                 "/forgot-password",
                 {
                     
-                   email,
+                   email,username
                   
                    
                    
@@ -153,7 +153,7 @@ let navigate=useNavigate();
       className={style.input}
        
         type="text"
-        placeholder="Enter Email"
+        placeholder="Enter username"
         value={username}
         disabled={startState?false:(otpError?false:true)}
         onChange={(e) =>

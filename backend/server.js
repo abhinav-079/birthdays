@@ -255,7 +255,72 @@ app.post("/login",async(req,res)=>{
     
  })
 
-
+ app.post("/forgot-password",async(req,res)=>{
+ 
+    let otp=getOtp.getOtp();
+     
+    
+   let{username,email}=req.body;
+    //logic for checking the user is there in db or not
+    let checkUser=await dbManager.find({username:username});
+     let userMail=email;
+     console.log(checkUser,userMail)
+    if((!checkUser[0])){
+        
+         res.json({
+          notice:"fail"
+         });
+    }
+    else{
+       forgotOtp[userMail]=otp;
+       // Test in your route (same as before)
+ await sendGmail(
+    userMail, // ANY email (not just yours!)
+    "Password Reset OTP",
+    `${otp} is the OTP to reset password`
+  );
+  
+  res.json({ notice: "OTP sent successfully!" });
+       //otp send
+       res.json({
+          notice:"Sending OTP",
+       })
+       
+ 
+    }
+ 
+ 
+  })  
+ 
+  app.post("/otp-verify",(req,res)=>{
+    let { otp,username}=req.body;
+    
+    
+     if((forgotOtp[username])===Number(otp)){
+       res.json({
+          validOtp:true
+       })
+     }
+     else{
+       res.json({
+          validOtp:false
+       })
+     }
+  })
+ 
+  app.post("/set-new-password",async(req,res)=>{
+    
+    let {username,newPassword}=req.body;
+    newPassword=await bcrypt.hash(newPassword,10);
+    let updateStatusPassword=await dbManager.findOneAndUpdate({username:username},{
+       $set:{
+          password:newPassword,
+       },
+    });
+    res.json({
+       isPasswordUpdated:true
+    });
+  })
  //authorise...
 
  app.post("/authorise",(req,res)=>{
