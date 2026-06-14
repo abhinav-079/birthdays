@@ -18,6 +18,7 @@ const HandleError=require("./error.js");
 app.use(cors());  
 app.use(express.json());
 let createOtp={};
+let forgotOtp={};
 
 let AuthErrorHandle=()=>{
 
