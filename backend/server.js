@@ -258,7 +258,7 @@ app.post("/login",async(req,res)=>{
 
  app.post("/forgot-password",async(req,res)=>{
  
-    let otp=getOtp.getOtp();
+    let otp=getOtp();
      
     
    let{username}=req.body;
