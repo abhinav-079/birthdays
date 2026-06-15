@@ -57,6 +57,7 @@ function SignUpForm() {
     }
   };
 const sendOtp=async ()=>{
+  console.log("sendin otp...");
   setOtpSucess(null);
   setOtpFail(null);
 const sendingOtp=await axiosManager.post("/signup-checkpost-two",{
@@ -289,7 +290,7 @@ const sendingOtp=await axiosManager.post("/signup-checkpost-two",{
             
             
             <Otp stylist={style} setOtp={setOtp}/>
-            <button onClick={sendOtp} className={style.loginBtn}>verify otp</button>
+            <button onClick={sendOtp} className={style.loginBtn} type="button">verify otp</button>
             <Link to={"/login"} className={style.links}> 
             Account created? 
             </Link> 
