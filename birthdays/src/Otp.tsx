@@ -95,7 +95,7 @@ useEffect(()=>{
                         }
                         
                         
-                    }} value={values[0] ?? ""} disabled={autoFocus[0]?false:true}
+                    }} value={values[0] ?? ""}  
                     className={props.stylist.otpInput}/>
 
 
@@ -140,11 +140,11 @@ useEffect(()=>{
                             
                             
                         }}
-                        disabled={autoFocus[1]?false:true} value={values[1] ?? ""} 
+                          value={values[1] ?? ""} 
                         className={props.stylist.otpInput}/>
                     <input type="text"
                             inputMode="numeric"
-                            maxLength={1} required ref={b3} disabled={autoFocus[2]?false:true} onKeyDown={(e)=>{
+                            maxLength={1} required ref={b3}   onKeyDown={(e)=>{
                             
                             if(e.key!="Backspace" && (e.code).includes("Digit")){
                                 setValues((prev)=>{
@@ -186,7 +186,7 @@ useEffect(()=>{
                         className={props.stylist.otpInput}/>
                     <input type="text"
                             inputMode="numeric"
-                            maxLength={1} required ref={b4} disabled={autoFocus[3]?false:true} 
+                            maxLength={1} required ref={b4}  
                         onKeyDown={(e)=>{
                             
                             if(e.key!="Backspace" && (e.code).includes("Digit")){
