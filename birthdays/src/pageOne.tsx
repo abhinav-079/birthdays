@@ -186,30 +186,36 @@ const saveData=async()=>{
     setUpdate(null);
     const nameOfPerson:string=name;
     console.log((dob));
-    const token:string|null=localStorage.getItem("token")
-    const addData=await axios.post("https://birthdays-639v.onrender.com/add-data",{
-        userId,nameOfPerson,dob,note,token
-    })
-    console.log(addData);
-    if(addData.data!="Please try to login" && addData.data!="User not found")
-     {
-        setTimeout(() => {
-            setUpdate("Please refresh to see changes");
-        }, 0);
-     }
-    /*  */
-    else if((addData.data)==="Please try to login"){
-        
-        setTimeout(() => {
-            setUpdate("Please try to login");
-        }, 0);
+    const token:string|null=localStorage.getItem("token");
+    if(token){
+        const addData=await axios.post("https://birthdays-639v.onrender.com/add-data",{
+            userId,nameOfPerson,dob,note,token
+        })
+        console.log(addData);
+        if(addData.data!="Please try to login" && addData.data!="User not found")
+         {
+            setTimeout(() => {
+                if(nameOfPerson && dob ){
+                    setUpdate("Please refresh to see changes");
+                }
+                
+            }, 0);
+         }
+        /*  */
+        else if((addData.data)==="Please try to login"){
+            
+            setTimeout(() => {
+                setUpdate("Please try to login");
+            }, 0);
+        }
+        else if((addData.data)==="User not found"){
+            
+            setTimeout(() => {
+                setUpdate("User not found");
+            }, 0);
+        }
     }
-    else if((addData.data)==="User not found"){
-        
-        setTimeout(() => {
-            setUpdate("User not found");
-        }, 0);
-    }
+    
     }
     
 

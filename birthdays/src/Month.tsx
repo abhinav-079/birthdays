@@ -98,8 +98,11 @@
                                     }}>{props.element.note}</textarea>
                                     <button onClick={()=>{
                                          
-                                        console.log("clicked edit button")
-                                        props.editAlert();
+                                        console.log("clicked edit button");
+                                        if(props.element.nameOfPerson && props.element.dob && props.element.note){
+                                            props.editAlert();
+                                        }
+                                        
                                     }} className={props.style.goldBtn}>Confirm Changes</button>
                                 </form>
                                 </>
