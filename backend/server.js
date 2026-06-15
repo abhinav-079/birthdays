@@ -400,9 +400,9 @@ app.get("/send-mail",async(req,res)=>{
                  
                 </div>`);
         }
-        for(let l=0;l<finalEveryMonthArr.length;l++){
+        for(let l=0;l<everyMonthEventsArr.length;l++){
             finalEveryMonthArr.push(`<div>
-                • <h3>${finalEveryMonthArr[l].wishes} ${ finalEveryMonthArr[l].notes }</h3>
+                • <h3>${everyMonthEventsArr[l].wishes} ${ everyMonthEventsArr[l].notes }</h3>
                  
                 </div>`);
         }
