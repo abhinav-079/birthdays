@@ -103,7 +103,7 @@
                                     <button onClick={()=>{
                                          console.log((name || props.editName) ,dob,typeof(dob));
                                         console.log("clicked edit button");
-                                        if(name && dob ){
+                                        if((name || props.editName )&& dob ){
                                              
                                             props.editAlert();
                                         }
