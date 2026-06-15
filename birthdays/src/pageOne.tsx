@@ -767,7 +767,7 @@ const saveData=async()=>{
                                     <button onClick={()=>{
                                          
                                         console.log("clicked edit button")
-                                        if((everyMonthName ) &&everyMonthDob){
+                                        if((everyMonthName || editName) &&everyMonthDob){
                                             editAlert();
                                         }
                                         

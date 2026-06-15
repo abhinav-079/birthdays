@@ -101,7 +101,7 @@
                                         props.setEditNote(e.target.value);
                                     }}>{props.element.note}</textarea>
                                     <button onClick={()=>{
-                                         console.log((name ) ,dob,typeof(dob));
+                                         console.log((name || props.editName) ,dob,typeof(dob));
                                         console.log("clicked edit button");
                                         if(name && dob ){
                                              
