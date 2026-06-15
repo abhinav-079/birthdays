@@ -414,17 +414,14 @@ app.get("/send-mail",async(req,res)=>{
                 font-size:14px;
                 color:#6b7280;
             ">
-            ${ everyMonthEventsArr[l].notes || "No Additional Notes"}
+            ${ todayEvents[l].notes || "No Additional Notes"}
             </div>
         </td>
     </tr>
 `);
         }
         for(let l=0;l<everyMonthEventsArr.length;l++){
-            finalEveryMonthArr.push(`<div>
-                • <h3>${everyMonthEventsArr[l].wishes} - ${ everyMonthEventsArr[l].notes }</h3>
-                 
-                </div>`
+            finalEveryMonthArr.push( 
             
             
             
