@@ -11,7 +11,10 @@ const PageOne=()=>{
     if(((todayGen.getMonth())+1)<10){
         thisMonth=`0${todayGen.getMonth()+1}`
     }
+
     const today=`${todayGen.getDate()}-${thisMonth}-${todayGen.getFullYear()}`
+    const [everyMonthName,setEveryMonthName]=useState<string|null>("");
+    const [everyMonthDob,setEveryMonthDob]=useState<string|null>("");
     const [editName,setEditName]=useState<string|null>(null);
     const[everyMonthList,setEveryMonthList]=useState<any>([]);
     const [everyMonthClick,setEveryMonthClick]=useState<boolean|null>(null);
@@ -751,9 +754,11 @@ const saveData=async()=>{
                                 }} className={style.formCard}>
 
                                     <input type="text" placeholder={`previous Name: ${element.nameOfPerson}`} value={editName ?? ""} onChange={(e)=>{
+                                        setEveryMonthName(e.target.value)
                                         setEditName(e.target.value)
                                     }} required/>
                                     <input type="date" value={element.dob} onChange={(e)=>{
+                                        setEveryMonthDob(e.target.value)
                                         setEditDob(e.target.value);
                                     }} required/>
                                     <textarea placeholder={`Previous Note: ${element.note}`} onChange={(e)=>{
@@ -762,7 +767,10 @@ const saveData=async()=>{
                                     <button onClick={()=>{
                                          
                                         console.log("clicked edit button")
-                                        editAlert();
+                                        if(everyMonthName&&everyMonthDob){
+                                            editAlert();
+                                        }
+                                        
                                     }} className={style.goldBtn}>Confirm Changes</button>
                                 </form>
                                 </>
