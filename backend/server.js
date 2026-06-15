@@ -383,9 +383,11 @@ app.get("/send-mail",async(req,res)=>{
         for(let l=0;l<(allusers[i].everyMonthEvents).length;l++){
             if(`${((allusers[i].everyMonthEvents)[l].dateOfUser)}`==setToday.getDate()){
                 let birthdayBoy=(allusers[i].everyMonthEvents)[l].nameOfPerson;
+                let dates=(allusers[i].everyMonthEvents)[l].dateOfUser+(allusers[i].everyMonthEvents)[l].monthOfUser+(allusers[i].everyMonthEvents)[l].yearOfUser;
                 let note=(allusers[i].everyMonthEvents)[l].note ;
                 let obj={
                     wishes:birthdayBoy,
+                    dates,
                     notes:note?note:"",
                 }
                 everyMonthEventsArr.push(obj);
@@ -458,7 +460,7 @@ app.get("/send-mail",async(req,res)=>{
                 font-size:14px;
                 color:#6b7280;
             ">
-            ${everyMonthEventsArr[l].dateOfUser}/ ${everyMonthEventsArr[l].monthOfUser}/ ${everyMonthEventsArr[l].yearOfUser}
+            ${everyMonthEventsArr[l].dates}
             ${ everyMonthEventsArr[l].notes || "No Additional Notes"}
             </div>
         </td>
@@ -496,7 +498,7 @@ app.get("/send-mail",async(req,res)=>{
             text-align:center;
         ">
             <h1 style="margin:0;">
-                📅 Annual Reminder 
+                📅 Monthly Events Reminder
             </h1>
         </div>
 
@@ -577,7 +579,7 @@ app.get("/send-mail",async(req,res)=>{
             color:white;
             font-size:28px;
         ">
-            📅 Annual Reminders
+            📅 Annual Reminder
         </h1>
 
         <p style="
