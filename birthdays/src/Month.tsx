@@ -103,8 +103,8 @@
                                     <button onClick={()=>{
                                          console.log(name,dob,typeof(dob));
                                         console.log("clicked edit button");
-                                        if(props.element.nameOfPerson && props.element.dob ){
-                                            console.log(props.element.nameOfPerson, props.element.dob, props.element.note)
+                                        if(name && dob ){
+                                             
                                             props.editAlert();
                                         }
                                         
