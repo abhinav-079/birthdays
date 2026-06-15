@@ -1,3 +1,13 @@
+
+*{
+    box-sizing:border-box;
+}
+
+html,
+body{
+    overflow-x:hidden;
+    width:100%;
+}
 .otpForm{
     width:100%;
 
@@ -146,5 +156,41 @@
 
     .otpTitle{
         font-size:1.3rem;
+    }
+}
+
+@media (max-width: 480px){
+
+    .otpForm{
+        gap:18px;
+    }
+
+    .otpTitle{
+        font-size:1.15rem;
+    }
+
+    .otpText{
+        font-size:.85rem;
+        padding:0 10px;
+    }
+
+    .otpInputs{
+        gap:8px;
+    }
+
+    .otpInput{
+        width:44px;
+        height:44px;
+        font-size:1rem;
+        border-radius:12px;
+    }
+
+    .verifyBtn{
+        height:50px;
+        font-size:.95rem;
+    }
+
+    .resendOtp{
+        font-size:.85rem;
     }
 }
