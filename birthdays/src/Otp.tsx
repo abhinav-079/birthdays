@@ -21,7 +21,7 @@ const Otp=(props:any)=>{
     else if(autoFocus[3]==true){
         b4.current?.focus()
     }
-    else{ b4.current?.focus()}
+    else{ b1.current?.focus()}
 },[autoFocus])
 
 useEffect(()=>{

@@ -141,7 +141,7 @@ const sendingOtp=await axiosManager.post("/signup-checkpost-two",{
 
       </form> */}
       <div className={style.loginContainer}> 
-      <h4>
+      <div>
         {startState?
         <>
         <h1 className={style.subtitle}>SignUp Form</h1>
@@ -302,7 +302,7 @@ const sendingOtp=await axiosManager.post("/signup-checkpost-two",{
         </>
         }
         
-      </h4>
+      </div>
 
       
       </div>
