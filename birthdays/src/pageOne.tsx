@@ -754,7 +754,7 @@ const saveData=async()=>{
                                 }} className={style.formCard}>
 
                                     <input type="text" placeholder={`previous Name: ${element.nameOfPerson}`} value={editName ?? ""} onChange={(e)=>{
-                                        setEveryMonthName(e.target.value)
+                                        setEveryMonthName(e.target.value || editName)
                                         setEditName(e.target.value)
                                     }} required/>
                                     <input type="date" value={element.dob} onChange={(e)=>{
@@ -767,7 +767,7 @@ const saveData=async()=>{
                                     <button onClick={()=>{
                                          
                                         console.log("clicked edit button")
-                                        if(everyMonthName&&everyMonthDob){
+                                        if((everyMonthName ) &&everyMonthDob){
                                             editAlert();
                                         }
                                         

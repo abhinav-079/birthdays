@@ -90,7 +90,7 @@
                                 }} className={props.style.formCard}>
 
                                     <input type="text" placeholder={`previous Name: ${props.element.nameOfPerson}`} value={props.editName} onChange={(e)=>{
-                                        setName(e.target.value);
+                                        setName(e.target.value || props.editName);
                                         props.setEditName(e.target.value)
                                     }} required/>
                                     <input type="date" value={props.element.dob} onChange={(e)=>{
@@ -101,7 +101,7 @@
                                         props.setEditNote(e.target.value);
                                     }}>{props.element.note}</textarea>
                                     <button onClick={()=>{
-                                         console.log(name,dob,typeof(dob));
+                                         console.log((name ) ,dob,typeof(dob));
                                         console.log("clicked edit button");
                                         if(name && dob ){
                                              
