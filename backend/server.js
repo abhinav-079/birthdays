@@ -396,36 +396,40 @@ app.get("/send-mail",async(req,res)=>{
         let finalEveryMonthArr=[];
         for(let l=0;l<todayEvents.length;l++){
             finalArray.push(`
-    <tr>
-        <td style="
-            padding:12px;
-            border-bottom:1px solid #e5e7eb;
+<tr>
+    <td style="
+        padding:15px;
+        border-bottom:1px solid #e5e7eb;
+    ">
+        <div style="
+            font-size:16px;
+            font-weight:600;
+            color:#111827;
         ">
-            <div style="
-                font-size:16px;
-                font-weight:600;
-                color:#111827;
-                margin-bottom:4px;
-            ">
-            ${todayEvents[l].wishes}
-            </div>
+            
+        ${todayEvents[l].wishes}
+        </div>
 
-            <div style="
-                font-size:14px;
-                color:#6b7280;
-            ">
-            ${ todayEvents[l].notes || "No Additional Notes"}
-            </div>
-        </td>
-    </tr>
+        <div style="
+            color:#6b7280;
+            margin-top:5px;
+        ">
+            ${todayEvents[l].notes || ""}
+        </div>
+
+        <div style="
+            color:#2563eb;
+            font-size:13px;
+            margin-top:5px;
+        ">
+            ${todayEvents[l].dob}
+        </div>
+    </td>
+</tr>
 `);
         }
         for(let l=0;l<everyMonthEventsArr.length;l++){
-            finalEveryMonthArr.push( 
-            
-            
-            
-            `
+            finalEveryMonthArr.push( `
     <tr>
         <td style="
             padding:12px;
@@ -444,6 +448,7 @@ app.get("/send-mail",async(req,res)=>{
                 font-size:14px;
                 color:#6b7280;
             ">
+            ${everyMonthEventsArr[l].dob}
             ${ everyMonthEventsArr[l].notes || "No Additional Notes"}
             </div>
         </td>
@@ -481,7 +486,7 @@ app.get("/send-mail",async(req,res)=>{
             text-align:center;
         ">
             <h1 style="margin:0;">
-                📅 Monthly Events Reminder
+                📅 Annual Reminder 
             </h1>
         </div>
 
