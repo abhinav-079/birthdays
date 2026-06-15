@@ -278,6 +278,7 @@ const sendingOtp=await axiosManager.post("/signup-checkpost-two",{
              
             :
             <>
+            <div className={style.otpWrapper}>
             <h1 className={style.alert}>Enter OTP to create account.</h1>
             {otpSucess?<h1 className={style.alert}>{otpSucess}</h1>:
             <>
@@ -291,7 +292,8 @@ const sendingOtp=await axiosManager.post("/signup-checkpost-two",{
             <button onClick={sendOtp} className={style.loginBtn}>verify otp</button>
             <Link to={"/login"} className={style.links}> 
             Account created? 
-          </Link> 
+            </Link> 
+            </div>
              
              
             </>
