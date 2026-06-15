@@ -1,5 +1,5 @@
  import axios from "axios";
- import type { FormEvent } from "react";
+ import { useState, type FormEvent } from "react";
  type MonthProps = {
     style: any;
     element: any;
@@ -22,6 +22,8 @@
   
    
  const Month=(props:MonthProps)=>{
+    const [name,setName]=useState<string|null>("");
+    const [dob,setDob]=useState<string|null>("");
     console.log(props.style.goldBtn)
     return(<>
      <div className={props.style.data}>
@@ -88,16 +90,18 @@
                                 }} className={props.style.formCard}>
 
                                     <input type="text" placeholder={`previous Name: ${props.element.nameOfPerson}`} value={props.editName} onChange={(e)=>{
+                                        setName(e.target.value);
                                         props.setEditName(e.target.value)
                                     }} required/>
                                     <input type="date" value={props.element.dob} onChange={(e)=>{
+                                        setDob(e.target.value);
                                         props.setEditDob(e.target.value);
                                     }} required/>
                                     <textarea placeholder={`Previous Note: ${props.element.note}`} onChange={(e)=>{
                                         props.setEditNote(e.target.value);
                                     }}>{props.element.note}</textarea>
                                     <button onClick={()=>{
-                                         console.log(props.element.nameOfPerson, props.element.dob, props.element.note)
+                                         console.log(name,dob,typeof(dob));
                                         console.log("clicked edit button");
                                         if(props.element.nameOfPerson && props.element.dob ){
                                             console.log(props.element.nameOfPerson, props.element.dob, props.element.note)
