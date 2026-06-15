@@ -1,5 +1,27 @@
  import axios from "axios";
- let Month=(props)=>{
+ import type { FormEvent } from "react";
+ type MonthProps = {
+    style: any;
+    element: any;
+    setEdit: any;
+    setEditName: any;
+    setEditDob: any;
+    setEditNote: any;
+    reqList: any;
+    index: number;
+    userId: string;
+    editName: any;
+    editDob: any;
+    editNote: any;
+    today: string;
+    edit: any;
+    setReqList: any;
+    editAlert: () => void;
+    month: string;
+  };
+  
+   
+ const Month=(props:MonthProps)=>{
     console.log(props.style.goldBtn)
     return(<>
      <div className={props.style.data}>
@@ -24,17 +46,18 @@
                         >Edit </button>
                         <button   onClick={async()=>{
                                 console.log(props.reqList);
-                                let sample=[...(props.reqList)];
+                                const sample=[...(props.reqList)];
                                 console.log(props.index);
                                 sample.splice(props.index,1);
                                 console.log(sample);
                                 props.setReqList(sample);
-                                let editId=props.element.id;
-                                let userId=props.userId;
-                                let token=localStorage.getItem("token");
-                                let deleteRequest=await axios.put("https://birthdays-639v.onrender.com/delete-event",{
+                                const editId=props.element.id;
+                                const userId=props.userId;
+                                const token=localStorage.getItem("token");
+                                const deleteRequest=await axios.put("https://birthdays-639v.onrender.com/delete-event",{
                                     userId,editId,token
                                 });
+                                console.log(deleteRequest)
     
                                  
     
@@ -44,11 +67,11 @@
                             </hr>
                             {(props.edit==props.element.id)?
                                 <>
-                                <form onSubmit={async(e)=>{
+                                <form onSubmit={async(e:FormEvent<HTMLFormElement>)=>{
                                     e.preventDefault();
                                     console.log("editDone");
-                                    let nameOfPersonId=props.element.id;
-                                    let editReq=await axios.put("https://birthdays-639v.onrender.com/edit-event",{
+                                    const nameOfPersonId=props.element.id;
+                                    const editReq=await axios.put("https://birthdays-639v.onrender.com/edit-event",{
                                         nameOfPersonId,
                                         userId:props.userId,
                                         editName:props.editName,
@@ -59,6 +82,7 @@
 
 
                                     });
+                                    console.log(editReq)
                                      
 
                                 }} className={props.style.formCard}>
@@ -83,5 +107,5 @@
      </div>
     </>)
  }
-
+  
  export {Month}

@@ -1,31 +1,30 @@
 import { useEffect, useState,useRef } from "react";
 import axios from "axios";
 import gsap from "gsap"
-import {Link, Navigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import { useNavigate,useLocation } from "react-router-dom";
- 
+import type { FormEvent } from "react";
 import style from "./loginForm.module.css";
  
 
 function LoginForm() {
-  let navigate=useNavigate();
-  let welcomeMsg=useRef();
-  let location=useLocation();
-  let [msg,setMsg]=useState("");
-  let [username, setUsername] = useState("");
-  let [password, setPassword] = useState("");
-  let[toLoc,setToLoc]=useState("");
-    let[inValidUserName,setInValidUserName]=useState(null);
-  let [validPassword,setValidPassword]=useState(null);
-  let [startState,setStartState]=useState(true);
-  let [isStudent,setIsStudent]=useState(true);
-  let [isFaculty,setIsFaculty]=useState(true);
-  let[errorInLogin,setErrorInLogin]=useState(false);
-  let[welcome,setWelcome]=useState(null);
+  const navigate=useNavigate();
+  const welcomeMsg=useRef<HTMLDivElement | null>(null);
+  const location=useLocation();
+  const [msg, ]=useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const[toLoc,setToLoc]=useState <string>("");
+    const[inValidUserName,setInValidUserName]=useState <boolean|null>(null);
+  const [validPassword,setValidPassword]=useState <boolean|null>(null);
+  const [startState,setStartState]=useState <boolean | null>(true);
+   
+  const[errorInLogin,setErrorInLogin]=useState <boolean|null>(false);
+  const[ ,setWelcome]=useState<boolean |null |string>(null);
  /*  console.log(location," location"); */
   
  useEffect(()=>{
-  let welcom=()=>{
+  const welcom=()=>{
     gsap.to(welcomeMsg.current,{
       x:"120%",
       delay:3,
@@ -37,12 +36,12 @@ function LoginForm() {
   welcom();
     
  },[])
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
  
     e.preventDefault();
     
-    let usernameForm=username;
-    let passwordForm=password;
+    const usernameForm=username;
+    const passwordForm=password;
     setInValidUserName(null);
     setValidPassword(null);
     setErrorInLogin(false);
@@ -50,8 +49,7 @@ function LoginForm() {
 
 
     try {
- 
-      let response = await axios.post(
+      const response = await axios.post(
         "https://birthdays-639v.onrender.com/login",
         {
             
@@ -71,9 +69,9 @@ function LoginForm() {
        
 
       console.log(response," Data");
-      let token=response.data.jwtToken;
-      let areCreditsTrue=response.data.validPassword;
-      let isUserInValid=response.data.inValidUserName;
+      const token=response.data.jwtToken;
+      const areCreditsTrue=response.data.validPassword;
+      const isUserInValid=response.data.inValidUserName;
       if(isUserInValid){
         setInValidUserName(true);
       }
@@ -113,7 +111,8 @@ function LoginForm() {
       
       
        
-    } catch (err) {
+    }
+     catch (err) {
 
       console.log(err," Error");
 
@@ -122,9 +121,7 @@ function LoginForm() {
   };
    
 
-  let logOut=()=>{
-    localStorage.removeItem("token");
-  }
+   
   console.log(location.state);
 console.log(location.state?.from);
 console.log(toLoc);
@@ -149,8 +146,7 @@ useEffect(() => {
       <h1 className={style.h1}>Login Form</h1>
       {(!inValidUserName && validPassword)?
         <>
-        <button className={style.submit}  onClick={studentHandle}>Student Page</button>
-        <button className={style.submit}  onClick={facultyHandle}>Faculty page</button>
+         
         </>
         :
         ""

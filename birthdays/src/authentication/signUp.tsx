@@ -1,33 +1,33 @@
 import style from "./signUp.module.css"
 import { useState } from "react";
- import {Link, Navigate} from "react-router-dom"
+ import {Link} from "react-router-dom"
 import { axiosManager } from "./axiosManager";
  import {Otp} from "../Otp"
-
+ import type { FormEvent } from "react";
  
 function SignUpForm() {
-  let [msg,setMsg]=useState("");
-  let [name,setName]=useState("");
-  let [username, setUsername] = useState("");
-  let [password, setPassword] = useState("");
-  let [otp,setOtp]=useState("");
-  let [startState,setStartState]=useState(true);
-  let[userExist,setUserExist]=useState(false);
-  let[otpSucess,setOtpSucess]=useState(null);
-  let[otpFail,setOtpFail]=useState(null);
+  const [name,setName]=useState<string>("");
+  const [msg,]=useState<string |boolean|null>("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [otp,setOtp]=useState<string>("");
+  const [startState,setStartState]=useState<boolean|null>(true);
+  const[userExist,setUserExist]=useState<boolean|null>(false);
+  const[otpSucess,setOtpSucess]=useState<boolean|null |string>(null);
+  const[otpFail,setOtpFail]=useState<boolean|null |string>(null);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
  
     e.preventDefault();
-    let usernameForm=username;
-    let passwordForm=password;
+    const usernameForm=username;
+    const passwordForm=password;
       setStartState(false);
      
 
 
     try {
-       
-      let response = await axiosManager.post(
+  
+      const response = await axiosManager.post(
         "/signup-checkpost-one",
         {
             email:name,
@@ -56,10 +56,10 @@ function SignUpForm() {
 
     }
   };
-let sendOtp=async ()=>{
+const sendOtp=async ()=>{
   setOtpSucess(null);
   setOtpFail(null);
-  let sendingOtp=await axiosManager.post("/signup-checkpost-two",{
+const sendingOtp=await axiosManager.post("/signup-checkpost-two",{
     otp,name,username,password
   });
   console.log(typeof(otp))
@@ -287,7 +287,7 @@ let sendOtp=async ()=>{
             }
             
             
-            <Otp stylist={style}/>
+            <Otp stylist={style} setOtp={setOtp}/>
             <button onClick={sendOtp} className={style.loginBtn}>verify otp</button>
             <Link to={"/login"} className={style.links}> 
             Account created? 

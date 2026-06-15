@@ -1,29 +1,29 @@
- 
+import type { MouseEvent } from "react";
 import { useState } from "react";
 import {Link } from "react-router-dom"
-import { axiosManager } from "./axiosManager";
+import { axiosManager } from "./axiosManager.js";
 import { useNavigate } from "react-router-dom";
 import style from "./loginForm.module.css"
-import {Otp } from "../Otp.tsx"
-let ForgotPassword=()=>{
+import {Otp } from "../Otp"
+const ForgotPassword=()=>{
 
-let navigate=useNavigate();
-        let [username,setUsername] =useState("");
-        let [otpError,setOtpError]=useState(false);
-        let [otp,setOtp]=useState("");
-        let [startState,setStartState]=useState(true);
-        let [isOtpValid,setIsOtpValid]=useState(null);
-        let [newPasswordHandle,setNewPasswordHandle]=useState("");
-        let [gmail,setGmail]=useState("");
+const navigate=useNavigate();
+        const [username,setUsername] =useState<string>("");
+        const [otpError,setOtpError]=useState<boolean | null>(false);
+        const [otp,setOtp ]=useState<string>("");
+        const [startState,setStartState]=useState<boolean|null>(true);
+        const [isOtpValid,setIsOtpValid]=useState<boolean|null>(null);
+        const [newPasswordHandle,setNewPasswordHandle]=useState<string>("");
+        
 
 
          
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e:MouseEvent<HTMLButtonElement>) => {
       
         console.log("PREvented DEfault")
             e.preventDefault();
             setStartState(false);
-            let email=username;
+            const email=username;
          console.log(email)
               
             
@@ -32,7 +32,7 @@ let navigate=useNavigate();
         
             try {
         console.log("In try");
-              let response = await axiosManager.post(
+              const response = await axiosManager.post(
                 "/forgot-password",
                 {
                     
@@ -64,15 +64,15 @@ let navigate=useNavigate();
             }
           };
 
-    let otpHandle=async(e)=>{
+    const otpHandle=async(e:MouseEvent<HTMLButtonElement>)=>{
       e.preventDefault();
-      let otpEntered=otp;
-      console.log(otpEntered);
        
-      let otpVerify=await axiosManager.post(
+ 
+       
+      const otpVerify=await axiosManager.post(
         "/otp-verify",{
           username,
-          otp:otpEntered,
+          otp,
         }
       )
       console.log(otpVerify);
@@ -84,11 +84,11 @@ let navigate=useNavigate();
       }
     }
 
-    const NewPasswordHandle=async(e)=>{
+    const NewPasswordHandle=async(e:MouseEvent<HTMLButtonElement>)=>{
       e.preventDefault();
 
-      let newPassword=newPasswordHandle;
-      let sendToDb=await axiosManager.post(
+      const newPassword=newPasswordHandle;
+      const sendToDb=await axiosManager.post(
         "/set-new-password",
         {
           username,
@@ -160,7 +160,7 @@ let navigate=useNavigate();
           setUsername(e.target.value)
         }
       />
-      {startState?null:<>{otpError?null:<Otp stylist={style}/>}</>}
+      {startState?null:<>{otpError?null:<Otp stylist={style} setOtp={setOtp}/> }</>}
 
       <br />
       <br />

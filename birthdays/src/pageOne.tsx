@@ -1,51 +1,50 @@
 import { useEffect, useState } from "react"
 import style from "./pageOne.module.css"
 import axios from "axios"
- import {Month} from "./Month.tsx"
+ import {Month} from "./Month"
+ import type { FormEvent } from "react";
 import { Navigate,useNavigate } from "react-router-dom";
 const PageOne=()=>{
-    let todayGen=new Date();
-    let thisMonth=0;
+    const todayGen=new Date();
+    let thisMonth:string|number=0;
 
     if(((todayGen.getMonth())+1)<10){
         thisMonth=`0${todayGen.getMonth()+1}`
     }
-    let today=`${todayGen.getDate()}-${thisMonth}-${todayGen.getFullYear()}`
-    let [editName,setEditName]=useState(null);
-    let[everyMonthList,setEveryMonthList]=useState([]);
-    let [everyMonthClick,setEveryMonthClick]=useState(null);
-    let [editDob,setEditDob]=useState(null);
-    let [editNote,setEditNote]=useState(null);
-    let[edit,setEdit]=useState(null);
-    const [role,setRole]=useState("User");
+    const today=`${todayGen.getDate()}-${thisMonth}-${todayGen.getFullYear()}`
+    const [editName,setEditName]=useState<string|null>(null);
+    const[everyMonthList,setEveryMonthList]=useState<any>([]);
+    const [everyMonthClick,setEveryMonthClick]=useState<boolean|null>(null);
+    const [editDob,setEditDob]=useState<string|null|boolean>(null);
+    const [editNote,setEditNote]=useState<string|null>(null);
+    const[edit,setEdit]=useState<string|boolean|null>(null);
+    const [role,setRole]=useState<string>("User");
     const[update,setUpdate]=useState<(null|string)>(null)
-    const [username,setUsername]=useState("null");
-    const [userId,setUserId]=useState("null");
-    const [list,setList]=useState([]);
-    const[reqList,setReqList]=useState([]);
+    const [,setUsername]=useState<string>("null");
+    const [userId,setUserId]=useState<string>("null");
+    const [list,setList]=useState<any>([]);
+    const[reqList,setReqList]=useState<any>([]);
     const [name,setName]=useState<string>("");
     const [dob,setDob]=useState<(string | null)>("");
     const [note,setNote]=useState<string>("");
     const [login,setLogin]=useState<(null | boolean)>(null);
      const [monthClick,setMonthClick]=useState<boolean[] | null[]>([null,null,null,null,null,null,null,null,null,null,null,null,]);
-     const [addBirthday,setAddBirtday]=useState(null);
+     const [addBirthday,setAddBirtday]=useState<boolean|null>(null);
 const navigate=useNavigate();
-     const manageClick=(index)=>{
-         
-     }
+      
      
      useEffect(()=>{
         
-        let checkLogin=async()=>{
+        const checkLogin=async()=>{
            console.log("Login Check...");
-           const token:string=localStorage.getItem("token");
+           const token:(string|null)=localStorage.getItem("token");
            console.log(token);
            if(!token){
                setLogin(false);
                
            }
            else{
-           let response=await axios.post("https://birthdays-639v.onrender.com/authorise",{
+           const response=await axios.post("https://birthdays-639v.onrender.com/authorise",{
                
                    token
                
@@ -73,7 +72,7 @@ const navigate=useNavigate();
 
     useEffect(()=>{
         const process=async()=>{
-             const token=localStorage.getItem("token");
+             const token:string|null=localStorage.getItem("token");
              if(!token){
                 setUpdate("Login.")
                 return;
@@ -94,7 +93,7 @@ const navigate=useNavigate();
                    setUpdate("User not found");
                }
             console.log(get.data.get.details);
-            let toSetData=get.data.get.details;
+            const toSetData=get.data.get.details;
             setList(toSetData);
     
            }
@@ -102,7 +101,7 @@ const navigate=useNavigate();
     },[userId])
     useEffect(()=>{
         const process=async()=>{
-             const token=localStorage.getItem("token");
+             const token:string|null=localStorage.getItem("token");
              if(!token){
                 setUpdate("Login.")
                 return;
@@ -123,7 +122,7 @@ const navigate=useNavigate();
                    setUpdate("User not found");
                }
             console.log(get.data.get.details);
-            let toSetData=get.data.get.everyMonthEvents;
+            const toSetData=get.data.get.everyMonthEvents;
             setEveryMonthList(toSetData);
     
            }
@@ -139,26 +138,26 @@ const navigate=useNavigate();
         setAddBirtday(true);
          
      }
-     let editAlert=()=>{
+     const editAlert=()=>{
         setUpdate(null);
         
         setTimeout(() => {
             setUpdate("Event Edited, Please refersh page to see changes.");
         }, 0);
      }
-     let deleteAlert=()=>{
+     /* const deleteAlert=()=>{
         setUpdate(null);
         
         setTimeout(() => {
             setUpdate("Event Deleted, Please refersh page to see changes.");
         }, 0);
-     }
+     } */
 
 const saveEveryMonth=async()=>{
     setUpdate(null);
     const nameOfPerson:string=name;
     console.log((dob));
-    let token=localStorage.getItem("token")
+    const token=localStorage.getItem("token")
     const addData=await axios.post("https://birthdays-639v.onrender.com/set-every-month",{
         userId,nameOfPerson,dob,note,token
     })
@@ -187,7 +186,7 @@ const saveData=async()=>{
     setUpdate(null);
     const nameOfPerson:string=name;
     console.log((dob));
-    let token=localStorage.getItem("token")
+    const token:string|null=localStorage.getItem("token")
     const addData=await axios.post("https://birthdays-639v.onrender.com/add-data",{
         userId,nameOfPerson,dob,note,token
     })
@@ -217,9 +216,9 @@ const saveData=async()=>{
  if(login===null){
     return "Session Expired, Please login."
  }
- let sendMails=async()=>{
-    let token=localStorage.getItem("token");
-    let sendMail=await axios.get("https://birthdays-639v.onrender.com/send-mail",{
+ const sendMails=async()=>{
+    const token:string|null=localStorage.getItem("token");
+    const sendMail=await axios.get("https://birthdays-639v.onrender.com/send-mail",{
         params:{
             token
         }
@@ -269,7 +268,7 @@ const saveData=async()=>{
                }
                console.log(sample);
                sample.sort((a,b)=>a.dateOfUser-b.dateOfUser); */
-               setEveryMonthList(everyMonthList.sort((a,b)=>a.dateOfUser-b.dateOfUser));
+               setEveryMonthList(everyMonthList.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser));
                    
                    
                
@@ -298,14 +297,14 @@ const saveData=async()=>{
                return sample;
                 
            })
-           let sample=[];
+           const sample=[];
            for(let i=0;i<list.length;i++){
                if((list[i].monthOfUser)==(1)){
                    sample.push(list[i]);
                }
            }
            console.log(sample);
-           sample.sort((a,b)=>a.dateOfUser-b.dateOfUser);
+           sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
            setReqList(sample);
                
                
@@ -329,14 +328,14 @@ const saveData=async()=>{
                     return sample;
                      
                 })
-                let sample=[];
+                const sample=[];
                 for(let i=0;i<list.length;i++){
                     if((list[i].monthOfUser)==(2)){
                         sample.push(list[i]);
                     }
                 }
                 console.log(sample);
-                sample.sort((a,b)=>a.dateOfUser-b.dateOfUser);
+                sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
                 setReqList(sample);
                    
                   
@@ -360,14 +359,14 @@ const saveData=async()=>{
                return sample;
                 
            })
-           let sample=[];
+           const sample=[];
            for(let i=0;i<list.length;i++){
                if((list[i].monthOfUser)==(3)){
                    sample.push(list[i]);
                }
            }
            console.log(sample);
-           sample.sort((a,b)=>a.dateOfUser-b.dateOfUser);
+           sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
            setReqList(sample);
                
                
@@ -393,14 +392,14 @@ const saveData=async()=>{
                    return sample;
                     
                })
-               let sample=[];
+               const sample=[];
                for(let i=0;i<list.length;i++){
                    if((list[i].monthOfUser)==(4)){
                        sample.push(list[i]);
                    }
                }
                console.log(sample);
-               sample.sort((a,b)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -426,14 +425,14 @@ const saveData=async()=>{
                    return sample;
                     
                })
-               let sample=[];
+               const sample=[];
                for(let i=0;i<list.length;i++){
                    if((list[i].monthOfUser)==(5)){
                        sample.push(list[i]);
                    }
                }
                console.log(sample);
-               sample.sort((a,b)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -459,14 +458,14 @@ const saveData=async()=>{
                    return sample;
                     
                })
-               let sample=[];
+               const sample=[];
                for(let i=0;i<list.length;i++){
                    if((list[i].monthOfUser)==(6)){
                        sample.push(list[i]);
                    }
                }
                console.log(sample);
-               sample.sort((a,b)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -492,14 +491,14 @@ const saveData=async()=>{
                    return sample;
                     
                })
-               let sample=[];
+               const sample=[];
                for(let i=0;i<list.length;i++){
                    if((list[i].monthOfUser)==(7)){
                        sample.push(list[i]);
                    }
                }
                console.log(sample);
-               sample.sort((a,b)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -525,14 +524,14 @@ const saveData=async()=>{
                    return sample;
                     
                })
-               let sample=[];
+               const sample=[];
                for(let i=0;i<list.length;i++){
                    if((list[i].monthOfUser)==(8)){
                        sample.push(list[i]);
                    }
                }
                console.log(sample);
-               sample.sort((a,b)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -558,14 +557,14 @@ const saveData=async()=>{
                    return sample;
                     
                })
-               let sample=[];
+               const sample=[];
                for(let i=0;i<list.length;i++){
                    if((list[i].monthOfUser)==(9)){
                        sample.push(list[i]);
                    }
                }
                console.log(sample);
-               sample.sort((a,b)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -591,14 +590,14 @@ const saveData=async()=>{
                    return sample;
                     
                })
-               let sample=[];
+               const sample=[];
                for(let i=0;i<list.length;i++){
                    if((list[i].monthOfUser)==(10)){
                        sample.push(list[i]);
                    }
                }
                console.log(sample);
-               sample.sort((a,b)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -624,14 +623,14 @@ const saveData=async()=>{
                    return sample;
                     
                })
-               let sample=[];
+               const sample=[];
                for(let i=0;i<list.length;i++){
                    if((list[i].monthOfUser)==(11)){
                        sample.push(list[i]);
                    }
                }
                console.log(sample);
-               sample.sort((a,b)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -657,14 +656,14 @@ const saveData=async()=>{
                    return sample;
                     
                })
-               let sample=[];
+               const sample=[];
                for(let i=0;i<list.length;i++){
                    if((list[i].monthOfUser)==(12)){
                        sample.push(list[i]);
                    }
                }
                console.log(sample);
-               sample.sort((a,b)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -678,7 +677,7 @@ const saveData=async()=>{
         {/* display of the events */}
         {everyMonthClick?
             <>
-            {everyMonthList.map((element,index)=>{
+            {everyMonthList.map((element:any,index:any)=>{
             return (
     <>
     <div className={style.data}>
@@ -704,17 +703,18 @@ const saveData=async()=>{
                           
                         <button   onClick={async()=>{
                                 console.log(everyMonthList);
-                                let sample=[...(everyMonthList)];
+                                const sample=[...(everyMonthList)];
                                 console.log(index);
                                 sample.splice(index,1);
                                 console.log(sample);
                                 setEveryMonthList(sample);
-                                let editId=element.id;
+                                const editId=element.id;
                                 
-                                let token=localStorage.getItem("token");
-                                let deleteRequest=await axios.put("https://birthdays-639v.onrender.com/delete-every-month-event",{
+                                const token=localStorage.getItem("token");
+                                const deleteRequest=await axios.put("https://birthdays-639v.onrender.com/delete-every-month-event",{
                                     userId,editId,token
                                 });
+                                console.log(deleteRequest);
     
                                  
     
@@ -727,8 +727,8 @@ const saveData=async()=>{
                                 <form onSubmit={async(e)=>{
                                     e.preventDefault();
                                     console.log("editDone");
-                                    let nameOfPersonId=element.id;
-                                    let editReq=await axios.put("https://birthdays-639v.onrender.com/edit-every-month-event",{
+                                    const nameOfPersonId=element.id;
+                                    const editReq=await axios.put("https://birthdays-639v.onrender.com/edit-every-month-event",{
                                         nameOfPersonId,
                                         userId:userId,
                                         editName:editName,
@@ -739,6 +739,7 @@ const saveData=async()=>{
 
 
                                     });
+                                    console.log(editReq)
                                      
 
                                 }} className={style.formCard}>
@@ -773,7 +774,7 @@ const saveData=async()=>{
         {(monthClick[0])?
         
         <>
-            {reqList.map((element,index)=>{
+            {reqList.map((element:any,index:any)=>{
 
                 console.log(element);
                 return (
@@ -865,7 +866,7 @@ const saveData=async()=>{
         {(monthClick[1])?
         
             <>
-                {reqList.map((element,index)=>{
+                {reqList.map((element:any,index:any)=>{
 
                     console.log(element);
                     return (
@@ -884,7 +885,7 @@ const saveData=async()=>{
         {(monthClick[2])?
         
         <>
-            {reqList.map((element,index)=>{
+            {reqList.map((element:any,index:any)=>{
 
                 console.log(element);
                 return (
@@ -904,7 +905,7 @@ const saveData=async()=>{
 {(monthClick[3])?
         
         <>
-            {reqList.map((element,index)=>{
+            {reqList.map((element:any,index:any)=>{
 
                 console.log(element);
                 return (
@@ -923,7 +924,7 @@ const saveData=async()=>{
     {(monthClick[4])?
         
         <>
-            {reqList.map((element,index)=>{
+            {reqList.map((element:any,index:any)=>{
 
                 console.log(element);
                 return (
@@ -942,7 +943,7 @@ const saveData=async()=>{
     {(monthClick[5])?
         
         <>
-            {reqList.map((element,index)=>{
+            {reqList.map((element:any,index:any)=>{
 
                 console.log(element);
                 return (
@@ -961,7 +962,7 @@ const saveData=async()=>{
     {(monthClick[6])?
         
         <>
-            {reqList.map((element,index)=>{
+            {reqList.map((element:any,index:any)=>{
 
                 console.log(element);
                 return (
@@ -980,7 +981,7 @@ const saveData=async()=>{
     {(monthClick[7])?
         
         <>
-            {reqList.map((element,index)=>{
+            {reqList.map((element:any,index:any)=>{
 
                 console.log(element);
                 return (
@@ -999,7 +1000,7 @@ const saveData=async()=>{
     {(monthClick[8])?
         
         <>
-            {reqList.map((element,index)=>{
+            {reqList.map((element:any,index:any)=>{
 
                 console.log(element);
                 return (
@@ -1018,7 +1019,7 @@ const saveData=async()=>{
     {(monthClick[9])?
         
         <>
-            {reqList.map((element,index)=>{
+            {reqList.map((element:any,index:any)=>{
 
                 console.log(element);
                 return (
@@ -1037,7 +1038,7 @@ const saveData=async()=>{
     {(monthClick[10])?
         
         <>
-            {reqList.map((element,index)=>{
+            {reqList.map((element:any,index:any)=>{
 
                 console.log(element);
                 return (
@@ -1056,7 +1057,7 @@ const saveData=async()=>{
     {(monthClick[11])?
         
         <>
-            {reqList.map((element,index)=>{
+            {reqList.map((element:any,index:any)=>{
 
                 console.log(element);
                 return (
@@ -1079,7 +1080,7 @@ const saveData=async()=>{
         
             <>
                 
-                    <form onSubmit={(e)=>{
+                    <form onSubmit={(e:FormEvent<HTMLFormElement>)=>{
                         e.preventDefault();
                         
                     }}>
