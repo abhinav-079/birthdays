@@ -28,7 +28,7 @@ const PageOne=()=>{
     const [dob,setDob]=useState<(string | null)>("");
     const [note,setNote]=useState<string>("");
     const [login,setLogin]=useState<(null | boolean)>(null);
-     const [monthClick,setMonthClick]=useState<boolean[] | null[]>([null,null,null,null,null,null,null,null,null,null,null,null,]);
+     const [monthClick,setMonthClick]=useState<(boolean | null)[]>([null,null,null,null,null,null,null,null,null,null,null,null,]);
      const [addBirthday,setAddBirtday]=useState<boolean|null>(null);
 const navigate=useNavigate();
       
@@ -283,8 +283,8 @@ const saveData=async()=>{
            <div className={style.monthCard} 
            onClick={()=>{
             setEveryMonthClick(null);
-            setMonthClick((prev:boolean[])=>{
-               const sample:boolean[]=[...prev];
+            setMonthClick((prev:(boolean|null)[])=>{
+               const sample:(boolean|null)[]=[...prev];
                for(let i=0;i<sample.length;i++){
                   if(i===0){
                       sample[i]=true;
@@ -314,8 +314,8 @@ const saveData=async()=>{
         ', current month' :null}</div>
            <div className={style.monthCard} onClick={()=>{
                  setEveryMonthClick(null);
-                 setMonthClick((prev:boolean[])=>{
-                    const sample:boolean[]=[...prev];
+                 setMonthClick((prev:(boolean|null)[])=>{
+                    const sample:(boolean|null)[]=[...prev];
                     for(let i=0;i<sample.length;i++){
                        if(i===1){
                            sample[i]=true;
@@ -345,8 +345,8 @@ const saveData=async()=>{
            
            onClick={()=>{
             setEveryMonthClick(null);
-            setMonthClick((prev:boolean[])=>{
-               const sample:boolean[]=[...prev];
+            setMonthClick((prev:(boolean|null)[])=>{
+               const sample:(boolean|null)[]=[...prev];
                for(let i=0;i<sample.length;i++){
                   if(i===2){
                       sample[i]=true;
@@ -378,8 +378,8 @@ const saveData=async()=>{
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
-                setMonthClick((prev:boolean[])=>{
-                   const sample:boolean[]=[...prev];
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
                    for(let i=0;i<sample.length;i++){
                       if(i===3){
                           sample[i]=true;
@@ -411,8 +411,8 @@ const saveData=async()=>{
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
-                setMonthClick((prev:boolean[])=>{
-                   const sample:boolean[]=[...prev];
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
                    for(let i=0;i<sample.length;i++){
                       if(i===4){
                           sample[i]=true;
@@ -444,8 +444,8 @@ const saveData=async()=>{
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
-                setMonthClick((prev:boolean[])=>{
-                   const sample:boolean[]=[...prev];
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
                    for(let i=0;i<sample.length;i++){
                       if(i===5){
                           sample[i]=true;
@@ -477,8 +477,8 @@ const saveData=async()=>{
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
-                setMonthClick((prev:boolean[])=>{
-                   const sample:boolean[]=[...prev];
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
                    for(let i=0;i<sample.length;i++){
                       if(i===6){
                           sample[i]=true;
@@ -510,8 +510,8 @@ const saveData=async()=>{
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);   
-                setMonthClick((prev:boolean[])=>{
-                   const sample:boolean[]=[...prev];
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
                    for(let i=0;i<sample.length;i++){
                       if(i===7){
                           sample[i]=true;
@@ -543,8 +543,8 @@ const saveData=async()=>{
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
-                setMonthClick((prev:boolean[])=>{
-                   const sample:boolean[]=[...prev];
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
                    for(let i=0;i<sample.length;i++){
                       if(i===8){
                           sample[i]=true;
@@ -576,8 +576,8 @@ const saveData=async()=>{
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
-                setMonthClick((prev:boolean[])=>{
-                   const sample:boolean[]=[...prev];
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
                    for(let i=0;i<sample.length;i++){
                       if(i===9){
                           sample[i]=true;
@@ -609,8 +609,8 @@ const saveData=async()=>{
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
-                setMonthClick((prev:boolean[])=>{
-                   const sample:boolean[]=[...prev];
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
                    for(let i=0;i<sample.length;i++){
                       if(i===10){
                           sample[i]=true;
@@ -642,8 +642,8 @@ const saveData=async()=>{
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
-                setMonthClick((prev:boolean[])=>{
-                   const sample:boolean[]=[...prev];
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
                    for(let i=0;i<sample.length;i++){
                       if(i===11){
                           sample[i]=true;
@@ -744,7 +744,7 @@ const saveData=async()=>{
 
                                 }} className={style.formCard}>
 
-                                    <input type="text" placeholder={`previous Name: ${element.nameOfPerson}`} value={editName} onChange={(e)=>{
+                                    <input type="text" placeholder={`previous Name: ${element.nameOfPerson}`} value={editName ?? ""} onChange={(e)=>{
                                         setEditName(e.target.value)
                                     }} required/>
                                     <input type="date" value={element.dob} onChange={(e)=>{

@@ -1,7 +1,7 @@
 import type { MouseEvent } from "react";
 import { useState } from "react";
 import {Link } from "react-router-dom"
-import { axiosManager } from "./axiosManager.js";
+import { axiosManager } from "./axiosManager";
 import { useNavigate } from "react-router-dom";
 import style from "./loginForm.module.css"
 import {Otp } from "../Otp"
