@@ -100,6 +100,7 @@
                                          
                                         console.log("clicked edit button");
                                         if(props.element.nameOfPerson && props.element.dob && props.element.note){
+                                            console.log(props.element.nameOfPerson, props.element.dob, props.element.note)
                                             props.editAlert();
                                         }
                                         
