@@ -372,7 +372,7 @@ app.get("/send-mail",async(req,res)=>{
                 let note=(allusers[i].details)[j].note ;
                 let obj={
                     wishes:birthdayBoy,
-                    notes:note?note:null,
+                    notes:note?note:"",
                 }
                 todayEvents.push(obj);
                 /*  */
@@ -386,7 +386,7 @@ app.get("/send-mail",async(req,res)=>{
                 let note=(allusers[i].everyMonthEvents)[l].note ;
                 let obj={
                     wishes:birthdayBoy,
-                    notes:note?note:null,
+                    notes:note?note:"",
                 }
                 everyMonthEventsArr.push(obj);
             }
@@ -402,7 +402,7 @@ app.get("/send-mail",async(req,res)=>{
         }
         for(let l=0;l<finalEveryMonthArr.length;l++){
             finalEveryMonthArr.push(`<div>
-                <h3>${finalEveryMonthArr[l].wishes}, ${finalEveryMonthArr[l].notes}</h3>
+                • <h3>${finalEveryMonthArr[l].wishes} ${ finalEveryMonthArr[l].notes }</h3>
                  
                 </div>`);
         }
