@@ -2,11 +2,11 @@
 import './App.css'
 import { Routes, Route } from "react-router";
 import { PageOne } from './pageOne'
-import {LoginForm } from "./authentication/loginForm.js";
-import {SignUpForm } from "./authentication/signUp.js";
-import { ForgotPassword } from "./authentication/forgotPassword.tsx";
-import { OtpError } from './authentication/otpError.js';
-import {Otp } from "./Otp.tsx"
+import {LoginForm } from "./authentication/loginForm";
+import {SignUpForm } from "./authentication/signUp";
+import { ForgotPassword } from "./authentication/forgotPassword";
+import { OtpError } from './authentication/otpError';
+import {Otp } from "./Otp"
 function App() {
   
 
