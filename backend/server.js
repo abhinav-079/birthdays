@@ -395,23 +395,132 @@ app.get("/send-mail",async(req,res)=>{
         let finalArray=[];
         let finalEveryMonthArr=[];
         for(let l=0;l<todayEvents.length;l++){
-            finalArray.push(`<div>
-                <h3>${todayEvents[l].wishes}, ${todayEvents[l].notes}</h3>
-                 
-                </div>`);
+            finalArray.push(`
+    <tr>
+        <td style="
+            padding:12px;
+            border-bottom:1px solid #e5e7eb;
+        ">
+            <div style="
+                font-size:16px;
+                font-weight:600;
+                color:#111827;
+                margin-bottom:4px;
+            ">
+            ${todayEvents[l].wishes}
+            </div>
+
+            <div style="
+                font-size:14px;
+                color:#6b7280;
+            ">
+            ${ everyMonthEventsArr[l].notes || "No Additional Notes"}
+            </div>
+        </td>
+    </tr>
+`);
         }
         for(let l=0;l<everyMonthEventsArr.length;l++){
             finalEveryMonthArr.push(`<div>
-                • <h3>${everyMonthEventsArr[l].wishes} ${ everyMonthEventsArr[l].notes }</h3>
+                • <h3>${everyMonthEventsArr[l].wishes} - ${ everyMonthEventsArr[l].notes }</h3>
                  
-                </div>`);
+                </div>`
+            
+            
+            
+            `
+    <tr>
+        <td style="
+            padding:12px;
+            border-bottom:1px solid #e5e7eb;
+        ">
+            <div style="
+                font-size:16px;
+                font-weight:600;
+                color:#111827;
+                margin-bottom:4px;
+            ">
+                 ${everyMonthEventsArr[l].wishes}
+            </div>
+
+            <div style="
+                font-size:14px;
+                color:#6b7280;
+            ">
+            ${ everyMonthEventsArr[l].notes || "No Additional Notes"}
+            </div>
+        </td>
+    </tr>
+`);
         }
         console.log(finalArray.length);
         if(finalEveryMonthArr.length){
             console.log("Ssending mail, every month.")
-            const html = `<h1> Every Month Events Reminder for ${username}</h1>
+            const html = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+<body style="
+    margin:0;
+    padding:20px;
+    background:#f3f4f6;
+    font-family:Arial, sans-serif;
+">
+    <div style="
+        max-width:600px;
+        margin:auto;
+        background:white;
+        border-radius:12px;
+        overflow:hidden;
+        box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    ">
+        
+        <div style="
+            background:#2563eb;
+            color:white;
+            padding:20px;
+            text-align:center;
+        ">
+            <h1 style="margin:0;">
+                📅 Monthly Events Reminder
+            </h1>
+        </div>
+
+        <div style="padding:20px;">
+            <p style="
+                font-size:16px;
+                color:#374151;
+                margin-top:0;
+            ">
+                Hi <strong>${username}</strong>,
+            </p>
+
+            <p style="
+                color:#6b7280;
+                font-size:14px;
+            ">
+                Here are your recurring monthly reminders:
+            </p>
+
+            <table width="100%" cellspacing="0" cellpadding="0">
                 ${finalEveryMonthArr}
-            `;
+            </table>
+
+            <div style="
+                margin-top:20px;
+                text-align:center;
+                color:#9ca3af;
+                font-size:12px;
+            ">
+                This is an automated reminder from your Birthday & Events Tracker.
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+`;
             console.log(html);
             let sendMail=await sendGmail(
                 userMail, // ANY email (not just yours!)
@@ -422,9 +531,71 @@ app.get("/send-mail",async(req,res)=>{
     }
         if(finalArray.length){
             console.log("Ssending mail")
-                const html = `<h1> Today's Events Reminder for ${username}</h1>
-                    ${finalArray}
-                `;
+            const html = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+            <meta charset="UTF-8">
+            </head>
+            <body style="
+                margin:0;
+                padding:20px;
+                background:#f3f4f6;
+                font-family:Arial, sans-serif;
+            ">
+                <div style="
+                    max-width:600px;
+                    margin:auto;
+                    background:white;
+                    border-radius:12px;
+                    overflow:hidden;
+                    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+                ">
+                    
+                    <div style="
+                        background:#2563eb;
+                        color:white;
+                        padding:20px;
+                        text-align:center;
+                    ">
+                        <h1 style="margin:0;">
+                            📅 Monthly Events Reminder
+                        </h1>
+                    </div>
+            
+                    <div style="padding:20px;">
+                        <p style="
+                            font-size:16px;
+                            color:#374151;
+                            margin-top:0;
+                        ">
+                            Hi <strong>${username}</strong>,
+                        </p>
+            
+                        <p style="
+                            color:#6b7280;
+                            font-size:14px;
+                        ">
+                            Here are your recurring monthly reminders:
+                        </p>
+            
+                        <table width="100%" cellspacing="0" cellpadding="0">
+                            ${finalArray}
+                        </table>
+            
+                        <div style="
+                            margin-top:20px;
+                            text-align:center;
+                            color:#9ca3af;
+                            font-size:12px;
+                        ">
+                            This is an automated reminder from your Birthday & Events Tracker.
+                        </div>
+                    </div>
+                </div>
+            </body>
+            </html>
+            `;
                 console.log(html);
                 let sendMail=await sendGmail(
                     userMail, // ANY email (not just yours!)
