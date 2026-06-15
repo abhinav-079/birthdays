@@ -397,32 +397,42 @@ app.get("/send-mail",async(req,res)=>{
         for(let l=0;l<todayEvents.length;l++){
             finalArray.push(`
 <tr>
-    <td style="
-        padding:15px;
-        border-bottom:1px solid #e5e7eb;
-    ">
+    <td style="padding:0 20px 15px 20px;">
         <div style="
-            font-size:16px;
-            font-weight:600;
-            color:#111827;
+            background:#ffffff;
+            border:1px solid #e5e7eb;
+            border-radius:12px;
+            padding:16px;
         ">
-            
-        ${todayEvents[l].wishes}
-        </div>
+            <div style="
+                font-size:18px;
+                font-weight:600;
+                color:#111827;
+                margin-bottom:8px;
+            ">
+                  ${todayEvents[l].wishes}
+            </div>
 
-        <div style="
-            color:#6b7280;
-            margin-top:5px;
-        ">
-            ${todayEvents[l].notes || ""}
-        </div>
+            <div style="
+                font-size:14px;
+                color:#6b7280;
+                line-height:1.6;
+                margin-bottom:10px;
+            ">
+                ${todayEvents[l].notes || "No additional notes"}
+            </div>
 
-        <div style="
-            color:#2563eb;
-            font-size:13px;
-            margin-top:5px;
-        ">
-            ${todayEvents[l].dob}
+            <div style="
+                display:inline-block;
+                background:#eff6ff;
+                color:#2563eb;
+                padding:6px 12px;
+                border-radius:999px;
+                font-size:13px;
+                font-weight:500;
+            ">
+                 
+            </div>
         </div>
     </td>
 </tr>
@@ -448,7 +458,7 @@ app.get("/send-mail",async(req,res)=>{
                 font-size:14px;
                 color:#6b7280;
             ">
-            ${everyMonthEventsArr[l].dob}
+            ${everyMonthEventsArr[l].dateOfUser}/ ${everyMonthEventsArr[l].monthOfUser}/ ${everyMonthEventsArr[l].yearOfUser}
             ${ everyMonthEventsArr[l].notes || "No Additional Notes"}
             </div>
         </td>
@@ -534,70 +544,105 @@ app.get("/send-mail",async(req,res)=>{
         if(finalArray.length){
             console.log("Ssending mail")
             const html = `
-            <!DOCTYPE html>
-            <html>
-            <head>
-            <meta charset="UTF-8">
-            </head>
-            <body style="
-                margin:0;
-                padding:20px;
-                background:#f3f4f6;
-                font-family:Arial, sans-serif;
-            ">
-                <div style="
-                    max-width:600px;
-                    margin:auto;
-                    background:white;
-                    border-radius:12px;
-                    overflow:hidden;
-                    box-shadow:0 2px 10px rgba(0,0,0,0.1);
-                ">
-                    
-                    <div style="
-                        background:#2563eb;
-                        color:white;
-                        padding:20px;
-                        text-align:center;
-                    ">
-                        <h1 style="margin:0;">
-                            📅 Monthly Events Reminder
-                        </h1>
-                    </div>
-            
-                    <div style="padding:20px;">
-                        <p style="
-                            font-size:16px;
-                            color:#374151;
-                            margin-top:0;
-                        ">
-                            Hi <strong>${username}</strong>,
-                        </p>
-            
-                        <p style="
-                            color:#6b7280;
-                            font-size:14px;
-                        ">
-                            Here are your recurring monthly reminders:
-                        </p>
-            
-                        <table width="100%" cellspacing="0" cellpadding="0">
-                            ${finalArray}
-                        </table>
-            
-                        <div style="
-                            margin-top:20px;
-                            text-align:center;
-                            color:#9ca3af;
-                            font-size:12px;
-                        ">
-                            This is an automated reminder from your Birthday & Events Tracker.
-                        </div>
-                    </div>
-                </div>
-            </body>
-            </html>
-            `;
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+</head>
+
+<body style="
+    margin:0;
+    padding:20px;
+    background:#f3f4f6;
+    font-family:Arial,sans-serif;
+">
+
+<div style="
+    max-width:650px;
+    margin:auto;
+    background:#ffffff;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+">
+
+    <!-- Header -->
+    <div style="
+        background:linear-gradient(135deg,#1e293b,#334155);
+        padding:30px;
+        text-align:center;
+    ">
+        <h1 style="
+            margin:0;
+            color:white;
+            font-size:28px;
+        ">
+            📅 Annual Reminders
+        </h1>
+
+        <p style="
+            color:#cbd5e1;
+            margin-top:10px;
+            font-size:14px;
+        ">
+            Never miss an important date
+        </p>
+    </div>
+
+    <!-- Content -->
+    <div style="padding:25px;">
+
+        <p style="
+            color:#374151;
+            font-size:16px;
+            margin-top:0;
+        ">
+            Hi <strong>${username}</strong>,
+        </p>
+
+        <p style="
+            color:#6b7280;
+            font-size:14px;
+            line-height:1.6;
+        ">
+            Here are your upcoming annual reminders.
+        </p>
+
+        <table width="100%" cellspacing="0" cellpadding="0">
+            ${finalArray}
+        </table>
+
+    </div>
+
+    <!-- Footer -->
+    <div style="
+        background:#f9fafb;
+        padding:20px;
+        text-align:center;
+        border-top:1px solid #e5e7eb;
+    ">
+        <p style="
+            margin:0;
+            color:#9ca3af;
+            font-size:12px;
+        ">
+            This reminder was generated automatically.
+        </p>
+
+        <p style="
+            margin-top:8px;
+            color:#9ca3af;
+            font-size:12px;
+        ">
+            Stay connected with the moments that matter.
+        </p>
+    </div>
+
+</div>
+
+</body>
+</html>
+`;
                 console.log(html);
                 let sendMail=await sendGmail(
                     userMail, // ANY email (not just yours!)
