@@ -383,7 +383,7 @@ app.get("/send-mail",async(req,res)=>{
         for(let l=0;l<(allusers[i].everyMonthEvents).length;l++){
             if(`${((allusers[i].everyMonthEvents)[l].dateOfUser)}`==setToday.getDate()){
                 let birthdayBoy=(allusers[i].everyMonthEvents)[l].nameOfPerson;
-                let dates=(allusers[i].everyMonthEvents)[l].dateOfUser+(allusers[i].everyMonthEvents)[l].monthOfUser+(allusers[i].everyMonthEvents)[l].yearOfUser;
+                let dates=`${(allusers[i].everyMonthEvents)[l].dateOfUser}/ ${(allusers[i].everyMonthEvents)[l].monthOfUser}/ ${(allusers[i].everyMonthEvents)[l].yearOfUser}`;
                 let note=(allusers[i].everyMonthEvents)[l].note ;
                 let obj={
                     wishes:birthdayBoy,
