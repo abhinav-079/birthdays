@@ -407,19 +407,6 @@ app.get("/send-mail",async(req,res)=>{
                 </div>`);
         }
         console.log(finalArray.length);
-        if(finalArray.length){
-            console.log("Ssending mail")
-                const html = `<h1> Today's Events Reminder for ${username}</h1>
-                    ${finalArray}
-                `;
-                console.log(html);
-                let sendMail=await sendGmail(
-                    userMail, // ANY email (not just yours!)
-                    `Events Reminder! to: ${username}`,
-                    `Send Wishes to: ${JSON.stringify(todayEvents, null, 7)}`,html
-                );
-                console.log(sendMail," Gmail.");
-        }
         if(finalEveryMonthArr.length){
             console.log("Ssending mail, every month.")
             const html = `<h1> Every Month Events Reminder for ${username}</h1>
@@ -433,6 +420,20 @@ app.get("/send-mail",async(req,res)=>{
             );
             console.log(sendMail," Gmail.");
     }
+        if(finalArray.length){
+            console.log("Ssending mail")
+                const html = `<h1> Today's Events Reminder for ${username}</h1>
+                    ${finalArray}
+                `;
+                console.log(html);
+                let sendMail=await sendGmail(
+                    userMail, // ANY email (not just yours!)
+                    `Events Reminder! to: ${username}`,
+                    `Send Wishes to: ${JSON.stringify(todayEvents, null, 7)}`,html
+                );
+                console.log(sendMail," Gmail.");
+        }
+        
     }
 })
 
