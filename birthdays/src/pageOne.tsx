@@ -294,404 +294,6 @@ const saveData=async()=>{
            >Every Month Events{(everyMonthClick)? 
             ', current List' :null}</div>
         </header>
-     
-        <section className={style.monthGrid}>
-     
-           <div className={style.monthCard} 
-           onClick={()=>{
-            setEveryMonthClick(null);
-            setMonthClick((prev:(boolean|null)[])=>{
-               const sample:(boolean|null)[]=[...prev];
-               for(let i=0;i<sample.length;i++){
-                  if(i===0){
-                      sample[i]=true;
-                  }
-                  else{
-                      sample[i]=null
-                  }
-               }
-                
-               return sample;
-                
-           })
-           const sample=[];
-           for(let i=0;i<list.length;i++){
-               if((list[i].monthOfUser)==(1)){
-                   sample.push(list[i]);
-               }
-           }
-           console.log(sample);
-           sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
-           setReqList(sample);
-               
-               
-           
-             
-      }}>January{(monthClick[0])? 
-        ', current month' :null}</div>
-           <div className={style.monthCard} onClick={()=>{
-                 setEveryMonthClick(null);
-                 setMonthClick((prev:(boolean|null)[])=>{
-                    const sample:(boolean|null)[]=[...prev];
-                    for(let i=0;i<sample.length;i++){
-                       if(i===1){
-                           sample[i]=true;
-                       }
-                       else{
-                           sample[i]=null
-                       }
-                    }
-                     
-                    return sample;
-                     
-                })
-                const sample=[];
-                for(let i=0;i<list.length;i++){
-                    if((list[i].monthOfUser)==(2)){
-                        sample.push(list[i]);
-                    }
-                }
-                console.log(sample);
-                sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
-                setReqList(sample);
-                   
-                  
-            }}>February{(monthClick[1])? 
-                ', current month' :null}</div>
-           <div className={style.monthCard}
-           
-           onClick={()=>{
-            setEveryMonthClick(null);
-            setMonthClick((prev:(boolean|null)[])=>{
-               const sample:(boolean|null)[]=[...prev];
-               for(let i=0;i<sample.length;i++){
-                  if(i===2){
-                      sample[i]=true;
-                  }
-                  else{
-                      sample[i]=null
-                  }
-               }
-                
-               return sample;
-                
-           })
-           const sample=[];
-           for(let i=0;i<list.length;i++){
-               if((list[i].monthOfUser)==(3)){
-                   sample.push(list[i]);
-               }
-           }
-           console.log(sample);
-           sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
-           setReqList(sample);
-               
-               
-           
-             
-      }}
-           >March{(monthClick[2])? 
-            ', current month' :null}</div>
-           <div className={style.monthCard}
-            onClick={()=>{
-                setEveryMonthClick(null);
-                setMonthClick((prev:(boolean|null)[])=>{
-                   const sample:(boolean|null)[]=[...prev];
-                   for(let i=0;i<sample.length;i++){
-                      if(i===3){
-                          sample[i]=true;
-                      }
-                      else{
-                          sample[i]=null
-                      }
-                   }
-                    
-                   return sample;
-                    
-               })
-               const sample=[];
-               for(let i=0;i<list.length;i++){
-                   if((list[i].monthOfUser)==(4)){
-                       sample.push(list[i]);
-                   }
-               }
-               console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
-               setReqList(sample);
-                   
-                   
-               
-                 
-          }}
-           >April{(monthClick[3])? 
-            ', current month' :null}</div>
-           <div className={style.monthCard}
-            onClick={()=>{
-                setEveryMonthClick(null);
-                setMonthClick((prev:(boolean|null)[])=>{
-                   const sample:(boolean|null)[]=[...prev];
-                   for(let i=0;i<sample.length;i++){
-                      if(i===4){
-                          sample[i]=true;
-                      }
-                      else{
-                          sample[i]=null
-                      }
-                   }
-                    
-                   return sample;
-                    
-               })
-               const sample=[];
-               for(let i=0;i<list.length;i++){
-                   if((list[i].monthOfUser)==(5)){
-                       sample.push(list[i]);
-                   }
-               }
-               console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
-               setReqList(sample);
-                   
-                   
-               
-                 
-          }}
-           >May{(monthClick[4])? 
-            ', current month' :null}</div>
-           <div className={style.monthCard}
-            onClick={()=>{
-                setEveryMonthClick(null);
-                setMonthClick((prev:(boolean|null)[])=>{
-                   const sample:(boolean|null)[]=[...prev];
-                   for(let i=0;i<sample.length;i++){
-                      if(i===5){
-                          sample[i]=true;
-                      }
-                      else{
-                          sample[i]=null
-                      }
-                   }
-                    
-                   return sample;
-                    
-               })
-               const sample=[];
-               for(let i=0;i<list.length;i++){
-                   if((list[i].monthOfUser)==(6)){
-                       sample.push(list[i]);
-                   }
-               }
-               console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
-               setReqList(sample);
-                   
-                   
-               
-                 
-          }}
-           >June{(monthClick[5])? 
-            ', current month' :null}</div>
-           <div className={style.monthCard}
-            onClick={()=>{
-                setEveryMonthClick(null);
-                setMonthClick((prev:(boolean|null)[])=>{
-                   const sample:(boolean|null)[]=[...prev];
-                   for(let i=0;i<sample.length;i++){
-                      if(i===6){
-                          sample[i]=true;
-                      }
-                      else{
-                          sample[i]=null
-                      }
-                   }
-                    
-                   return sample;
-                    
-               })
-               const sample=[];
-               for(let i=0;i<list.length;i++){
-                   if((list[i].monthOfUser)==(7)){
-                       sample.push(list[i]);
-                   }
-               }
-               console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
-               setReqList(sample);
-                   
-                   
-               
-                 
-          }}
-           >July{(monthClick[6])? 
-            ', current month' :null}</div>
-           <div className={style.monthCard}
-            onClick={()=>{
-                setEveryMonthClick(null);   
-                setMonthClick((prev:(boolean|null)[])=>{
-                   const sample:(boolean|null)[]=[...prev];
-                   for(let i=0;i<sample.length;i++){
-                      if(i===7){
-                          sample[i]=true;
-                      }
-                      else{
-                          sample[i]=null
-                      }
-                   }
-                    
-                   return sample;
-                    
-               })
-               const sample=[];
-               for(let i=0;i<list.length;i++){
-                   if((list[i].monthOfUser)==(8)){
-                       sample.push(list[i]);
-                   }
-               }
-               console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
-               setReqList(sample);
-                   
-                   
-               
-                 
-          }}
-           >August{(monthClick[7])? 
-            ', current month' :null}</div>
-           <div className={style.monthCard}
-            onClick={()=>{
-                setEveryMonthClick(null);
-                setMonthClick((prev:(boolean|null)[])=>{
-                   const sample:(boolean|null)[]=[...prev];
-                   for(let i=0;i<sample.length;i++){
-                      if(i===8){
-                          sample[i]=true;
-                      }
-                      else{
-                          sample[i]=null
-                      }
-                   }
-                    
-                   return sample;
-                    
-               })
-               const sample=[];
-               for(let i=0;i<list.length;i++){
-                   if((list[i].monthOfUser)==(9)){
-                       sample.push(list[i]);
-                   }
-               }
-               console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
-               setReqList(sample);
-                   
-                   
-               
-                 
-          }}
-           >September{(monthClick[8])? 
-            ', current month' :null}</div>
-           <div className={style.monthCard}
-            onClick={()=>{
-                setEveryMonthClick(null);
-                setMonthClick((prev:(boolean|null)[])=>{
-                   const sample:(boolean|null)[]=[...prev];
-                   for(let i=0;i<sample.length;i++){
-                      if(i===9){
-                          sample[i]=true;
-                      }
-                      else{
-                          sample[i]=null
-                      }
-                   }
-                    
-                   return sample;
-                    
-               })
-               const sample=[];
-               for(let i=0;i<list.length;i++){
-                   if((list[i].monthOfUser)==(10)){
-                       sample.push(list[i]);
-                   }
-               }
-               console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
-               setReqList(sample);
-                   
-                   
-               
-                 
-          }}
-           >October{(monthClick[9])? 
-            ', current month' :null}</div>
-           <div className={style.monthCard}
-            onClick={()=>{
-                setEveryMonthClick(null);
-                setMonthClick((prev:(boolean|null)[])=>{
-                   const sample:(boolean|null)[]=[...prev];
-                   for(let i=0;i<sample.length;i++){
-                      if(i===10){
-                          sample[i]=true;
-                      }
-                      else{
-                          sample[i]=null
-                      }
-                   }
-                    
-                   return sample;
-                    
-               })
-               const sample=[];
-               for(let i=0;i<list.length;i++){
-                   if((list[i].monthOfUser)==(11)){
-                       sample.push(list[i]);
-                   }
-               }
-               console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
-               setReqList(sample);
-                   
-                   
-               
-                 
-          }}
-           >November{(monthClick[10])? 
-            ', current month' :null}</div>
-           <div className={style.monthCard}
-            onClick={()=>{
-                setEveryMonthClick(null);
-                setMonthClick((prev:(boolean|null)[])=>{
-                   const sample:(boolean|null)[]=[...prev];
-                   for(let i=0;i<sample.length;i++){
-                      if(i===11){
-                          sample[i]=true;
-                      }
-                      else{
-                          sample[i]=null
-                      }
-                   }
-                    
-                   return sample;
-                    
-               })
-               const sample=[];
-               for(let i=0;i<list.length;i++){
-                   if((list[i].monthOfUser)==(12)){
-                       sample.push(list[i]);
-                   }
-               }
-               console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
-               setReqList(sample);
-                   
-                   
-               
-                 
-          }}
-           >December{(monthClick[11])? 
-            ', current month' :null}</div>
-     
-        </section>
-        {/* display of the events */}
         {everyMonthClick?
             <>
             {everyMonthList.map((element:any,index:any)=>{
@@ -793,6 +395,42 @@ const saveData=async()=>{
             :
             null
         }
+
+        {/* All Months display */}
+        <section className={style.monthGrid}>
+     
+           <div className={style.monthCard} 
+           onClick={()=>{
+            setEveryMonthClick(null);
+            setMonthClick((prev:(boolean|null)[])=>{
+               const sample:(boolean|null)[]=[...prev];
+               for(let i=0;i<sample.length;i++){
+                  if(i===0){
+                      sample[i]=true;
+                  }
+                  else{
+                      sample[i]=null
+                  }
+               }
+                
+               return sample;
+                
+           })
+           const sample=[];
+           for(let i=0;i<list.length;i++){
+               if((list[i].monthOfUser)==(1)){
+                   sample.push(list[i]);
+               }
+           }
+           console.log(sample);
+           sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+           setReqList(sample);
+               
+               
+           
+             
+      }}>January{(monthClick[0])? 
+        ', current month' :null}
         {(monthClick[0])?
         
         <>
@@ -885,26 +523,93 @@ const saveData=async()=>{
         :
         null
     }
-        {(monthClick[1])?
+        </div>
         
-            <>
-                {reqList.map((element:any,index:any)=>{
+           <div className={style.monthCard} onClick={()=>{
+                 setEveryMonthClick(null);
+                 setMonthClick((prev:(boolean|null)[])=>{
+                    const sample:(boolean|null)[]=[...prev];
+                    for(let i=0;i<sample.length;i++){
+                       if(i===1){
+                           sample[i]=true;
+                       }
+                       else{
+                           sample[i]=null
+                       }
+                    }
+                     
+                    return sample;
+                     
+                })
+                const sample=[];
+                for(let i=0;i<list.length;i++){
+                    if((list[i].monthOfUser)==(2)){
+                        sample.push(list[i]);
+                    }
+                }
+                console.log(sample);
+                sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+                setReqList(sample);
+                   
+                  
+            }}>February{(monthClick[1])? 
+                ', current month' :null}
+                {(monthClick[1])?
+        
+        <>
+            {reqList.map((element:any,index:any)=>{
 
-                    console.log(element);
-                    return (
-                        <>
-                         <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
-                      editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert} month="February"/>
-                         
-                        </>
-                    )
-                    
-                })}
-            </>
-            :
-            null
-        }
-        {(monthClick[2])?
+                console.log(element);
+                return (
+                    <>
+                     <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
+                  editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert} month="February"/>
+                     
+                    </>
+                )
+                
+            })}
+        </>
+        :
+        null
+    }
+                </div>
+                
+           <div className={style.monthCard}
+           
+           onClick={()=>{
+            setEveryMonthClick(null);
+            setMonthClick((prev:(boolean|null)[])=>{
+               const sample:(boolean|null)[]=[...prev];
+               for(let i=0;i<sample.length;i++){
+                  if(i===2){
+                      sample[i]=true;
+                  }
+                  else{
+                      sample[i]=null
+                  }
+               }
+                
+               return sample;
+                
+           })
+           const sample=[];
+           for(let i=0;i<list.length;i++){
+               if((list[i].monthOfUser)==(3)){
+                   sample.push(list[i]);
+               }
+           }
+           console.log(sample);
+           sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+           setReqList(sample);
+               
+               
+           
+             
+      }}
+           >March{(monthClick[2])? 
+            ', current month' :null}
+            {(monthClick[2])?
         
         <>
             {reqList.map((element:any,index:any)=>{
@@ -923,8 +628,41 @@ const saveData=async()=>{
         :
         null
     }
-
-{(monthClick[3])?
+            </div>
+           <div className={style.monthCard}
+            onClick={()=>{
+                setEveryMonthClick(null);
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
+                   for(let i=0;i<sample.length;i++){
+                      if(i===3){
+                          sample[i]=true;
+                      }
+                      else{
+                          sample[i]=null
+                      }
+                   }
+                    
+                   return sample;
+                    
+               })
+               const sample=[];
+               for(let i=0;i<list.length;i++){
+                   if((list[i].monthOfUser)==(4)){
+                       sample.push(list[i]);
+                   }
+               }
+               console.log(sample);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               setReqList(sample);
+                   
+                   
+               
+                 
+          }}
+           >April{(monthClick[3])? 
+            ', current month' :null}
+            {(monthClick[3])?
         
         <>
             {reqList.map((element:any,index:any)=>{
@@ -943,7 +681,41 @@ const saveData=async()=>{
         :
         null
     }
-    {(monthClick[4])?
+            </div>
+           <div className={style.monthCard}
+            onClick={()=>{
+                setEveryMonthClick(null);
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
+                   for(let i=0;i<sample.length;i++){
+                      if(i===4){
+                          sample[i]=true;
+                      }
+                      else{
+                          sample[i]=null
+                      }
+                   }
+                    
+                   return sample;
+                    
+               })
+               const sample=[];
+               for(let i=0;i<list.length;i++){
+                   if((list[i].monthOfUser)==(5)){
+                       sample.push(list[i]);
+                   }
+               }
+               console.log(sample);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               setReqList(sample);
+                   
+                   
+               
+                 
+          }}
+           >May{(monthClick[4])? 
+            ', current month' :null}
+            {(monthClick[4])?
         
         <>
             {reqList.map((element:any,index:any)=>{
@@ -962,7 +734,41 @@ const saveData=async()=>{
         :
         null
     }
-    {(monthClick[5])?
+            </div>
+           <div className={style.monthCard}
+            onClick={()=>{
+                setEveryMonthClick(null);
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
+                   for(let i=0;i<sample.length;i++){
+                      if(i===5){
+                          sample[i]=true;
+                      }
+                      else{
+                          sample[i]=null
+                      }
+                   }
+                    
+                   return sample;
+                    
+               })
+               const sample=[];
+               for(let i=0;i<list.length;i++){
+                   if((list[i].monthOfUser)==(6)){
+                       sample.push(list[i]);
+                   }
+               }
+               console.log(sample);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               setReqList(sample);
+                   
+                   
+               
+                 
+          }}
+           >June{(monthClick[5])? 
+            ', current month' :null}
+            {(monthClick[5])?
         
         <>
             {reqList.map((element:any,index:any)=>{
@@ -981,7 +787,42 @@ const saveData=async()=>{
         :
         null
     }
-    {(monthClick[6])?
+            </div>
+           <div className={style.monthCard}
+            onClick={()=>{
+                setEveryMonthClick(null);
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
+                   for(let i=0;i<sample.length;i++){
+                      if(i===6){
+                          sample[i]=true;
+                      }
+                      else{
+                          sample[i]=null
+                      }
+                   }
+                    
+                   return sample;
+                    
+               })
+               const sample=[];
+               for(let i=0;i<list.length;i++){
+                   if((list[i].monthOfUser)==(7)){
+                       sample.push(list[i]);
+                   }
+               }
+               console.log(sample);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               setReqList(sample);
+                   
+                   
+               
+                 
+          }}
+           >July{(monthClick[6])? 
+            ', current month' :null}
+            
+            {(monthClick[6])?
         
         <>
             {reqList.map((element:any,index:any)=>{
@@ -1000,7 +841,41 @@ const saveData=async()=>{
         :
         null
     }
-    {(monthClick[7])?
+            </div>
+           <div className={style.monthCard}
+            onClick={()=>{
+                setEveryMonthClick(null);   
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
+                   for(let i=0;i<sample.length;i++){
+                      if(i===7){
+                          sample[i]=true;
+                      }
+                      else{
+                          sample[i]=null
+                      }
+                   }
+                    
+                   return sample;
+                    
+               })
+               const sample=[];
+               for(let i=0;i<list.length;i++){
+                   if((list[i].monthOfUser)==(8)){
+                       sample.push(list[i]);
+                   }
+               }
+               console.log(sample);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               setReqList(sample);
+                   
+                   
+               
+                 
+          }}
+           >August{(monthClick[7])? 
+            ', current month' :null}
+            {(monthClick[7])?
         
         <>
             {reqList.map((element:any,index:any)=>{
@@ -1019,7 +894,42 @@ const saveData=async()=>{
         :
         null
     }
-    {(monthClick[8])?
+            </div>
+           <div className={style.monthCard}
+            onClick={()=>{
+                setEveryMonthClick(null);
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
+                   for(let i=0;i<sample.length;i++){
+                      if(i===8){
+                          sample[i]=true;
+                      }
+                      else{
+                          sample[i]=null
+                      }
+                   }
+                    
+                   return sample;
+                    
+               })
+               const sample=[];
+               for(let i=0;i<list.length;i++){
+                   if((list[i].monthOfUser)==(9)){
+                       sample.push(list[i]);
+                   }
+               }
+               console.log(sample);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               setReqList(sample);
+                   
+                   
+               
+                 
+          }}
+           >September{(monthClick[8])? 
+            ', current month' :null}
+            
+            {(monthClick[8])?
         
         <>
             {reqList.map((element:any,index:any)=>{
@@ -1038,7 +948,41 @@ const saveData=async()=>{
         :
         null
     }
-    {(monthClick[9])?
+            </div>
+           <div className={style.monthCard}
+            onClick={()=>{
+                setEveryMonthClick(null);
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
+                   for(let i=0;i<sample.length;i++){
+                      if(i===9){
+                          sample[i]=true;
+                      }
+                      else{
+                          sample[i]=null
+                      }
+                   }
+                    
+                   return sample;
+                    
+               })
+               const sample=[];
+               for(let i=0;i<list.length;i++){
+                   if((list[i].monthOfUser)==(10)){
+                       sample.push(list[i]);
+                   }
+               }
+               console.log(sample);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               setReqList(sample);
+                   
+                   
+               
+                 
+          }}
+           >October{(monthClick[9])? 
+            ', current month' :null}
+            {(monthClick[9])?
         
         <>
             {reqList.map((element:any,index:any)=>{
@@ -1057,7 +1001,42 @@ const saveData=async()=>{
         :
         null
     }
-    {(monthClick[10])?
+            </div>
+           <div className={style.monthCard}
+            onClick={()=>{
+                setEveryMonthClick(null);
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
+                   for(let i=0;i<sample.length;i++){
+                      if(i===10){
+                          sample[i]=true;
+                      }
+                      else{
+                          sample[i]=null
+                      }
+                   }
+                    
+                   return sample;
+                    
+               })
+               const sample=[];
+               for(let i=0;i<list.length;i++){
+                   if((list[i].monthOfUser)==(11)){
+                       sample.push(list[i]);
+                   }
+               }
+               console.log(sample);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               setReqList(sample);
+                   
+                   
+               
+                 
+          }}
+           >November{(monthClick[10])? 
+            ', current month' :null}
+            
+            {(monthClick[10])?
         
         <>
             {reqList.map((element:any,index:any)=>{
@@ -1076,7 +1055,41 @@ const saveData=async()=>{
         :
         null
     }
-    {(monthClick[11])?
+            </div>
+           <div className={style.monthCard}
+            onClick={()=>{
+                setEveryMonthClick(null);
+                setMonthClick((prev:(boolean|null)[])=>{
+                   const sample:(boolean|null)[]=[...prev];
+                   for(let i=0;i<sample.length;i++){
+                      if(i===11){
+                          sample[i]=true;
+                      }
+                      else{
+                          sample[i]=null
+                      }
+                   }
+                    
+                   return sample;
+                    
+               })
+               const sample=[];
+               for(let i=0;i<list.length;i++){
+                   if((list[i].monthOfUser)==(12)){
+                       sample.push(list[i]);
+                   }
+               }
+               console.log(sample);
+               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               setReqList(sample);
+                   
+                   
+               
+                 
+          }}
+           >December{(monthClick[11])? 
+            ', current month' :null}
+            {(monthClick[11])?
         
         <>
             {reqList.map((element:any,index:any)=>{
@@ -1095,6 +1108,24 @@ const saveData=async()=>{
         :
         null
     }
+            </div>
+     
+        </section>
+         
+        
+        
+        
+        
+
+
+    
+    
+    
+    
+    
+    
+    
+    
         <button onClick={addToList} className={style.goldBtn}>Add To List</button>
         <br />
         <hr />
