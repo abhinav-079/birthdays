@@ -227,16 +227,24 @@ const saveData=async()=>{
  }
  const sendMails=async()=>{
     const token:string|null=localStorage.getItem("token");
-    const sendMail=await axios.get("https://birthdays-639v.onrender.com/send-mail",{
-        params:{
-            token
+
+    if(token){
+        const sendMail=await axios.get("https://birthdays-639v.onrender.com/send-mail",{
+            params:{
+                token
+            }
+        });
+        if(sendMail.data==="Only Admins Page"){
+            setUpdate("Login as Admin.");
+            return;
         }
-    });
-    if(sendMail.data==="Only Admins Page"){
-        setUpdate("Login as Admin.");
-        return;
+        console.log(sendMail);
     }
-    console.log(sendMail);
+    else{
+        return "Login."
+    }
+    
+    
  }
 
   

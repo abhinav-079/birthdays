@@ -343,9 +343,16 @@ app.post("/login",async(req,res)=>{
 
  //send gmail 
 
-app.get("/send-mail",async(req,res)=>{
+app.get("/send-mail",authoriseMiddleWareGetAdmin,async(req,res)=>{
 
     console.log("send-mail----------------------------")
+    
+        console.log("SEND MAIL HIT");
+        console.log("IP:", req.ip);
+        console.log("USER AGENT:", req.headers["user-agent"]);
+        console.log("QUERY:", req.query);
+    
+         
     let allusers=await dbManager.find({});
     let setToday=new Date();
             let thisMonth=0;
