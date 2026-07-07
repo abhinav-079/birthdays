@@ -14,6 +14,7 @@ let currentDay:string|number=0;
     if((todayGen.getDate())<10){
         currentDay='0'+currentDay;
     }
+    console.log(currentDay," Current Day");
 
     const today=`${currentDay}-${thisMonth}-${todayGen.getFullYear()}`
     const [everyMonthName,setEveryMonthName]=useState<string|null>("");
