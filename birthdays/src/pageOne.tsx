@@ -708,7 +708,7 @@ const saveData=async()=>{
 
                         <p className={style.date}>
                             🎂 {element.dateOfUser}-Every Month-{element.yearOfUser}
-                            {(`${element.dateOfUser}-${element.monthOfUser}-${element.yearOfUser}`==today)?"/   Today":null}
+                            {(`${element.dateOfUser}`==currentDay)?"/   Today":null}
                         </p>
 
                         <p className={style.note}>
