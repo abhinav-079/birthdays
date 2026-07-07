@@ -38,7 +38,7 @@
 
                         <p className={props.style.date}>
                         • {props.element.dateOfUser}-{props.month}-{props.element.yearOfUser}
-                            {(`${props.element.dateOfUser}-${props.element.monthOfUser}-${props.element.yearOfUser}`==props.today)?"/   Today":null}
+                            {(`${props.element.dateOfUser}-${props.element.monthOfUser}-${props.element.yearOfUser}`==setToday)?"/   Today":null}
                         </p>
 
                         <p className={props.style.note}>
