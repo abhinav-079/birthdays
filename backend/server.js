@@ -15,6 +15,7 @@ const {sendGmail}=require("./emailService.js");
 const bcrypt=require("bcrypt");
  
 const HandleError=require("./error.js");
+const { set } = require("mongoose");
 app.use(cors());  
 app.use(express.json());
 let createOtp={};
@@ -355,6 +356,7 @@ app.get("/send-mail",authoriseMiddleWareGetAdmin,async(req,res)=>{
          
     let allusers=await dbManager.find({});
     let setToday=new Date();
+    console.log(setToday.getDate(),setToday.getMonth());
             let thisMonth=0;
             if((setToday.getMonth())<10){
 

@@ -24,7 +24,7 @@
  const Month=(props:MonthProps)=>{
     const [name,setName]=useState<string|null>("");
     const [dob,setDob]=useState<string|null>("");
-    console.log(props.style.goldBtn)
+    console.log(props.today);
     return(<>
      <div className={props.style.data}>
                         
