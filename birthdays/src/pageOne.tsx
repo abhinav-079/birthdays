@@ -7,7 +7,7 @@ import { Navigate,useNavigate } from "react-router-dom";
 const PageOne=()=>{
     const todayGen=new Date();
     let thisMonth:string|number=0;
-let currentDay:string|number=0;
+let currentDay:string|number=todayGen.getDate();
     if(((todayGen.getMonth())+1)<10){
         thisMonth=`0${todayGen.getMonth()+1}`
     }
