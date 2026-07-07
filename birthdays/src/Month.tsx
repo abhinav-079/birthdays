@@ -25,6 +25,7 @@
     const [name,setName]=useState<string|null>("");
     const [dob,setDob]=useState<string|null>("");
     console.log(props.today);
+    console.log(props.element.dateOfUser,"date of user");
     return(<>
      <div className={props.style.data}>
                         
