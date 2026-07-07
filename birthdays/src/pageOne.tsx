@@ -7,12 +7,15 @@ import { Navigate,useNavigate } from "react-router-dom";
 const PageOne=()=>{
     const todayGen=new Date();
     let thisMonth:string|number=0;
-
+let currentDay:string|number=0;
     if(((todayGen.getMonth())+1)<10){
         thisMonth=`0${todayGen.getMonth()+1}`
     }
+    if((todayGen.getDate())<10){
+        currentDay='0'+currentDay;
+    }
 
-    const today=`${todayGen.getDate()}-${thisMonth}-${todayGen.getFullYear()}`
+    const today=`${currentDay}-${thisMonth}-${todayGen.getFullYear()}`
     const [everyMonthName,setEveryMonthName]=useState<string|null>("");
     const [everyMonthDob,setEveryMonthDob]=useState<string|null>("");
     const [editName,setEditName]=useState<string|null>(null);
