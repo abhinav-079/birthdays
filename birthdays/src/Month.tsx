@@ -25,6 +25,11 @@
     const [name,setName]=useState<string|null>("");
     const [dob,setDob]=useState<string|null>("");
     console.log(props.today);
+    let setToday:string=(props.today);
+    if((setToday.slice(1,2))=='-'){
+        setToday='0'+setToday;
+    }
+    console.log(setToday);
     console.log(props.element.dateOfUser,"date of user");
     return(<>
      <div className={props.style.data}>
