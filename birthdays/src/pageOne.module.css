@@ -943,3 +943,6 @@ hr{
         rgba(255,248,180,.3)
     );
 }
+h3{
+    display: inline-block;
+}
