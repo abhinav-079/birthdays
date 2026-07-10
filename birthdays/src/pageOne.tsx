@@ -693,7 +693,7 @@ const saveData=async()=>{
                  
           }}
            >December{(monthClick[11])? 
-            ', current month, Please scroll down.' :null}</div>
+            `, current month, Please scroll down. (${reqList.length})` :null}</div>
      
         </section>
         {/* display of the events */}
