@@ -297,7 +297,7 @@ const saveData=async()=>{
                  
           }}
            >Every Month Events{(everyMonthClick)? 
-            ', current List, Please scroll down.' :null}</div>
+            `, current month, Please scroll down. (${everyMonthList.length})` :null}</div>
         </header>
         
         <section className={style.monthGrid}>
@@ -333,7 +333,7 @@ const saveData=async()=>{
            
              
       }}>January{(monthClick[0])? 
-        ', current month, Please scroll down.' :null}</div>
+        `, current month, Please scroll down. (${reqList.length})` :null}</div>
            <div className={style.monthCard} onClick={()=>{
                  setEveryMonthClick(null);
                  setMonthClick((prev:(boolean|null)[])=>{
@@ -362,7 +362,7 @@ const saveData=async()=>{
                    
                   
             }}>February{(monthClick[1])? 
-                ', current month, Please scroll down.' :null}</div>
+                `, current month, Please scroll down. (${reqList.length})` :null}</div>
            <div className={style.monthCard}
            
            onClick={()=>{
@@ -396,7 +396,7 @@ const saveData=async()=>{
              
       }}
            >March{(monthClick[2])? 
-            ', current month, Please scroll down.' :null}</div>
+            `, current month, Please scroll down. (${reqList.length})` :null}</div>
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
@@ -429,7 +429,7 @@ const saveData=async()=>{
                  
           }}
            >April{(monthClick[3])? 
-            ', current month, Please scroll down.' :null}</div>
+            `, current month, Please scroll down. (${reqList.length})` :null}</div>
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
@@ -462,7 +462,7 @@ const saveData=async()=>{
                  
           }}
            >May{(monthClick[4])? 
-            ', current month, Please scroll down.' :null}</div>
+            `, current month, Please scroll down. (${reqList.length})` :null}</div>
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
@@ -495,7 +495,7 @@ const saveData=async()=>{
                  
           }}
            >June{(monthClick[5])? 
-            ', current month, Please scroll down.' :null}</div>
+            `, current month, Please scroll down. (${reqList.length})` :null}</div>
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
@@ -528,7 +528,7 @@ const saveData=async()=>{
                  
           }}
            >July{(monthClick[6])? 
-            ', current month, Please scroll down.' :null}</div>
+            `, current month, Please scroll down. (${reqList.length})` :null}</div>
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);   
@@ -561,7 +561,7 @@ const saveData=async()=>{
                  
           }}
            >August{(monthClick[7])? 
-            ', current month, Please scroll down.' :null}</div>
+            `, current month, Please scroll down. (${reqList.length})` :null}</div>
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
@@ -594,7 +594,7 @@ const saveData=async()=>{
                  
           }}
            >September{(monthClick[8])? 
-            ', current month, Please scroll down.' :null}</div>
+            `, current month, Please scroll down. (${reqList.length})` :null}</div>
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
@@ -627,7 +627,7 @@ const saveData=async()=>{
                  
           }}
            >October{(monthClick[9])? 
-            ', current month, Please scroll down.' :null}</div>
+            `, current month, Please scroll down. (${reqList.length})` :null}</div>
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
@@ -660,7 +660,7 @@ const saveData=async()=>{
                  
           }}
            >November{(monthClick[10])? 
-            ', current month, Please scroll down.' :null}</div>
+            `, current month, Please scroll down. (${reqList.length})` :null}</div>
            <div className={style.monthCard}
             onClick={()=>{
                 setEveryMonthClick(null);
