@@ -44,7 +44,7 @@
             null
         }      
      
-                        <h3>{props.element.nameOfPerson}</h3>
+                        <h3 className={props.style.h3}>{props.element.nameOfPerson}</h3>
         </div>
         
 
