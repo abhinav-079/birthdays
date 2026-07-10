@@ -946,8 +946,9 @@ margin: 0.7rem;
 }
  
 .eventHeader{
+    padding: 0.1rem;
     display: flex;
     flex-direction: row;
     justify-content: start;
-    
+
 }
