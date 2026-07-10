@@ -1081,7 +1081,8 @@ const saveData=async()=>{
      :
      <>
      {console.log(login)}
-     <LoginForm/>
+     {setTimeout(()=>{<LoginForm/>},2000)}
+     
      </>
    }
      </>
