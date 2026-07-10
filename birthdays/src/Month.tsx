@@ -31,7 +31,9 @@
     }
     console.log(setToday);
     console.log(props.element.dateOfUser,"date of user");
-    return(<>
+    return(
+        (props.element.nameOfPerson)? 
+    <>
      <div className={props.style.data}>
                         
                         <h3>{props.element.nameOfPerson}</h3>
@@ -119,7 +121,15 @@
                                 </>
                             :null}
      </div>
-    </>)
+    </>
+    :
+    "No events this month."
+    
+     
+                                
+                                
+    
+    )
  }
   
  export {Month}

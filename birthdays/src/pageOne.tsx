@@ -3,6 +3,7 @@ import style from "./pageOne.module.css"
 import axios from "axios"
  import {Month} from "./Month"
  import type { FormEvent } from "react";
+ import { LoginForm } from "./authentication/loginForm";
 import { Navigate,useNavigate } from "react-router-dom";
 const PageOne=()=>{
     const todayGen=new Date();
@@ -226,9 +227,9 @@ const saveData=async()=>{
     }
     
 
- if(login===null){
+ /* if(login===null){
     return "Session Expired, Please login."
- }
+ } */
  const sendMails=async()=>{
     const token:string|null=localStorage.getItem("token");
 
@@ -1080,7 +1081,7 @@ const saveData=async()=>{
      :
      <>
      {console.log(login)}
-     <Navigate to="/login"></Navigate>
+     <LoginForm/>
      </>
    }
      </>
