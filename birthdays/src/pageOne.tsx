@@ -4,7 +4,7 @@ import axios from "axios"
  import {Month} from "./Month"
  import type { FormEvent } from "react";
  import { LoginForm } from "./authentication/loginForm";
-import { Navigate,useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 const PageOne=()=>{
     const todayGen=new Date();
     let thisMonth:string|number=0;
