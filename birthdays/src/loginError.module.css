@@ -1,0 +1,15 @@
+.body{
+    background-color: rgb(255, 248, 248);
+    height: 101vh;
+    width: 101vw;
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+.links{
+    color:#000000;
+ 
+    text-decoration:none;
+ 
+    transition:.3s ease;
+ }

@@ -3,8 +3,9 @@ import style from "./pageOne.module.css"
 import axios from "axios"
  import {Month} from "./Month"
  import type { FormEvent } from "react";
- import { LoginForm } from "./authentication/loginForm";
-import {  useNavigate } from "react-router-dom";
+ 
+import { Navigate, useNavigate } from "react-router-dom";
+import { LoginError } from "./loginError";
 const PageOne=()=>{
     const todayGen=new Date();
     let thisMonth:string|number=0;
@@ -82,8 +83,8 @@ const navigate=useNavigate();
         const process=async()=>{
              const token:string|null=localStorage.getItem("token");
              if(!token){
-                setUpdate("Login.")
-                return;
+                setUpdate("Login To Access.")
+                return "login to access";
              }
             const get=await axios.get("https://birthdays-639v.onrender.com/get-data",{
                 params:{
@@ -107,12 +108,13 @@ const navigate=useNavigate();
            }
            process();
     },[userId])
-    useEffect(()=>{
+    useEffect(()=>{  
         const process=async()=>{
              const token:string|null=localStorage.getItem("token");
+              
              if(!token){
-                setUpdate("Login.")
-                return;
+                setUpdate("Login To Access.")
+                return "login first";
              }
             const get=await axios.get("https://birthdays-639v.onrender.com/every-month-data",{
                 params:{
@@ -150,7 +152,7 @@ const navigate=useNavigate();
         setUpdate(null);
         
         setTimeout(() => {
-            setUpdate("Event Edited, Please refersh page to see changes.");
+            setUpdate("Event Edited, Please refersh the page to see changes.");
         }, 0);
      }
      /* const deleteAlert=()=>{
@@ -241,7 +243,7 @@ const saveData=async()=>{
         });
         if(sendMail.data==="Only Admins Page"){
             setUpdate("Login as Admin.");
-            return;
+            return "login as admin";
         }
         console.log(sendMail);
     }
@@ -252,6 +254,9 @@ const saveData=async()=>{
     
  }
 
+  if(login===null){
+    return <LoginError/>
+  }
   
     return(
     <>
@@ -1079,9 +1084,10 @@ const saveData=async()=>{
             
      </div>
      :
-     <>
-     {console.log(login)}
-     {setTimeout(()=>{<LoginForm/>},2000)}
+     <> 
+     {console.log(setTimeout(()=>{return("<LoginForm/>")},1000))}
+     <Navigate to="/login"></Navigate>
+      
      
      </>
    }

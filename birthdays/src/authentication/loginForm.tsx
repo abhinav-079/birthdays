@@ -7,7 +7,8 @@ import type { FormEvent } from "react";
 import style from "./loginForm.module.css";
  
 
-function LoginForm() {
+function LoginForm(props:any) {
+   
   const navigate=useNavigate();
   const welcomeMsg=useRef<HTMLDivElement | null>(null);
   const location=useLocation();
@@ -133,7 +134,7 @@ useEffect(() => {
     navigate(toLoc);
   }
 }, [toLoc]);
- 
+  
   return (
 
     <>
@@ -165,8 +166,10 @@ useEffect(() => {
               :
                <>
               {validPassword?
-               
+               <>
                 <h1 className={style.alert}> Redirecting...</h1> 
+                
+                </>
                 :
                 <h1 className={style.alert}>  Wrong Password, Please Try Again..</h1> 
                  
@@ -264,7 +267,10 @@ useEffect(() => {
           <>
             {console.log(validPassword," password correctness")}
               {validPassword
-                ? <h1 className={style.alert}>Redirecting...</h1>
+                ? <>
+                <h1 className={style.alert}>Redirecting...</h1>
+                 
+                </>
                 : <h1 className={style.alert}>Wrong Password</h1>
               }
             </>
