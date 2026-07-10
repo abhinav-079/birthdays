@@ -799,7 +799,7 @@ hr{
         width:100%;
 
         padding:15px;
-
+margin: 0.7rem;
         font-size:15px;
     }
 
@@ -874,7 +874,7 @@ hr{
         width:100%;
 
         font-size:14px;
-
+        margin: 0.7rem;
         padding:14px;
     }
 
@@ -910,6 +910,7 @@ hr{
 
     .goldBtn,
     .logoutBtn{
+        margin: 0.7rem;
         font-size:13px;
         padding:12px;
     }
