@@ -254,7 +254,7 @@ body{
     transition:
     transform .4s ease,
     box-shadow .4s ease;
-
+margin: 1rem;
     box-shadow:
     0 7px 30px rgba(255,215,0,.25),
     0 0 30px rgba(255,215,0,.1);
