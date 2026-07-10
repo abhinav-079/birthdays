@@ -35,6 +35,7 @@
         (props.element.nameOfPerson)? 
     <>
      <div className={props.style.data}>
+        <div className={props.style.eventHeader}>
         {(props.element.nameOfPerson)?
             <div className={props.style.commentAvatar}>
                 {props.element.nameOfPerson.charAt(0).toUpperCase()}
@@ -44,6 +45,8 @@
         }      
      
                         <h3>{props.element.nameOfPerson}</h3>
+        </div>
+        
 
                         <p className={props.style.date}>
                         • {props.element.dateOfUser}-{props.month}

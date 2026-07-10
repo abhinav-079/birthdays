@@ -944,6 +944,10 @@ margin: 0.7rem;
         rgba(255,248,180,.3)
     );
 }
-h3{
-    display: inline-block;
+ 
+.eventHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    
 }
