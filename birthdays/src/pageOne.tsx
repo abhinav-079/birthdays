@@ -709,7 +709,7 @@ const saveData=async()=>{
                         <h3>{element.nameOfPerson}</h3>
 
                         <p className={style.date}>
-                            🎂 {element.dateOfUser}-Every Month
+                             {element.dateOfUser}-Every Month
                             {(`${element.dateOfUser}`==currentDay)?"/   Today":null}
                         </p>
 
@@ -1055,7 +1055,7 @@ const saveData=async()=>{
                                 console.log(e.target.value);
                                 setDob(e.target.value);
                             }}
-                            pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"
+                             
                             required></input>
                         <textarea placeholder="Enter Note" onChange={(e)=>{
                             setNote(e.target.value);
