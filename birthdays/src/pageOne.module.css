@@ -925,3 +925,21 @@ hr{
         font-size:.8rem;
     }
 }
+
+.commentAvatar{
+    width:36px;
+    height:36px;
+    flex-shrink:0;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    font-size:.85rem;
+    color:white;
+    background:linear-gradient(
+        135deg,
+        rgba(255,215,0,.7),
+        rgba(255,248,180,.3)
+    );
+}

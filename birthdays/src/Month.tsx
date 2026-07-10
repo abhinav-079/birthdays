@@ -35,7 +35,14 @@
         (props.element.nameOfPerson)? 
     <>
      <div className={props.style.data}>
-                        
+        {(props.element.nameOfPerson)?
+            <div className={props.style.commentAvatar}>
+                {props.element.nameOfPerson.charAt(0).toUpperCase()}
+            </div>
+            :
+            null
+        }      
+     
                         <h3>{props.element.nameOfPerson}</h3>
 
                         <p className={props.style.date}>
