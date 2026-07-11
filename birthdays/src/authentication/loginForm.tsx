@@ -7,7 +7,7 @@ import type { FormEvent } from "react";
 import style from "./loginForm.module.css";
  
 
-function LoginForm(props:any) {
+function LoginForm( ) {
    
   const navigate=useNavigate();
   const welcomeMsg=useRef<HTMLDivElement | null>(null);
