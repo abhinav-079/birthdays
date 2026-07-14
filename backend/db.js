@@ -21,7 +21,7 @@ let schema=mongoose.Schema({
     username:String,
     password:String,
     details:Array,
-    memories:Array,
+     
     everyMonthEvents:Array,
     role:{
         type:String,

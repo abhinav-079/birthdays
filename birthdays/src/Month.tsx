@@ -110,12 +110,16 @@
                             {newMemory?
                             
                             <>
-                                <form onSubmit={async(e)=>{
+                                <form onSubmit={async(e:React.FormEvent<HTMLFormElement>)=>{
                                     e.preventDefault();
                                     console.log("Prevented Default")
                                     const file=((e.target[0]).files[0]);
                                     const formData=new FormData();
                                     formData.append("file",file);
+                                    const userId=props.userId;
+                                    formData.append("userId",userId);
+                                    const eventId=props.element.id
+                                    formData.append("eventId",eventId)
                                     const saveMemory=await axios.post("http://localhost:4000/save-memory",formData)
                                     console.log((saveMemory))
                                 }}>

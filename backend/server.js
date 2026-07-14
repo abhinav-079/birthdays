@@ -122,7 +122,8 @@ app.post("/add-data",authoriseMiddleWarePost,async(req,res)=>{
     const dateOfUser=dob.slice(8,10);
     console.log(yearOfUser,monthOfUser,dateOfUser);
     let id=(crypto.randomUUID());
-    let data={id,nameOfPerson,yearOfUser,monthOfUser,dateOfUser,note};
+    let memories={}
+    let data={id,nameOfPerson,yearOfUser,monthOfUser,dateOfUser,note,memories};
     let existingArray=await dbManager.updateOne({_id:Object(userId)},{$push:{details:data}});
     
      
@@ -754,6 +755,7 @@ app.put("/edit-every-month-event",authoriseMiddleWarePut,async(req,res)=>{
 }) 
 app.post("/save-memory",upload.single("file"),async(req,res)=>{
     console.log("Save Memoery");
+    const {eventId,userId}=req.body;
     console.log(req.file.path);
     let pushMemory=await dbManager.updateOne({_id:Object()})
     res.json({result:req.body})
