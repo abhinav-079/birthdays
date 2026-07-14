@@ -122,7 +122,7 @@ app.post("/add-data",authoriseMiddleWarePost,async(req,res)=>{
     const dateOfUser=dob.slice(8,10);
     console.log(yearOfUser,monthOfUser,dateOfUser);
     let id=(crypto.randomUUID());
-    let memories={}
+    let memories={sample:"sampleImg"}
     let data={id,nameOfPerson,yearOfUser,monthOfUser,dateOfUser,note,memories};
     let existingArray=await dbManager.updateOne({_id:Object(userId)},{$push:{details:data}});
     
