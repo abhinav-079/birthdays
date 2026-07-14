@@ -1,5 +1,6 @@
  import axios from "axios";
  import { useState, type FormEvent } from "react";
+ 
  type MonthProps = {
     style: any;
     element: any;
@@ -24,6 +25,8 @@
  const Month=(props:MonthProps)=>{
     const [name,setName]=useState<string|null>("");
     const [dob,setDob]=useState<string|null>("");
+    const [addMemory,setAddMemory]=useState<null|boolean>(null);
+    const [newMemory,setnewMemory]=useState<null|boolean>(null);
     console.log(props.today);
     let setToday:string=(props.today);
     if((setToday.slice(1,2))=='-'){
@@ -31,6 +34,16 @@
     }
     console.log(setToday);
     console.log(props.element.dateOfUser,"date of user");
+
+
+
+    const showMemories=()=>{
+        console.log("Memories");
+        setAddMemory(true);
+    }
+    const addNewMemory=()=>{
+        setnewMemory(true)
+    }
     return(
         (props.element.nameOfPerson)? 
     <>
@@ -85,6 +98,36 @@
 
                             <hr>
                             </hr>
+                            <button className={props.style.goldBtn} onClick={showMemories}>Memories</button>
+                            {addMemory?
+                            
+                                <>
+                                    <button className={props.style.goldBtn} onClick={addNewMemory}>Add Memory</button>
+                                </>
+                                :
+                                null
+                            }
+                            {newMemory?
+                            
+                            <>
+                                <form onSubmit={async(e)=>{
+                                    e.preventDefault();
+                                    console.log("Prevented Default")
+                                    const file=((e.target[0]).files[0]);
+                                    const formData=new FormData();
+                                    formData.append("file",file);
+                                    const saveMemory=await axios.post("http://localhost:4000/save-memory",formData)
+                                    console.log((saveMemory))
+                                }}>
+                                    <input type="file"   formEncType="multipart/form-data"/>
+                                    <button type="submit">submit</button>
+                                 
+                                </form>
+                            </>
+                            :
+                            null
+                        
+                            }
                             {(props.edit==props.element.id)?
                                 <>
                                 <form onSubmit={async(e:FormEvent<HTMLFormElement>)=>{

@@ -13,9 +13,12 @@ const dbManager=require("./db.js");
 const{getOtp} =require("./otp.js");
 const {sendGmail}=require("./emailService.js");
 const bcrypt=require("bcrypt");
- 
+ //file uploading
+ const multer=require("multer");
+ const {storage}=require("./cloudUpload.js");
+ const upload=multer({storage});
 const HandleError=require("./error.js");
-const { set } = require("mongoose");
+ 
 app.use(cors());  
 app.use(express.json());
 let createOtp={};
@@ -548,7 +551,7 @@ app.get("/send-mail",authoriseMiddleWareGetAdmin,async(req,res)=>{
             let sendMail=await sendGmail(
                 userMail, // ANY email (not just yours!)
                 `Events Reminder! to: ${username}`,
-                `Send Wishes to: ${JSON.stringify(everyMonthEventsArr, null, 7)}`,html
+                `Event: ${JSON.stringify(everyMonthEventsArr, null, 7)}`,html
             );
             console.log(sendMail," Gmail.");
     }
@@ -747,9 +750,14 @@ app.put("/edit-every-month-event",authoriseMiddleWarePut,async(req,res)=>{
     }
     let finalEdit=await dbManager.updateOne({_id:Object(userId)},{$set:{everyMonthEvents:sampleArr}});
 
-
+  
+}) 
+app.post("/save-memory",upload.single("file"),async(req,res)=>{
+    console.log("Save Memoery");
+    console.log(req.file.path);
+    let pushMemory=await dbManager.updateOne({_id:Object()})
+    res.json({result:req.body})
 })
-
 app.use((err,req,res,next)=>{
     res.send(err.message);
 })
