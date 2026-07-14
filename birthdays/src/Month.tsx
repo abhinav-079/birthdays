@@ -114,7 +114,7 @@
                                     e.preventDefault();
                                     console.log("Prevented Default")
                                     const form=e.target as HTMLFormElement;
-                                    const file=((form[0] as HTMLInputElement).files[0]);
+                                    const file=((form[0] as HTMLInputElement).files?.[0]);
                                     if(!file){
                                         return;
                                     }
