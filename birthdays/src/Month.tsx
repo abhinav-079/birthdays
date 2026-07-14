@@ -113,7 +113,8 @@
                                 <form onSubmit={async(e:React.FormEvent<HTMLFormElement>)=>{
                                     e.preventDefault();
                                     console.log("Prevented Default")
-                                    const file=((e.target[0]).files[0]);
+                                    const form=e.target as HTMLFormElement;
+                                    const file=((form[0] as HTMLInputElement).files[0]);
                                     const formData=new FormData();
                                     formData.append("file",file);
                                     const userId=props.userId;
