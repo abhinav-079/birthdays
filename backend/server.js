@@ -122,7 +122,7 @@ app.post("/add-data",authoriseMiddleWarePost,async(req,res)=>{
     const dateOfUser=dob.slice(8,10);
     console.log(yearOfUser,monthOfUser,dateOfUser);
     let id=(crypto.randomUUID());
-    let memories={sample:"sampleImg"}
+    let memories=[]
     let data={id,nameOfPerson,yearOfUser,monthOfUser,dateOfUser,note,memories};
     let existingArray=await dbManager.updateOne({_id:Object(userId)},{$push:{details:data}});
     
@@ -756,8 +756,19 @@ app.put("/edit-every-month-event",authoriseMiddleWarePut,async(req,res)=>{
 app.post("/save-memory",upload.single("file"),async(req,res)=>{
     console.log("Save Memoery");
     const {eventId,userId}=req.body;
-    console.log(req.file.path);
-    let pushMemory=await dbManager.updateOne({_id:Object()})
+    const fileLink=(req.file.path);
+    console.log(eventId)
+    let memoryUpdater={};
+    let dayGiver=new Date();
+    let savedDate=String(dayGiver.getDate())+String((dayGiver.getMonth())+1)+String(dayGiver.getFullYear());
+    let pushMemory=(await dbManager.find({_id:Object(userId)}))[0];
+    for(let i=0;i<(pushMemory.details).length;i++){
+        if(((pushMemory.details[i]).id)===eventId){
+            console.log("Adding New Memory...");
+            memoryUpdater.file=fileLink;
+            memoryUpdater.uploadTimeLine=savedDate;
+        }        
+    }
     res.json({result:req.body})
 })
 app.use((err,req,res,next)=>{
