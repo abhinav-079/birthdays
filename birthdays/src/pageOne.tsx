@@ -1031,14 +1031,16 @@ const saveEveryMonth=async()=>{
 
                             formData.append("nameOfPerson",nameOfPerson);
                         formData.append("dob",dob);
-                        
-                        formData.append("file",file);
+                        if(file){
+                            formData.append("file",file);
+                        }
+                       
                         formData.append("token",token);
                         formData.append("note",note);
-                        console.log(formData)
-                        const addDatas=await axios.post("http://localhost:4000/add-datas",formData)
-                            console.log(addDatas)
-                            const addData=await axios.post("https://birthdays-639v.onrender.com/add-data",formData)
+                        console.log(file,token)
+                        /* const addDatas=await axios.post("http://localhost:4000/add-datas",formData)
+                            console.log(addDatas) */
+                            const addData=await axios.post("http://localhost:4000/add-data",formData)
                             console.log(addData);
                             
                             if(addData.data!="Please try to login" && addData.data!="User not found")
