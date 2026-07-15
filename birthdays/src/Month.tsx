@@ -27,6 +27,8 @@
     const [dob,setDob]=useState<string|null>("");
     const [addMemory,setAddMemory]=useState<null|boolean>(null);
     const [newMemory,setnewMemory]=useState<null|boolean>(null);
+
+    const[memoryImg,setMemoryImg]=useState<any>([]);
     console.log(props.today);
     let setToday:string=(props.today);
     if((setToday.slice(1,2))=='-'){
@@ -38,8 +40,16 @@
 
 
     const showMemories=()=>{
+        setnewMemory(false)
+        props.setEdit(false);
         console.log("Memories");
         setAddMemory(true);
+        const memoryHolder=[];
+        for(let i=0;i<(props.element.memories.length);i++){
+            memoryHolder.push((props.element).memories[i]);
+        }
+        setMemoryImg(memoryHolder);
+
     }
     const addNewMemory=()=>{
         setnewMemory(true)
@@ -71,9 +81,13 @@
                         </p>
                         <button className={props.style.goldBtn} 
                             onClick={()=>{
+                                setnewMemory(false)
+                                setAddMemory(false);
+                                setMemoryImg(false)
                                 props.setEdit(false);
                                 props.setEditName(props.element.nameOfPerson);
-                                props.setEdit(props.element.id);
+                                setTimeout(()=>{props.setEdit(props.element.id);},1)
+                                
 
                             }}
                         >Edit </button>
@@ -102,7 +116,12 @@
                             {addMemory?
                             
                                 <>
-                                    <button className={props.style.goldBtn} onClick={addNewMemory}>Add Memory</button>
+                                    <span title="Upload New Memory" 
+                                         onClick={addNewMemory} style={{cursor:"pointer"}}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"/></svg>
+                                    </span>
+                                     
+                                    
+                                        
                                 </>
                                 :
                                 null
@@ -110,7 +129,8 @@
                             {newMemory?
                             
                             <>
-                                <form onSubmit={async(e:React.FormEvent<HTMLFormElement>)=>{
+                                <form className={props.style.formCard}
+                                onSubmit={async(e:React.FormEvent<HTMLFormElement>)=>{
                                     e.preventDefault();
                                     console.log("Prevented Default")
                                     const form=e.target as HTMLFormElement;
@@ -124,11 +144,11 @@
                                     formData.append("userId",userId);
                                     const eventId=props.element.id
                                     formData.append("eventId",eventId)
-                                    const saveMemory=await axios.post("http://localhost:4000/save-memory",formData)
+                                    const saveMemory=await axios.post("http://localhost:4000/new-memory",formData)
                                     console.log((saveMemory))
                                 }}>
-                                    <input type="file"   formEncType="multipart/form-data"/>
-                                    <button type="submit">submit</button>
+                                    <input type="file"   formEncType="multipart/form-data" className={props.style.monthCard}/>
+                                    <button type="submit" className={props.style.goldBtn}>Upload</button>
                                  
                                 </form>
                             </>
@@ -136,6 +156,19 @@
                             null
                         
                             }
+                            <div className={`${props.style.memoryContainer} `}>
+                            {memoryImg?
+                                memoryImg.map((element)=>{
+                                    console.log(element.fileName);
+                                   return( <div className={props.style.image}>
+                                    
+                                    <img src={element.fileName} alt={element.uploadTimeLine} ></img>
+                                    <h4 className={props.style.text}> {element.uploadTimeLine}</h4>
+                                   </div>)
+                                })
+                                :null
+                            }
+                            </div>
                             {(props.edit==props.element.id)?
                                 <>
                                 <form onSubmit={async(e:FormEvent<HTMLFormElement>)=>{

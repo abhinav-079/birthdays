@@ -2,7 +2,10 @@
 *{
     box-sizing:border-box;
 }
-
+.form{
+    display: flex;
+    justify-content: center;
+}
 html,
 body{
     overflow-x:hidden;
@@ -109,11 +112,15 @@ body{
     0 0 25px rgba(212,175,55,.15),
     0 0 80px rgba(212,175,55,.08);
  }
- .formCard{
-
+ .formSetter{
+    display: flex;
+    justify-content: center;
+ }
+ .formCard  form {
+     
     width:min(500px,90%);
 
-    margin:auto;
+    margin:1rem;
 
     padding:40px;
 
@@ -173,8 +180,8 @@ body{
     shine 7s linear infinite;
 }
 
-.formCard input,
-.formCard textarea{
+.formCard form input,
+.formCard form textarea{
 
     background:
     rgba(255,255,255,.03);
@@ -196,22 +203,22 @@ body{
     all .35s ease;
 }
 
-.formCard textarea{
+.formCard form textarea{
 
     min-height:140px;
 
     resize:none;
 }
 
-.formCard input::placeholder,
-.formCard textarea::placeholder{
+.formCard form input::placeholder,
+.formCard form textarea::placeholder{
 
     color:
     rgba(255,255,255,.45);
 }
 
-.formCard input:focus,
-.formCard textarea:focus{
+.formCard form input:focus,
+.formCard form textarea:focus{
 
     border:
     1px solid #D4AF37;
@@ -401,7 +408,7 @@ hr{
 
     overflow:hidden;
 
-    cursor:pointer;
+     
 
     transition:
     transform .4s ease,
@@ -688,6 +695,10 @@ hr{
     }
 }
 
+hr{
+    width: 90%;
+}
+
 /* Hover Effect */
 
 .logoutBtn:hover{
@@ -956,8 +967,60 @@ margin: 0.7rem;
     justify-content:start;
 
 }
-.image{
-    border-radius: 9%;
-    scale: 0.5;
-    margin: 0;
+.memoryContainer {
+    
+    display: flex;
+    flex-wrap: wrap;
+    gap: 77px;
+    animation:
+     
 }
+.image {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    overflow: hidden;
+    border-radius: 10px;
+    animation:
+    formReveal .8s ease;
+}
+
+.image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.text {
+    position: absolute;
+    bottom: 6px;
+    left: 6px;
+
+    margin: 0;
+    padding: 4px 8px;
+
+    font-size: 12px;
+    color: white;
+
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+}
+
+/* plus symbol */
+ 
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+ 
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+  

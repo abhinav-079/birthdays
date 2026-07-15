@@ -30,6 +30,7 @@ let AuthErrorHandle=()=>{
 let authoriseMiddleWarePost=(req,res,next)=>{
     
     let {token}=req.body;
+    console.log(token)
     if(!token){ throw new HandleError("Please try to login",400);return res.json("Please try to login");}
  let isVerified=(verifyUser(token));
  console.log(isVerified);
@@ -107,7 +108,9 @@ let authoriseMiddleWarePost=(req,res,next)=>{
         console.log("set-every-month,end.")
  })
 app.post("/add-data",authoriseMiddleWarePost,async(req,res)=>{
+    console.log("Add-data route")
     let {userId,nameOfPerson,dob,note}=req.body;
+    console.log(req.file.path,"hi")
     let userFind=(await dbManager.find({_id:Object(userId)}))[0];
     if(!userFind){
         throw new HandleError("User not found",401);
@@ -753,22 +756,36 @@ app.put("/edit-every-month-event",authoriseMiddleWarePut,async(req,res)=>{
 
   
 }) 
-app.post("/save-memory",upload.single("file"),async(req,res)=>{
+app.post("/new-memory",upload.single("file"),async(req,res)=>{
     console.log("Save Memoery");
     const {eventId,userId}=req.body;
     const fileLink=(req.file.path);
     console.log(eventId)
     let memoryUpdater={};
     let dayGiver=new Date();
-    let savedDate=String(dayGiver.getDate())+String((dayGiver.getMonth())+1)+String(dayGiver.getFullYear());
+    let savedDate=String(dayGiver.getDate())+"-"+String((dayGiver.getMonth())+1)+"-"+String(dayGiver.getFullYear());
+    console.log(typeof(savedDate));
     let pushMemory=(await dbManager.find({_id:Object(userId)}))[0];
     for(let i=0;i<(pushMemory.details).length;i++){
         if(((pushMemory.details[i]).id)===eventId){
             console.log("Adding New Memory...");
-            memoryUpdater.file=fileLink;
-            memoryUpdater.uploadTimeLine=savedDate;
+            console.log(memoryUpdater,typeof(fileLink))
+            try{
+            memoryUpdater.fileName=fileLink;
+            memoryUpdater.uploadTimeLine=savedDate; 
+            
+             
+            ((pushMemory.details[i]).memories).push(memoryUpdater);
+            }
+            catch(er){
+                console.log("err",er);
+            }
+            break;
         }        
     }
+    
+    console.log(memoryUpdater,"--- ",pushMemory);
+    let saveLinkOnDb=await dbManager.updateOne({_id:Object(userId)},{details:pushMemory.details})
     res.json({result:req.body})
 })
 app.use((err,req,res,next)=>{

@@ -36,6 +36,7 @@ let currentDay:string|number=todayGen.getDate();
     const [name,setName]=useState<string>("");
     const [dob,setDob]=useState<(string | null)>("");
     const [note,setNote]=useState<string>("");
+    const [profilePhoto,setProfilePhoto]=useState<string | null | boolean>(null);
     const [login,setLogin]=useState<(null | boolean)>(null);
      const [monthClick,setMonthClick]=useState<(boolean | null)[]>([null,null,null,null,null,null,null,null,null,null,null,null,]);
      const [addBirthday,setAddBirtday]=useState<boolean|null>(null);
@@ -192,41 +193,7 @@ const saveEveryMonth=async()=>{
         }, 0);
     }
 }
-const saveData=async()=>{
-    setUpdate(null);
-    const nameOfPerson:string=name;
-    console.log((dob));
-    const token:string|null=localStorage.getItem("token");
-    if(token){
-        const addData=await axios.post("https://birthdays-639v.onrender.com/add-data",{
-            userId,nameOfPerson,dob,note,token
-        })
-        console.log(addData);
-        if(addData.data!="Please try to login" && addData.data!="User not found")
-         {
-            setTimeout(() => {
-                if(nameOfPerson && dob ){
-                    setUpdate("Please refresh to see changes");
-                }
-                
-            }, 0);
-         }
-        /*  */
-        else if((addData.data)==="Please try to login"){
-            
-            setTimeout(() => {
-                setUpdate("Please try to login");
-            }, 0);
-        }
-        else if((addData.data)==="User not found"){
-            
-            setTimeout(() => {
-                setUpdate("User not found");
-            }, 0);
-        }
-    }
-    
-    }
+ 
     
 
  /* if(login===null){
@@ -926,7 +893,7 @@ const saveData=async()=>{
         <>
             {reqList.map((element:any,index:any)=>{
 
-                console.log(element);
+                /* console.log(element); */
                 return (
                     <>
                      
@@ -1041,12 +1008,66 @@ const saveData=async()=>{
         {addBirthday?
         
             <>
-                
-                    <form onSubmit={(e:FormEvent<HTMLFormElement>)=>{
+            <div className={style.formSetter}>
+                <div className={style.formCard}>
+                    <form onSubmit={async(e:FormEvent<HTMLFormElement>)=>{
                         e.preventDefault();
+                        console.log("Prevented Default");
+                        const form=e.target as HTMLFormElement;
+                        console.log(e);
+                        const file=((form[3] as HTMLInputElement).files?.[0]);
+                        if(!file){
+                            return;
+                        }
+                        const formData=new FormData();
                         
-                    }}>
-                     <div className={style.formCard}>
+                        
+                        formData.append("userId",userId);
+                        
+                        setUpdate(null);
+                        const nameOfPerson:string=name;
+                        console.log((dob));
+                        const token:string|null=localStorage.getItem("token");
+                        console.log(token)
+                        if(token){
+
+                            formData.append("nameOfPerson",nameOfPerson);
+                        formData.append("dob",dob);
+                        
+                        formData.append("file",file);
+                        formData.append("token",token);
+                        formData.append("note",note);
+                        console.log(formData)
+                            const addData=await axios.post("https://birthdays-639v.onrender.com/add-data",formData)
+                            console.log(addData);
+                            if(addData.data!="Please try to login" && addData.data!="User not found")
+                            {
+                                setTimeout(() => {
+                                    if(nameOfPerson && dob ){
+                                        setUpdate("Please refresh to see changes");
+                                    }
+                                    
+                                }, 0);
+                            }
+                            /*  */
+                            else if((addData.data)==="Please try to login"){
+                                
+                                setTimeout(() => {
+                                    setUpdate("Please try to login");
+                                }, 0);
+                            }
+                            else if((addData.data)==="User not found"){
+                                
+                                setTimeout(() => {
+                                    setUpdate("User not found");
+                                }, 0);
+                            }
+                        }
+                        
+                                                    
+                                            
+                    }}   className={style.form}>
+                     
                         <input type="text" placeholder="Enter Name"
                         onChange={(e)=>{
                             setName(e.target.value);
@@ -1064,14 +1085,28 @@ const saveData=async()=>{
                             required></input>
                         <textarea placeholder="Enter Note" onChange={(e)=>{
                             setNote(e.target.value);
+
                         }}
                         
                         ></textarea>
-                        <button   className={style.goldBtn} onClick={saveData}>Save</button>
-                        <button onClick={saveEveryMonth} className={style.goldBtn}>Save Every Month</button>
+                         
+                                    
+                                     
+                                    
+                                     
+                                    <input type="file"  name="file" formEncType="multipart/form-data" className={ style.monthCard} onChange={()=>{console.log("Photo Uploaded")}}/>
+                                     
+                                 
+                                 
+                        <button   className={style.goldBtn}  >Save</button>
+                        </form>
+                        <hr />
+                        <span className={style.formCard}>
+                        <button onClick={saveEveryMonth} className={style.goldBtn}  >Save Every Month</button>
+                        </span>
                      </div>
-                    </form>
-                
+                    
+            </div>   
             </>
             :
             null
