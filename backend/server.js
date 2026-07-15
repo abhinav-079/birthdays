@@ -107,10 +107,10 @@ let authoriseMiddleWarePost=(req,res,next)=>{
         }
         console.log("set-every-month,end.")
  })
-app.post("/add-data",authoriseMiddleWarePost,async(req,res)=>{
+app.post("/add-data",authoriseMiddleWarePost, upload.single("file"),async(req,res)=>{
     console.log("Add-data route")
     let {userId,nameOfPerson,dob,note}=req.body;
-    console.log(req.file.path,"hi")
+    let profile=(req.file.path)
     let userFind=(await dbManager.find({_id:Object(userId)}))[0];
     if(!userFind){
         throw new HandleError("User not found",401);
@@ -126,7 +126,7 @@ app.post("/add-data",authoriseMiddleWarePost,async(req,res)=>{
     console.log(yearOfUser,monthOfUser,dateOfUser);
     let id=(crypto.randomUUID());
     let memories=[]
-    let data={id,nameOfPerson,yearOfUser,monthOfUser,dateOfUser,note,memories};
+    let data={id,profile,nameOfPerson,yearOfUser,monthOfUser,dateOfUser,note,memories};
     let existingArray=await dbManager.updateOne({_id:Object(userId)},{$push:{details:data}});
     
      
@@ -787,6 +787,11 @@ app.post("/new-memory",upload.single("file"),async(req,res)=>{
     console.log(memoryUpdater,"--- ",pushMemory);
     let saveLinkOnDb=await dbManager.updateOne({_id:Object(userId)},{details:pushMemory.details})
     res.json({result:req.body})
+})
+app.post("/add-datas", upload.single("file"),(req,res)=>{
+
+    console.log(req.body);
+    console.log(req.file.path);
 })
 app.use((err,req,res,next)=>{
     res.send(err.message);

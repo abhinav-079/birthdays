@@ -158,7 +158,7 @@
                             }
                             <div className={`${props.style.memoryContainer} `}>
                             {memoryImg?
-                                memoryImg.map((element)=>{
+                                memoryImg.map((element:any)=>{
                                     console.log(element.fileName);
                                    return( <div className={props.style.image}>
                                     
