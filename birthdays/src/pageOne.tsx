@@ -171,11 +171,19 @@ const saveEveryMonth=async()=>{
     console.log((everyMonthProfile));
     const token=localStorage.getItem("token");
     formData.append("userId",userId);
-    formData.append("file",everyMonthProfile);
+    if(everyMonthProfile!=null){
+        formData.append("file",everyMonthProfile);
+    }
+    
     formData.append("nameOfPerson",nameOfPerson);
     formData.append("dob",dob);
-    formData.append("note",note);
-    formData.append("token",token);
+    if(note!=null){
+        formData.append("note",note);
+    }
+    if(token!=null){
+        formData.append("token",token);
+    }
+    
     
     
     const addData=await axios.post("https://birthdays-639v.onrender.com/set-every-month",
@@ -1077,9 +1085,13 @@ const saveEveryMonth=async()=>{
                         if(file){
                             formData.append("file",file);
                         }
-                       
+                       if(token){
                         formData.append("token",token);
-                        formData.append("note",note);
+                       }
+                        if(note){
+                            formData.append("note",note);
+                        }
+                        
                         console.log(file,formData.get("token"))
                          
                             const addData=await axios.post("https://birthdays-639v.onrender.com/add-data",formData)

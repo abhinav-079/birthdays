@@ -173,11 +173,10 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                                     console.log("Prevented Default")
                                     const form=e.target as HTMLFormElement;
                                     const file=((form[0] as HTMLInputElement).files?.[0]);
-                                    if(!file){
-                                        return;
-                                    }
+                                     
                                     const formData=new FormData();
-                                    formData.append("file",file);
+                                    if(file)
+                                    {formData.append("file",file);}
                                     const userId=props.userId;
                                     formData.append("userId",userId);
                                     const eventId=props.element.id
