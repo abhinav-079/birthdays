@@ -2,21 +2,21 @@
  import { useState, type FormEvent } from "react";
  
  type MonthProps = {
-    style;
-    element;
-    setEdit;
-    setEditName;
-    setEditDob;
-    setEditNote;
-    reqList;
+    style : any;
+    element : any;
+    setEdit : any;
+    setEditName : any;
+    setEditDob : any;
+    setEditNote : any;
+    reqList : any;
     index: number;
     userId: string;
-    editName;
-    editDob;
-    editNote;
+    editName : any;
+    editDob : any;
+    editNote : any;
     today: string;
-    edit;
-    setReqList;
+    edit : any;
+    setReqList : any;
     editAlert: (msg:string) => void;
     month: string;
   };

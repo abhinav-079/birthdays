@@ -149,7 +149,7 @@ const navigate=useNavigate();
         setAddBirtday(true);
          
      }
-     const editAlert=(msg)=>{
+     const editAlert=(msg:string)=>{
         setUpdate(null);
         
         setTimeout(() => {
