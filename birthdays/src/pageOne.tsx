@@ -687,7 +687,7 @@ const saveEveryMonth=async()=>{
     <>
     <div className={style.data}>
     <div  className={style.eventHeader}>
-                        {console.log(element)}
+                         
                         
                         {(element.profile)?
               <div className={style.profileAvatar}>
@@ -1073,7 +1073,7 @@ const saveEveryMonth=async()=>{
                         if(token){
 
                             formData.append("nameOfPerson",nameOfPerson);
-                        formData.append("dob",dob);
+                            formData.append("dob",dob);
                         if(file){
                             formData.append("file",file);
                         }
