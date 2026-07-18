@@ -39,7 +39,7 @@
     console.log(props.element.dateOfUser,"date of user");
 
 
-const deleteMemory=async(memoryIndex,eventIndex)=>{
+const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
     console.log(memoryIndex);
     const userId=props.userId;
     const eventId=props.element.id;
@@ -197,7 +197,7 @@ const deleteMemory=async(memoryIndex,eventIndex)=>{
                             }
                             <div className={`${props.style.memoryContainer} `}>
                             {memoryImg?
-                                memoryImg.map((element,index)=>{
+                                memoryImg.map((element:any,index:number)=>{
                                     console.log(element.fileName);
                                    return( <div className={props.style.image}>
                                    <h4 className={props.style.memoryDelete}
