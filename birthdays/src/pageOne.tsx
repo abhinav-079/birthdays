@@ -170,13 +170,17 @@ const saveEveryMonth=async()=>{
     const nameOfPerson:string=name;
     console.log((everyMonthProfile));
     const token=localStorage.getItem("token");
-    formData.append("userId",userId);
+    if(userId){
+        formData.append("userId",userId);
+    }
+   
     if(everyMonthProfile!=null){
         formData.append("file",everyMonthProfile);
     }
+    if(nameOfPerson)
+    {formData.append("nameOfPerson",nameOfPerson);}
+    if(dob){formData.append("dob",dob);}
     
-    formData.append("nameOfPerson",nameOfPerson);
-    formData.append("dob",dob);
     if(note!=null){
         formData.append("note",note);
     }
@@ -1079,9 +1083,13 @@ const saveEveryMonth=async()=>{
                         const token:string|null=localStorage.getItem("token");
                         console.log(token)
                         if(token){
-
-                            formData.append("nameOfPerson",nameOfPerson);
-                            formData.append("dob",dob);
+                            if(nameOfPerson){
+                                formData.append("nameOfPerson",nameOfPerson);
+                            }
+                            if(dob){
+                                formData.append("dob",dob);
+                            }
+                            
                         if(file){
                             formData.append("file",file);
                         }
