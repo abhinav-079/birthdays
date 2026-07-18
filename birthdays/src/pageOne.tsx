@@ -17,7 +17,7 @@ let currentDay:string|number=todayGen.getDate();
         currentDay='0'+currentDay;
     }
     console.log(currentDay," Current Day");
-
+const [everyMonthProfile,setEveryMonthProfile]=useState<string|null|File>(null);
     const today=`${currentDay}-${thisMonth}-${todayGen.getFullYear()}`
     const [everyMonthName,setEveryMonthName]=useState<string|null>("");
     const [everyMonthDob,setEveryMonthDob]=useState<string|null>("");
@@ -36,7 +36,7 @@ let currentDay:string|number=todayGen.getDate();
     const [name,setName]=useState<string>("");
     const [dob,setDob]=useState<(string | null)>("");
     const [note,setNote]=useState<string>("");
-    const [profilePhoto,setProfilePhoto]=useState<string | null | boolean>(null);
+     const [delete2,setDelete2]=useState<boolean|null>(null);
     const [login,setLogin]=useState<(null | boolean)>(null);
      const [monthClick,setMonthClick]=useState<(boolean | null)[]>([null,null,null,null,null,null,null,null,null,null,null,null,]);
      const [addBirthday,setAddBirtday]=useState<boolean|null>(null);
@@ -149,11 +149,11 @@ const navigate=useNavigate();
         setAddBirtday(true);
          
      }
-     const editAlert=()=>{
+     const editAlert=(msg)=>{
         setUpdate(null);
         
         setTimeout(() => {
-            setUpdate("Event Edited, Please refersh the page to see changes.");
+            setUpdate(msg);
         }, 0);
      }
      /* const deleteAlert=()=>{
@@ -165,13 +165,22 @@ const navigate=useNavigate();
      } */
 
 const saveEveryMonth=async()=>{
+    const formData=new FormData();
     setUpdate(null);
     const nameOfPerson:string=name;
-    console.log((dob));
-    const token=localStorage.getItem("token")
-    const addData=await axios.post("https://birthdays-639v.onrender.com/set-every-month",{
-        userId,nameOfPerson,dob,note,token
-    })
+    console.log((everyMonthProfile));
+    const token=localStorage.getItem("token");
+    formData.append("userId",userId);
+    formData.append("file",everyMonthProfile);
+    formData.append("nameOfPerson",nameOfPerson);
+    formData.append("dob",dob);
+    formData.append("note",note);
+    formData.append("token",token);
+    
+    
+    const addData=await axios.post("https://birthdays-639v.onrender.com/set-every-month",
+        formData
+    )
     console.log(addData);
     if(addData.data!="Please try to login" && addData.data!="User not found")
      {
@@ -677,8 +686,24 @@ const saveEveryMonth=async()=>{
             return (
     <>
     <div className={style.data}>
+    <div  className={style.eventHeader}>
+                        {console.log(element)}
                         
-                        <h3>{element.nameOfPerson}</h3>
+                        {(element.profile)?
+              <div className={style.profileAvatar}>
+              <img src={element.profile} ></img>
+              </div>
+          
+  
+              :
+               
+              <div className={style.commentAvatar}>
+                  {element.nameOfPerson.charAt(0).toUpperCase()}
+              </div>
+               
+          } 
+          <h3 className={style.h3}>{element.nameOfPerson}</h3>
+          </div>
 
                         <p className={style.date}>
                              {element.dateOfUser}-Every Month
@@ -696,8 +721,16 @@ const saveEveryMonth=async()=>{
 
                             }}
                         >Edit </button>
-                          
-                        <button   onClick={async()=>{
+                          <button className={style.deleteBtn1} onClick={()=>{
+                            setDelete2(true);
+                          }}>Delete</button>
+                          {delete2?
+                          <>
+                          <br />
+                            <button className={style.cancelBtn} onClick={()=>{
+                                setDelete2(false)
+                            }}>cancel</button>
+                            <button   onClick={async()=>{
                                 console.log(everyMonthList);
                                 const sample=[...(everyMonthList)];
                                 console.log(index);
@@ -711,15 +744,20 @@ const saveEveryMonth=async()=>{
                                     userId,editId,token
                                 });
                                 console.log(deleteRequest);
-    
-                                 
-    
-                            }} className={style.goldBtn}>Delete</button>
+
+                                
+
+                            }} className={style.delete}>Confirm Delete</button>
+                        </>
+                        :null
+                            }
+                        
 
                             <hr>
                             </hr>
                             {(edit==element.id)?
                                 <>
+                                <div className={style.formCard}>
                                 <form onSubmit={async(e)=>{
                                     e.preventDefault();
                                     console.log("editDone");
@@ -738,7 +776,7 @@ const saveEveryMonth=async()=>{
                                     console.log(editReq)
                                      
 
-                                }} className={style.formCard}>
+                                }}  >
 
                                     <input type="text" placeholder={`previous Name: ${element.nameOfPerson}`} value={editName ?? ""} onChange={(e)=>{
                                         setEveryMonthName(e.target.value || editName)
@@ -755,14 +793,16 @@ const saveEveryMonth=async()=>{
                                          
                                         console.log("clicked edit button")
                                         if((everyMonthName || editName) &&everyMonthDob){
-                                            editAlert();
+                                            editAlert("Event Edited, Please refersh the page to see changes.");
                                         }
                                         
                                     }} className={style.goldBtn}>Confirm Changes</button>
                                 </form>
+                                </div> 
                                 </>
                             :null}
      </div>
+      
      
     </>
 )
@@ -893,7 +933,7 @@ const saveEveryMonth=async()=>{
         <>
             {reqList.map((element:any,index:any)=>{
 
-                /* console.log(element); */
+                console.log(element);
                 return (
                     <>
                      
@@ -1018,7 +1058,10 @@ const saveEveryMonth=async()=>{
                         const file=((form[3] as HTMLInputElement).files?.[0]);
                          
                         const formData=new FormData();
-                        
+                        if(file){
+                            console.log(file)
+                            setEveryMonthProfile(file);
+                        }
                         
                         formData.append("userId",userId);
                         
@@ -1037,10 +1080,9 @@ const saveEveryMonth=async()=>{
                        
                         formData.append("token",token);
                         formData.append("note",note);
-                        console.log(file,token)
-                        /* const addDatas=await axios.post("http://localhost:4000/add-datas",formData)
-                            console.log(addDatas) */
-                            const addData=await axios.post("http://localhost:4000/add-data",formData)
+                        console.log(file,formData.get("token"))
+                         
+                            const addData=await axios.post("https://birthdays-639v.onrender.com/add-data",formData)
                             console.log(addData);
                             
                             if(addData.data!="Please try to login" && addData.data!="User not found")
@@ -1097,7 +1139,11 @@ const saveEveryMonth=async()=>{
                                      
                                     
                                      
-                                    <input type="file"  name="file" formEncType="multipart/form-data" className={ style.monthCard} onChange={()=>{console.log("Photo Uploaded")}}/>
+                                    <input type="file"  name="file" formEncType="multipart/form-data" className={ style.monthCard} onChange={(e:any)=>{console.log(e);
+                                    const file = e.target.files?.[0] ;
+                                        console.log(file);
+                                        setEveryMonthProfile(file);
+                                    }}/>
                                      
                                  
                                  

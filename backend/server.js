@@ -30,12 +30,12 @@ let AuthErrorHandle=()=>{
 let authoriseMiddleWarePost=(req,res,next)=>{
     
     let {token}=req.body;
-    console.log(token)
-    if(!token){ throw new HandleError("Please try to login",400);return res.json("Please try to login");}
+    console.log(token,"token")
+    if(!token){ throw new HandleError("Please try to login Boss",400);return res.json("Please try to login");}
  let isVerified=(verifyUser(token));
  console.log(isVerified);
  if(!isVerified){
-    throw new HandleError("Please Try Again",400);
+    throw new HandleError("Please Try Again",400); 
     return res.json("Please Try Again");
  }
  
@@ -77,13 +77,16 @@ let authoriseMiddleWarePost=(req,res,next)=>{
  }
  
  next();
- };
+ }; 
  //---------routes-----------
- app.post("/set-every-month",async(req,res)=>{
+ app.post("/set-every-month",upload.single("file"),authoriseMiddleWarePost,async(req,res)=>{
     console.log("set-every-month,start")
+    console.log(req.body);
     let {userId,nameOfPerson,dob,note}=req.body;
     let userFind=(await dbManager.find({_id:Object(userId)}))[0];
-    if(!userFind){
+    console.log(req.body,userFind)
+     if(!userFind){
+        console.log("No user found.")
         throw new HandleError("User not found",401);
         res.json({userFound:false})
         return;
@@ -96,7 +99,11 @@ let authoriseMiddleWarePost=(req,res,next)=>{
         const dateOfUser=dob.slice(8,10);
         console.log(dateOfUser);
         let id=(crypto.randomUUID());
-        let data={id,nameOfPerson,yearOfUser,monthOfUser,dateOfUser,note};
+        let profile="";
+        if(req.file){
+            profile=req.file.path; 
+        }
+        let data={id,profile,nameOfPerson,yearOfUser,monthOfUser,dateOfUser,note};
         let existingArray=await dbManager.updateOne({_id:Object(userId)},{$push:{everyMonthEvents:data}});
         
          
@@ -107,10 +114,14 @@ let authoriseMiddleWarePost=(req,res,next)=>{
         }
         console.log("set-every-month,end.")
  })
-app.post("/add-data",authoriseMiddleWarePost, upload.single("file"),async(req,res)=>{
+app.post("/add-data",upload.single("file"),authoriseMiddleWarePost, async(req,res)=>{
     console.log("Add-data route")
     let {userId,nameOfPerson,dob,note}=req.body;
-    let profile=(req.file.path)
+    let profile="";
+    if(req.file){
+         profile=(req.file.path)
+    }
+    
     let userFind=(await dbManager.find({_id:Object(userId)}))[0];
     if(!userFind){
         throw new HandleError("User not found",401);
@@ -786,12 +797,44 @@ app.post("/new-memory",upload.single("file"),async(req,res)=>{
     
     console.log(memoryUpdater,"--- ",pushMemory);
     let saveLinkOnDb=await dbManager.updateOne({_id:Object(userId)},{details:pushMemory.details})
-    res.json({result:req.body})
+    res.json({result:"Memory Saved."})
 })
 app.post("/add-datas", upload.single("file"),(req,res)=>{
 
     console.log(req.body);
-    console.log(req.file.path);
+    let {token} =req.body;
+
+     if(req.file){
+        console.log(req.file.path)
+     }
+     console.log(token)
+    res.json({status:"recieved"});
+})
+app.delete("/deleteMemory",async(req,res)=>{
+    const {userId,eventId,eventIndex,memoryIndex}=req.query;
+     console.log(userId)
+    const findingDoc=(await dbManager.find({_id:(userId)}))[0];
+    console.log(findingDoc)
+    let event=(findingDoc.details)[eventIndex];
+    console.log("Event: ", event);
+    if((event.id)==eventId){
+        console.log("-----------------------------");
+        let memory=(event.memories).splice(memoryIndex,1);
+        console.log(memoryIndex)
+        console.log(event);
+        //To say mongoose that we modified the details.
+        findingDoc.markModified("details");
+        try{
+        await findingDoc.save();
+        res.json({message:"Memory Deleted, Please refresh the page to see the changes."});
+        }
+        catch(er){
+            console.log(er);
+            res.json({message:"Some Error Occured, Please Try Again Later."})
+        }
+
+    }
+     
 })
 app.use((err,req,res,next)=>{
     res.send(err.message);

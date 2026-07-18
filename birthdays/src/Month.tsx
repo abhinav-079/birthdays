@@ -2,22 +2,22 @@
  import { useState, type FormEvent } from "react";
  
  type MonthProps = {
-    style: any;
-    element: any;
-    setEdit: any;
-    setEditName: any;
-    setEditDob: any;
-    setEditNote: any;
-    reqList: any;
+    style;
+    element;
+    setEdit;
+    setEditName;
+    setEditDob;
+    setEditNote;
+    reqList;
     index: number;
     userId: string;
-    editName: any;
-    editDob: any;
-    editNote: any;
+    editName;
+    editDob;
+    editNote;
     today: string;
-    edit: any;
-    setReqList: any;
-    editAlert: () => void;
+    edit;
+    setReqList;
+    editAlert: (msg:string) => void;
     month: string;
   };
   
@@ -27,6 +27,7 @@
     const [dob,setDob]=useState<string|null>("");
     const [addMemory,setAddMemory]=useState<null|boolean>(null);
     const [newMemory,setnewMemory]=useState<null|boolean>(null);
+    const [secondDelete,setSecondDelete]=useState<boolean|null>(null);
 
     const[memoryImg,setMemoryImg]=useState<any>([]);
     console.log(props.today);
@@ -38,7 +39,20 @@
     console.log(props.element.dateOfUser,"date of user");
 
 
-
+const deleteMemory=async(memoryIndex,eventIndex)=>{
+    console.log(memoryIndex);
+    const userId=props.userId;
+    const eventId=props.element.id;
+    console.log(userId,eventId,eventIndex,memoryIndex);
+    const deleteMemoryReq=await axios.delete("https://birthdays-639v.onrender.com/deleteMemory",{params:{userId,eventId,eventIndex,memoryIndex}});
+    console.log(deleteMemoryReq);
+    if((deleteMemoryReq.data.message)=="Some Error Occured, Please Try Again Later."){
+        props.editAlert("Some Error Occured, Please Try Again Later.")
+    }
+    else if((deleteMemoryReq.data.message)=="Memory Deleted, Please refresh the page to see the changes."){
+        props.editAlert("Memory Deleted, Please refresh the page to see the changes.");
+    }
+}
     const showMemories=()=>{
         setnewMemory(false)
         props.setEdit(false);
@@ -59,12 +73,19 @@
     <>
      <div className={props.style.data}>
         <div className={props.style.eventHeader}>
-        {(props.element.nameOfPerson)?
+        {(props.element.profile)?
+              <div className={props.style.profileAvatar}>
+            <img src={props.element.profile} ></img>
+            </div>
+        
+
+            :
+            <>
             <div className={props.style.commentAvatar}>
                 {props.element.nameOfPerson.charAt(0).toUpperCase()}
             </div>
-            :
-            null
+             
+            </>
         }      
      
                         <h3 className={props.style.h3}>{props.element.nameOfPerson}</h3>
@@ -91,24 +112,41 @@
 
                             }}
                         >Edit </button>
-                        <button   onClick={async()=>{
-                                console.log(props.reqList);
-                                const sample=[...(props.reqList)];
-                                console.log(props.index);
-                                sample.splice(props.index,1);
-                                console.log(sample);
-                                props.setReqList(sample);
-                                const editId=props.element.id;
-                                const userId=props.userId;
-                                const token=localStorage.getItem("token");
-                                const deleteRequest=await axios.put("https://birthdays-639v.onrender.com/delete-event",{
-                                    userId,editId,token
-                                });
-                                console.log(deleteRequest)
-    
-                                 
-    
-                            }} className={props.style.goldBtn}>Delete</button>
+                        <button onClick={()=>{
+                            setSecondDelete(true);
+                        }} className={props.style.deleteBtn1}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#F19E39"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></button>
+                        {secondDelete?
+                        <>
+                       <br />
+                       
+                       <button onClick={()=>{
+                        setSecondDelete(false)
+                       }} style={{cursor:"pointer"}} className={props.style.cancelBtn}>cancel </button>
+                        <span   onClick={async()=>{
+                            console.log(props.reqList);
+                            const sample=[...(props.reqList)];
+                            console.log(props.index);
+                            sample.splice(props.index,1);
+                            console.log(sample);
+                            props.setReqList(sample);
+                            const editId=props.element.id;
+                            const userId=props.userId;
+                            const token=localStorage.getItem("token");
+                            const deleteRequest=await axios.put("https://birthdays-639v.onrender.com/delete-event",{
+                                userId,editId,token
+                            });
+                            console.log(deleteRequest)
+
+                             
+
+                        }} style={{cursor:"pointer"}} className={props.style.delete}>
+                             
+                             Confirm Delete</span>
+                            </>
+                            :null
+                    
+                        }
+                        
 
                             <hr>
                             </hr>
@@ -144,8 +182,9 @@
                                     formData.append("userId",userId);
                                     const eventId=props.element.id
                                     formData.append("eventId",eventId)
-                                    const saveMemory=await axios.post("http://localhost:4000/new-memory",formData)
-                                    console.log((saveMemory))
+                                    const saveMemory=await axios.post("https://birthdays-639v.onrender.com/new-memory",formData)
+                                    console.log((saveMemory));
+                                    props.editAlert("Memory Saved, Please refersh the page to see changes.");
                                 }}>
                                     <input type="file"   formEncType="multipart/form-data" className={props.style.monthCard}/>
                                     <button type="submit" className={props.style.goldBtn}>Upload</button>
@@ -158,12 +197,20 @@
                             }
                             <div className={`${props.style.memoryContainer} `}>
                             {memoryImg?
-                                memoryImg.map((element:any)=>{
+                                memoryImg.map((element,index)=>{
                                     console.log(element.fileName);
                                    return( <div className={props.style.image}>
-                                    
+                                   <h4 className={props.style.memoryDelete}
+                                   
+                                   onClick={()=>{
+                                    const eventIndex=props.index;
+                                    deleteMemory(index,eventIndex);
+                                   }}
+                                   > <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></h4>
                                     <img src={element.fileName} alt={element.uploadTimeLine} ></img>
                                     <h4 className={props.style.text}> {element.uploadTimeLine}</h4>
+                                    
+                                    
                                    </div>)
                                 })
                                 :null
@@ -171,47 +218,49 @@
                             </div>
                             {(props.edit==props.element.id)?
                                 <>
-                                <form onSubmit={async(e:FormEvent<HTMLFormElement>)=>{
-                                    e.preventDefault();
-                                    console.log("editDone");
-                                    const nameOfPersonId=props.element.id;
-                                    const editReq=await axios.put("https://birthdays-639v.onrender.com/edit-event",{
-                                        nameOfPersonId,
-                                        userId:props.userId,
-                                        editName:props.editName,
-                                        editDob:props.editDob,
-                                        editNote:props.editNote,
-                                        token:localStorage.getItem("token"),
+                                <div className={props.style.formCard}>
+                                    <form onSubmit={async(e:FormEvent<HTMLFormElement>)=>{
+                                        e.preventDefault();
+                                        console.log("editDone");
+                                        const nameOfPersonId=props.element.id;
+                                        const editReq=await axios.put("https://birthdays-639v.onrender.com/edit-event",{
+                                            nameOfPersonId,
+                                            userId:props.userId,
+                                            editName:props.editName,
+                                            editDob:props.editDob,
+                                            editNote:props.editNote,
+                                            token:localStorage.getItem("token"),
+                                            
+
+
+                                        });
+                                        console.log(editReq)
                                         
 
+                                    }} >
 
-                                    });
-                                    console.log(editReq)
-                                     
-
-                                }} className={props.style.formCard}>
-
-                                    <input type="text" placeholder={`previous Name: ${props.element.nameOfPerson}`} value={props.editName} onChange={(e)=>{
-                                        setName(e.target.value || props.editName);
-                                        props.setEditName(e.target.value)
-                                    }} required/>
-                                    <input type="date" value={props.element.dob} onChange={(e)=>{
-                                        setDob(e.target.value);
-                                        props.setEditDob(e.target.value);
-                                    }} required/>
-                                    <textarea placeholder={`Previous Note: ${props.element.note}`} onChange={(e)=>{
-                                        props.setEditNote(e.target.value);
-                                    }}>{props.element.note}</textarea>
-                                    <button onClick={()=>{
-                                         console.log((name || props.editName) ,dob,typeof(dob));
-                                        console.log("clicked edit button");
-                                        if((name || props.editName )&& dob ){
-                                             
-                                            props.editAlert();
-                                        }
-                                        
-                                    }} className={props.style.goldBtn}>Confirm Changes</button>
-                                </form>
+                                        <input type="text" placeholder={`previous Name: ${props.element.nameOfPerson}`} value={props.editName} onChange={(e)=>{
+                                            setName(e.target.value || props.editName);
+                                            props.setEditName(e.target.value)
+                                        }} required/>
+                                        <input type="date" value={props.element.dob} onChange={(e)=>{
+                                            setDob(e.target.value);
+                                            props.setEditDob(e.target.value);
+                                        }} required/>
+                                        <textarea placeholder={`Previous Note: ${props.element.note}`} onChange={(e)=>{
+                                            props.setEditNote(e.target.value);
+                                        }}>{props.element.note}</textarea>
+                                        <button onClick={()=>{
+                                            console.log((name || props.editName) ,dob,typeof(dob));
+                                            console.log("clicked edit button");
+                                            if((name || props.editName )&& dob ){
+                                                
+                                                props.editAlert("Event Edited, Please refersh the page to see changes.");
+                                            }
+                                            
+                                        }} className={props.style.goldBtn}>Confirm Changes</button>
+                                    </form>
+                                </div>
                                 </>
                             :null}
      </div>
