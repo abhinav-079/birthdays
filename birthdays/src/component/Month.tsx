@@ -2,7 +2,7 @@
  import { useState, type FormEvent } from "react";
  import { InvalidPage } from "../pages/InvalidPage";
  import style from "../pages/pageOne.module.css"
- import {saveAs} from "file-saver"
+  
 interface memory{
     fileName:string,
     uploadTimeLine:string
@@ -21,9 +21,9 @@ interface memory{
     
     element : element;
     setEdit : React.Dispatch<React.SetStateAction<string|boolean|null>>;
-    setEditName : React.Dispatch<React.SetStateAction<string>>;
-    setEditDob : React.Dispatch<React.SetStateAction<string>>;
-    setEditNote : React.Dispatch<React.SetStateAction<string>>;
+    setEditName : React.Dispatch<React.SetStateAction<string|boolean|null>>;
+    setEditDob : React.Dispatch<React.SetStateAction<string|boolean|null>>;
+    setEditNote : React.Dispatch<React.SetStateAction<string|boolean|null>>;
     reqList : element[];
     index: number;
     userId: string;
