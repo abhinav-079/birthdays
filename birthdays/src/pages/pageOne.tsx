@@ -38,9 +38,9 @@ const [everyMonthProfile,setEveryMonthProfile]=useState<string|null|File>(null);
     const [editName,setEditName]=useState<string|null>(null);
     const[everyMonthList,setEveryMonthList]=useState<element[]>([]);
     const [everyMonthClick,setEveryMonthClick]=useState<boolean|null>(null);
-    const [editDob,setEditDob]=useState<string|null|boolean>(null);
-    const [editNote,setEditNote]=useState<string|null|boolean>(null);
-    const[edit,setEdit]=useState<string|boolean|null>(null);
+    const [editDob,setEditDob]=useState<string|null>(null);
+    const [editNote,setEditNote]=useState<string|null>(null);
+    const[edit,setEdit]=useState<string|null>(null);
     const [role,setRole]=useState<string>("User");
     const[update,setUpdate]=useState<(null|string)>(null)
     const [,setUsername]=useState<string>("null");
@@ -752,7 +752,7 @@ const saveEveryMonth=async()=>{
                         </p>
                         <button className={style.goldBtn} 
                             onClick={()=>{
-                                setEdit(false);
+                                setEdit(null);
                                 setEditName(element.nameOfPerson);
                                 setEdit(element.id);
 

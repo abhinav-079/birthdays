@@ -20,18 +20,18 @@ interface memory{
  type MonthProps = {
     
     element : element;
-    setEdit : React.Dispatch<React.SetStateAction<string|boolean|null>>;
-    setEditName : React.Dispatch<React.SetStateAction<string|boolean|null>>;
-    setEditDob : React.Dispatch<React.SetStateAction<string|boolean|null>>;
-    setEditNote : React.Dispatch<React.SetStateAction<string|boolean|null>>;
+    setEdit : React.Dispatch<React.SetStateAction<string|null>>;
+    setEditName : React.Dispatch<React.SetStateAction<string|null>>;
+    setEditDob : React.Dispatch<React.SetStateAction<string|null>>;
+    setEditNote : React.Dispatch<React.SetStateAction<string|null>>;
     reqList : element[];
     index: number;
     userId: string;
-    editName : null |string |boolean;
-    editDob : string|boolean|null;
-    editNote : null |string|boolean;
+    editName : null |string ;
+    editDob : string|null;
+    editNote : null |string;
     today: string;
-    edit : boolean|null|string;
+    edit : null|string;
     setReqList : React.Dispatch<React.SetStateAction<element[]>>;
     editAlert: (msg:string) => void;
     month: string;
@@ -74,7 +74,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
 }
     const showMemories=()=>{
         setnewMemory(false)
-        props.setEdit(false);
+        props.setEdit(null);
         console.log("Memories",(props.element).memories[0]);
         setAddMemory(true);
         const memoryHolder=[];
@@ -125,7 +125,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                                 setAddMemory(false);
                                 setSecondDelete(false)
                                 //setMemoryImg(false);
-                                props.setEdit(false);
+                                props.setEdit(null);
                                 props.setEditName(props.element.nameOfPerson);
                                 setTimeout(()=>{props.setEdit(props.element.id);},1)
                                 
@@ -134,7 +134,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                         >Edit </button>
                         <button onClick={()=>{
                             setSecondDelete(true);
-                            props.setEdit(false)
+                            props.setEdit(null)
                         }} className={style.deleteBtn1}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#F19E39"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></button>
                         {secondDelete?
                         <>
