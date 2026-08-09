@@ -1,7 +1,10 @@
 import { useState,useEffect,useRef } from "react"
- 
-const Otp=(props:any)=>{
-    console.log(props.stylist.otpInputs);
+import style from "../authentication/signUp.module.css"
+interface otp {
+    setOtp:React.Dispatch<React.SetStateAction<string>>,
+}
+const Otp=(props:otp)=>{
+    console.log(style.otpInputs);
     const b1=useRef<HTMLInputElement | null>(null);
     const b2=useRef<HTMLInputElement | null>(null);
     const b3=useRef<HTMLInputElement | null>(null);
@@ -56,9 +59,9 @@ useEffect(()=>{
         <>
           {console.log(values)}
           
-            <form className={props.stylist.otpForm}>
+            <form className={style.otpForm}>
                 <hr></hr>
-                <div className={props.stylist.otpInputs}>
+                <div className={style.otpInputs}>
                     <input type="text"
                             inputMode="numeric"
                             maxLength={1} required ref={b1} onKeyDown={(e)=>{
@@ -96,7 +99,7 @@ useEffect(()=>{
                         
                         
                     }} value={values[0] ?? ""}  
-                    className={props.stylist.otpInput}/>
+                    className={style.otpInput}/>
 
 
                     <input type="text"
@@ -141,7 +144,7 @@ useEffect(()=>{
                             
                         }}
                           value={values[1] ?? ""} 
-                        className={props.stylist.otpInput}/>
+                        className={style.otpInput}/>
                     <input type="text"
                             inputMode="numeric"
                             maxLength={1} required ref={b3}   onKeyDown={(e)=>{
@@ -183,7 +186,7 @@ useEffect(()=>{
                             
                             
                         }} value={values[2] ?? ""}
-                        className={props.stylist.otpInput}/>
+                        className={style.otpInput}/>
                     <input type="text"
                             inputMode="numeric"
                             maxLength={1} required ref={b4}  
@@ -226,7 +229,7 @@ useEffect(()=>{
                             
                         }}
                     value={values[3] ?? ""}
-                    className={props.stylist.otpInput}/>
+                    className={style.otpInput}/>
                 </div>
                   
             </form>

@@ -1,0 +1,1132 @@
+/* ==========================================================================
+   DESIGN SYSTEM — "Onyx"
+   A drop-in re-skin of the previous "Memoir" system. Same components, same
+   class names, same 8pt grid and radii — the surface underneath is now
+   Apple's dark-mode language: near-black canvas, two grays of text, one
+   restrained system-blue accent used only where it earns its place (focus,
+   primary action, links). Every decorative flourish that read as "AI-made"
+   in the old file — film grain, light leaks, shine sweeps, the breathing
+   ember glow, the dog-eared corner, the scrapbook photo corners — has been
+   removed. What replaces them is quieter: a 1px hairline, a soft shadow,
+   a small lift on hover. Nothing glows. Nothing loops.
+
+   Token plan
+   ----------
+   Color
+     --void        #000000   canvas — true black, Apple dark-mode base
+     --surface     #1C1C1E   elevated surface (cards, inputs)
+     --surface-2   #2C2C2E   secondary elevated surface (hover states)
+     --white       #F5F5F7   primary text — Apple's off-white, not #FFF
+     --gray-70     rgba(245,245,247,.72)  secondary text
+     --gray-45     rgba(245,245,247,.45)  placeholder / tertiary
+     --accent      #0A84FF   the one accent — Apple system blue, dark mode
+     --accent-bright #409CFF hover state
+     --accent-deep #0060DF   pressed state
+     --danger      #FF453A   destructive — Apple system red, dark mode
+     --danger-bright #FF6961 destructive hover
+     --hairline    rgba(255,255,255,.12)  standard border
+     --hairline-soft rgba(255,255,255,.07) quiet border (cancel, dividers)
+
+   Type
+     Inter, loaded via Google Fonts, is the only typeface — the closest
+     open substitute for SF Pro's proportions and spacing. The Apple-ad
+     read comes from pushing the two ends of the weight range further
+     apart, the way SF Pro Display Bold/Heavy sits against SF Pro Text
+     Regular: headlines and card titles are now 800 with tight negative
+     tracking (-0.03em) instead of 700 at near-zero tracking, eyebrows
+     (dates) are 600 with positive tracking for the all-caps read, controls
+     are 600 with a slight -0.01em, and body copy stays 400-500 with no
+     tracking adjustment — so the contrast between "headline" and
+     "everything else" is doing more of the work than any single weight.
+     --font-display and --font-body both point at Inter; kept as separate
+     variables only so weight/tracking per role stays easy to tune later.
+
+   Layout
+     Same 8pt spacing grid and radii as the previous system, unchanged, so
+     this drops in without touching markup.
+
+   Signature
+     Restraint itself is the signature. No animated flourish carries the
+     brand this time — the single consistent device is a hairline border
+     that quietly brightens from --hairline-soft to --hairline on hover,
+     paired with a 2–4px lift and a soft, low, neutral shadow. That is the
+     entire vocabulary of interaction in this system. One accent color,
+     used only for the primary action, focus rings, and the ember-analog
+     moments (dates, active states) — never for decoration.
+   ========================================================================== */
+
+   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+   :root{
+       --void:#000000;
+       --surface:#1C1C1E;
+       --surface-2:#2C2C2E;
+       --white:#F5F5F7;
+       --gray-70:rgba(245,245,247,.72);
+       --gray-45:rgba(245,245,247,.45);
+       --accent:#0A84FF;
+       --accent-bright:#409CFF;
+       --accent-deep:#0060DF;
+       --danger:#FF453A;
+       --danger-bright:#FF6961;
+       --hairline:rgba(255,255,255,.12);
+       --hairline-soft:rgba(255,255,255,.07);
+   
+       --font-display:'Inter',-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+       --font-body:'Inter',-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+   }
+   
+   *{
+       box-sizing:border-box;
+   }
+   
+   .form{
+       display:flex;
+       justify-content:center;
+   }
+   
+   html,
+   body{
+       overflow-x:hidden;
+       width:100%;
+       font-family:var(--font-body);
+       -webkit-font-smoothing:antialiased;
+       background:var(--void);
+   }
+   
+   /* ==========================================================================
+      PAGE CANVAS — flat, quiet, true black
+      ========================================================================== */
+   
+   .page{
+       min-height:100vh;
+       background:var(--void);
+       color:var(--white);
+       overflow:hidden;
+       position:relative;
+   }
+   
+   /* ==========================================================================
+      MONTH GRID / CARDS
+      ========================================================================== */
+   
+   .monthGrid{
+       display:grid;
+   
+       grid-template-columns:
+       repeat(auto-fit,minmax(220px,1fr));
+   
+       gap:24px;
+   
+       padding:64px;
+   
+       position:relative;
+       z-index:2;
+   }
+   
+   .monthCard{
+   
+       background:var(--surface);
+   
+       border:
+       1px solid var(--hairline-soft);
+   
+       border-radius:20px;
+   
+       padding:32px;
+   
+       transition:
+       transform .28s cubic-bezier(.22,1,.36,1),
+       box-shadow .28s cubic-bezier(.22,1,.36,1),
+       border-color .28s ease,
+       background .28s ease;
+   
+       cursor:pointer;
+   
+       position:relative;
+   
+       overflow:hidden;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.04) inset,
+       0 10px 24px rgba(0,0,0,.5);
+   }
+   
+   .monthCard:hover{
+   
+       transform:
+       translateY(-3px);
+   
+       background:var(--surface-2);
+   
+       border-color:
+       var(--hairline);
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.05) inset,
+       0 16px 32px rgba(0,0,0,.55);
+   }
+   
+   /* ==========================================================================
+      FORM
+      ========================================================================== */
+   
+   .formSetter{
+       display:flex;
+       justify-content:center;
+       position:relative;
+       z-index:2;
+   }
+   
+   .formCard form{
+   
+       width:min(500px,90%);
+   
+       margin:1rem;
+   
+       padding:40px;
+   
+       display:flex;
+   
+       flex-direction:column;
+   
+       gap:16px;
+   
+       background:var(--surface);
+   
+       border:
+       1px solid var(--hairline-soft);
+   
+       border-radius:24px;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.04) inset,
+       0 24px 60px rgba(0,0,0,.55);
+   
+       position:relative;
+   
+       overflow:hidden;
+   
+       animation:
+       formReveal .5s cubic-bezier(.22,1,.36,1);
+   }
+   
+   .formCard form input,
+   .formCard form textarea{
+   
+       background:var(--void);
+   
+       border:
+       1px solid var(--hairline-soft);
+   
+       color:var(--white);
+   
+       padding:16px 18px;
+   
+       border-radius:14px;
+   
+       outline:none;
+   
+       font-family:var(--font-body);
+       font-size:1rem;
+       font-weight:400;
+   
+       transition:
+       border-color .2s ease,
+       box-shadow .2s ease,
+       background .2s ease;
+   }
+   
+   .formCard form textarea{
+   
+       min-height:140px;
+   
+       resize:none;
+   }
+   
+   .formCard form input::placeholder,
+   .formCard form textarea::placeholder{
+   
+       color:
+       var(--gray-45);
+   
+       font-style:normal;
+   }
+   
+   .formCard form input:focus,
+   .formCard form textarea:focus{
+   
+       border:
+       1px solid var(--accent);
+   
+       box-shadow:
+       0 0 0 4px rgba(10,132,255,.22);
+   
+       background:
+       var(--surface);
+   }
+   
+   /* ==========================================================================
+      PRIMARY CTA
+      (class kept as .goldBtn for drop-in compatibility with existing markup)
+      ========================================================================== */
+   
+   .goldBtn{
+       position:relative;
+   
+       padding:14px 34px;
+   
+       border:none;
+       border-radius:14px;
+   
+       cursor:pointer;
+   
+       overflow:hidden;
+   
+       font-family:var(--font-body);
+       font-size:16px;
+       font-weight:600;
+   
+       letter-spacing:-.01em;
+   
+       color:var(--void);
+   
+       background:var(--accent);
+   
+       transition:
+       transform .22s cubic-bezier(.22,1,.36,1),
+       box-shadow .22s ease,
+       background .22s ease;
+   
+       margin:1rem;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.18) inset,
+       0 8px 20px rgba(10,132,255,.22);
+   
+       z-index:1;
+   }
+   
+   .goldBtn:hover{
+   
+       background:var(--accent-bright);
+   
+       transform:
+       translateY(-2px);
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.2) inset,
+       0 12px 26px rgba(10,132,255,.3);
+   }
+   
+   .goldBtn:active{
+   
+       background:var(--accent-deep);
+   
+       transform:
+       scale(.97)
+       translateY(0);
+   }
+   
+   @keyframes formReveal{
+   
+       from{
+           opacity:0;
+   
+           transform:
+           translateY(16px);
+       }
+   
+       to{
+           opacity:1;
+   
+           transform:
+           translateY(0);
+       }
+   }
+   
+   hr{
+       opacity:1;
+       border:none;
+       border-top:1px solid var(--hairline-soft);
+   }
+   
+   /* ==========================================================================
+      DATA / EVENT CARD
+      ========================================================================== */
+   
+   .data{
+   
+       position:relative;
+   
+       width:min(500px,95%);
+   
+       margin:16px auto;
+   
+       padding:24px 24px 24px 28px;
+   
+       border-radius:20px;
+   
+       background:var(--surface);
+   
+       border:
+       1px solid var(--hairline-soft);
+       border-left:2px solid var(--accent);
+   
+       overflow:hidden;
+   
+       transition:
+       transform .22s cubic-bezier(.22,1,.36,1),
+       box-shadow .22s ease,
+       border-color .22s ease,
+       background .22s ease;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.04) inset,
+       0 10px 22px rgba(0,0,0,.45);
+   
+       z-index:2;
+   }
+   
+   .data:hover{
+   
+       transform:
+       translateY(-3px);
+   
+       background:var(--surface-2);
+   
+       border-color:
+       var(--hairline);
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.05) inset,
+       0 16px 30px rgba(0,0,0,.5);
+   }
+   
+   .data h3{
+   
+       margin:3px;
+   
+       color:var(--white);
+   
+       font-family:var(--font-display);
+       font-size:1.45rem;
+       font-weight:800;
+       letter-spacing:-.03em;
+       line-height:1.15;
+   }
+   
+   .date{
+   
+       margin-top:12px;
+   
+       color:var(--accent-bright);
+   
+       font-family:var(--font-display);
+       font-size:.8rem;
+       font-weight:600;
+       letter-spacing:.7px;
+       text-transform:uppercase;
+   }
+   
+   .note{
+   
+       margin-top:12px;
+   
+       color:var(--gray-70);
+   
+       line-height:1.65;
+   
+       font-size:.92rem;
+       font-weight:400;
+   }
+   
+   /* ==========================================================================
+      ALERT / TOAST
+      ========================================================================== */
+   
+   .alert{
+       position:fixed;
+   
+       top:20px;
+       left:50%;
+   
+       transform:translateX(-50%);
+   
+       width:min(90vw,420px);
+   
+       padding:16px 24px;
+   
+       background:var(--surface-2);
+   
+       color:var(--white);
+   
+       border:1px solid var(--hairline);
+       border-radius:14px;
+   
+       font-family:var(--font-body);
+       font-weight:600;
+       font-size:1rem;
+   
+       letter-spacing:0;
+   
+       overflow:hidden;
+   
+       text-align:center;
+       word-wrap:break-word;
+   
+       z-index:9999;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.05) inset,
+       0 18px 44px rgba(0,0,0,.6);
+   
+       animation:toastLife 5.77s forwards;
+   }
+   
+   .alert::after{
+       content:"";
+   
+       position:absolute;
+   
+       bottom:0;
+       left:0;
+   
+       height:2px;
+       width:100%;
+   
+       background:var(--accent);
+   
+       animation:progress 5s linear forwards;
+   }
+   
+   @keyframes progress{
+       from{
+           width:100%;
+       }
+   
+       to{
+           width:0%;
+       }
+   }
+   
+   @keyframes toastLife{
+   
+       0%{
+           opacity:0;
+           transform:translate(-50%,-16px);
+       }
+   
+       10%{
+           opacity:1;
+           transform:translate(-50%,0);
+       }
+   
+       85%{
+           opacity:1;
+           transform:translate(-50%,0);
+       }
+   
+       100%{
+           opacity:0;
+           transform:translate(-50%,-16px);
+           visibility:hidden;
+       }
+   }
+   
+   @media (max-width:480px){
+   
+       .alert{
+           width:95vw;
+   
+           padding:14px 16px;
+   
+           font-size:.9rem;
+   
+           top:12px;
+       }
+   }
+   
+   /* ==========================================================================
+      LOGOUT — quiet, neutral, secondary
+      ========================================================================== */
+   
+   .logoutBtn{
+       margin-top:1rem;
+       position:relative;
+   
+       padding:14px 36px;
+   
+       border:1px solid var(--hairline-soft);
+       border-radius:14px;
+   
+       background:var(--surface);
+   
+       color:var(--white);
+   
+       font-family:var(--font-body);
+       font-size:16px;
+       font-weight:600;
+       letter-spacing:-.01em;
+   
+       cursor:pointer;
+   
+       overflow:hidden;
+   
+       transition:
+       transform .22s cubic-bezier(.22,1,.36,1),
+       box-shadow .22s ease,
+       background .22s ease,
+       border-color .22s ease;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.04) inset,
+       0 6px 16px rgba(0,0,0,.4);
+   }
+   
+   hr{
+       width:90%;
+   }
+   
+   .logoutBtn:hover{
+       background:var(--surface-2);
+   
+       border-color:var(--hairline);
+   
+       transform:
+       translateY(-2px);
+   
+       box-shadow:
+       0 10px 22px rgba(0,0,0,.45);
+   }
+   
+   .logoutBtn:active{
+       transform:
+       translateY(0)
+       scale(.98);
+   }
+   
+   /* ==========================================================================
+      RESPONSIVE — 8pt grid preserved at every breakpoint
+      ========================================================================== */
+   
+   @media (max-width:1024px){
+   
+       .monthGrid{
+           padding:40px;
+           gap:20px;
+       }
+   
+       .formCard{
+           width:90%;
+       }
+   }
+   
+   @media (max-width:768px){
+   
+       .monthGrid{
+   
+           grid-template-columns:1fr;
+   
+           padding:24px;
+   
+           gap:16px;
+       }
+   
+       .monthCard{
+   
+           padding:24px;
+   
+           border-radius:18px;
+       }
+   
+       .formCard{
+   
+           width:95%;
+   
+           padding:24px;
+   
+           border-radius:20px;
+   
+           gap:16px;
+       }
+   
+       .formCard input,
+       .formCard textarea{
+   
+           padding:14px;
+   
+           font-size:15px;
+       }
+   
+       .data{
+   
+           width:95%;
+   
+           padding:18px 18px 18px 22px;
+   
+           border-radius:18px;
+       }
+   
+       .data h3{
+   
+           font-size:1.1rem;
+       }
+   
+       .date{
+   
+           font-size:.8rem;
+       }
+   
+       .note{
+   
+           font-size:.85rem;
+       }
+   
+       .goldBtn,
+       .logoutBtn{
+   
+           width:100%;
+   
+           padding:15px;
+           margin:0.5rem;
+           font-size:15px;
+       }
+   
+       .alert{
+   
+           top:16px;
+   
+           left:50%;
+   
+           right:auto;
+   
+           transform:translateX(-50%);
+   
+           width:90%;
+   
+           text-align:center;
+   
+           font-size:.9rem;
+   
+           padding:14px;
+       }
+   }
+   
+   @media (max-width:480px){
+   
+       .page{
+           overflow-x:hidden;
+       }
+   
+       .monthGrid{
+           padding:16px;
+       }
+   
+       .monthCard{
+   
+           padding:18px;
+   
+           border-radius:16px;
+       }
+   
+       .formCard{
+   
+           width:96%;
+   
+           padding:18px;
+   
+           border-radius:18px;
+       }
+   
+       .formCard input,
+       .formCard textarea{
+   
+           padding:14px;
+   
+           font-size:14px;
+       }
+   
+       .data{
+   
+           width:96%;
+   
+           padding:16px 16px 16px 20px;
+       }
+   
+       .goldBtn,
+       .logoutBtn{
+   
+           width:100%;
+   
+           font-size:14px;
+           margin:0.5rem;
+           padding:14px;
+       }
+   
+       .alert{
+   
+           width:95%;
+   
+           font-size:.85rem;
+       }
+   }
+   
+   .header{
+       display:flex;
+       justify-content:space-between;
+       position:relative;
+       z-index:2;
+   }
+   
+   @media (max-width:380px){
+   
+       .monthGrid{
+           padding:8px;
+       }
+   
+       .monthCard{
+           padding:16px;
+       }
+   
+       .formCard{
+           padding:16px;
+       }
+   
+       .data{
+           padding:16px 16px 16px 20px;
+       }
+   
+       .goldBtn,
+       .logoutBtn{
+           margin:0.5rem;
+           font-size:13px;
+           padding:12px;
+       }
+   
+       .header{
+           flex-direction:column;
+           gap:8px;
+           align-items:center;
+       }
+   
+       .alert{
+           width:98%;
+           font-size:.8rem;
+       }
+   }
+   
+   /* ==========================================================================
+      AVATARS
+      ========================================================================== */
+   
+   .profileAvatar{
+       width:60px;
+       height:60px;
+       border-radius:50%;
+       overflow:hidden;
+       flex-shrink:0;
+       border:2px solid var(--accent);
+       box-shadow:0 4px 12px rgba(0,0,0,.45);
+   }
+   
+   .profileAvatar img{
+       width:100%;
+       height:100%;
+       object-fit:cover;
+       object-position:center;
+       display:block;
+   }
+   
+   .commentAvatar{
+       width:36px;
+       height:36px;
+       flex-shrink:0;
+       border-radius:50%;
+       display:flex;
+       align-items:center;
+       justify-content:center;
+       font-family:var(--font-display);
+       font-weight:800;
+       letter-spacing:-.01em;
+       font-size:.9rem;
+       color:var(--void);
+       background:var(--accent);
+       margin:0.4rem;
+   }
+   
+   .h3{
+       position:relative;
+       top:1rem;
+       color:var(--white);
+       font-family:var(--font-display);
+       font-size:1.6rem;
+       font-weight:800;
+       letter-spacing:-.03em;
+       line-height:1.1;
+   }
+   
+   .eventHeader{
+       display:flex;
+       flex-direction:row;
+       justify-content:start;
+       position:relative;
+       z-index:2;
+   }
+   
+   /* ==========================================================================
+      MEMORY GRID — photographs
+      ========================================================================== */
+   
+   .memoryContainer{
+   
+       display:flex;
+       flex-wrap:wrap;
+       gap:64px;
+   
+       position:relative;
+       z-index:2;
+   
+       animation:
+       formReveal .5s cubic-bezier(.22,1,.36,1);
+   }
+   
+   .image{
+       position:relative;
+       width:140px;
+       height:140px;
+       overflow:hidden;
+       border-radius:8px;
+       border:1px solid var(--hairline-soft);
+       box-shadow:0 8px 20px rgba(0,0,0,.45);
+   
+       transition:
+       border-color .22s ease,
+       box-shadow .22s ease,
+       transform .22s cubic-bezier(.22,1,.36,1);
+   
+       animation:
+       formReveal .5s cubic-bezier(.22,1,.36,1);
+   }
+   
+   .image:hover{
+       border-color:var(--hairline);
+       transform:translateY(-2px);
+       box-shadow:0 12px 26px rgba(0,0,0,.5);
+   }
+   
+   .image img{
+       width:100%;
+       height:100%;
+       object-fit:contain;
+       background:var(--surface);
+   }
+   
+   .text{
+       position:absolute;
+       bottom:6px;
+       left:6px;
+   
+       margin:0;
+       padding:4px 8px;
+   
+       font-family:var(--font-display);
+       font-weight:600;
+       font-size:12px;
+       color:var(--white);
+   
+       background:rgba(0,0,0,.65);
+       border-radius:6px;
+   
+       z-index:3;
+   }
+   
+   .memoryDelete{
+       position:absolute;
+       bottom:6px;
+       right:6px;
+   
+       cursor:pointer;
+   
+       margin:0;
+       padding:4px 8px;
+   
+       font-size:12px;
+       font-weight:500;
+       color:var(--white);
+   
+       scale:0.85;
+   
+       background:rgba(0,0,0,.65);
+       border-radius:6px;
+   
+       z-index:3;
+   }
+   
+   /* plus symbol */
+   
+   .material-symbols-outlined{
+     font-variation-settings:
+     'FILL' 0,
+     'wght' 400,
+     'GRAD' 0,
+     'opsz' 24
+   }
+   
+   /* ==========================================================================
+      DESTRUCTIVE / CANCEL ACTIONS
+      ========================================================================== */
+   
+   .delete{
+       scale:0.9;
+       margin:7px;
+       position:relative;
+       padding:14px 32px;
+       border:none;
+       border-radius:14px;
+       cursor:pointer;
+       overflow:hidden;
+   
+       color:var(--white);
+   
+       font-family:var(--font-body);
+       font-size:16px;
+       font-weight:600;
+       letter-spacing:-.01em;
+   
+       background:var(--danger);
+   
+       transition:
+       background .22s ease,
+       transform .22s ease,
+       box-shadow .22s ease;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.1) inset,
+       0 8px 20px rgba(255,69,58,.24);
+   }
+   
+   .delete:hover{
+       background:var(--danger-bright);
+   
+       transform:translateY(-2px);
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.12) inset,
+       0 12px 26px rgba(255,69,58,.32);
+   }
+   
+   .delete:active{
+       transform:scale(.97);
+   }
+   
+   .deleteBtn1{
+       position:relative;
+       padding:14px 32px;
+       border:none;
+       border-radius:14px;
+       cursor:pointer;
+       overflow:hidden;
+   
+       font-family:var(--font-body);
+       font-size:16px;
+       font-weight:600;
+       letter-spacing:-.01em;
+   
+       color:var(--white);
+   
+       background:var(--danger);
+   
+       scale:0.9;
+   
+       transition:
+           transform .22s cubic-bezier(.22,1,.36,1),
+           box-shadow .22s ease,
+           background .2s ease;
+   
+       box-shadow:
+           0 1px 0 rgba(255,255,255,.08) inset,
+           0 6px 16px rgba(255,69,58,.2);
+   }
+   
+   .deleteBtn1:hover{
+       background:var(--danger-bright);
+   
+       transform:translateY(-2px) scale(.92);
+   
+       box-shadow:
+           0 10px 22px rgba(255,69,58,.3);
+   }
+   
+   .deleteBtn1:active{
+       transform:scale(.88);
+   }
+   
+   .cancelBtn{
+       scale:0.9;
+       position:relative;
+       padding:14px 32px;
+       border:1px solid var(--hairline-soft);
+       border-radius:14px;
+   
+       cursor:pointer;
+       overflow:hidden;
+   
+       font-family:var(--font-body);
+       font-size:16px;
+       font-weight:600;
+       letter-spacing:-.01em;
+   
+       color:var(--white);
+   
+       background:var(--surface);
+   
+       transition:
+           transform .22s cubic-bezier(.22,1,.36,1),
+           box-shadow .22s ease,
+           background .2s ease,
+           border-color .2s ease;
+   
+       box-shadow:
+           0 1px 0 rgba(255,255,255,.04) inset,
+           0 4px 12px rgba(0,0,0,.4);
+   }
+   
+   .cancelBtn:hover{
+       background:var(--surface-2);
+   
+       border-color:var(--hairline);
+   
+       transform:translateY(-2px) scale(.92);
+   
+       box-shadow:
+           0 8px 18px rgba(0,0,0,.45);
+   }
+   
+   .cancelBtn:active{
+       transform:scale(.88);
+   }
+
+
+   /* download */
+   .memoryDownload{
+    position:absolute;
+    top:6px;
+    right:6px;
+
+    cursor:pointer;
+
+    margin:0;
+    padding:4px 8px;
+
+    font-size:12px;
+    font-weight:500;
+    color:var(--white);
+
+    scale:0.85;
+
+    background:rgba(0,0,0,.65);
+    border-radius:6px;
+
+    z-index:3;
+}

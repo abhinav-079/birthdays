@@ -1,12 +1,26 @@
 import { useEffect, useState } from "react"
 import style from "./pageOne.module.css"
 import axios from "axios"
- import {Month} from "./Month"
+ import {Month} from "../component/Month"
  import type { FormEvent } from "react";
- 
+ import { InvalidPage } from "./InvalidPage";
 import { Navigate, useNavigate } from "react-router-dom";
-import { LoginError } from "./loginError";
+ 
 const PageOne=()=>{
+    interface memory{
+        fileName:string,
+        uploadTimeLine:string
+    }
+    interface element {
+        id: string;
+        profile: string;
+        nameOfPerson: string;
+        yearOfUser: number;
+        monthOfUser: number;
+        dateOfUser: number;
+        memories: memory[];
+        note: string | null;
+    }
     const todayGen=new Date();
     let thisMonth:string|number=0;
 let currentDay:string|number=todayGen.getDate();
@@ -22,7 +36,7 @@ const [everyMonthProfile,setEveryMonthProfile]=useState<string|null|File>(null);
     const [everyMonthName,setEveryMonthName]=useState<string|null>("");
     const [everyMonthDob,setEveryMonthDob]=useState<string|null>("");
     const [editName,setEditName]=useState<string|null>(null);
-    const[everyMonthList,setEveryMonthList]=useState<any>([]);
+    const[everyMonthList,setEveryMonthList]=useState<element[]>([]);
     const [everyMonthClick,setEveryMonthClick]=useState<boolean|null>(null);
     const [editDob,setEditDob]=useState<string|null|boolean>(null);
     const [editNote,setEditNote]=useState<string|null>(null);
@@ -31,8 +45,8 @@ const [everyMonthProfile,setEveryMonthProfile]=useState<string|null|File>(null);
     const[update,setUpdate]=useState<(null|string)>(null)
     const [,setUsername]=useState<string>("null");
     const [userId,setUserId]=useState<string>("null");
-    const [list,setList]=useState<any>([]);
-    const[reqList,setReqList]=useState<any>([]);
+    const [list,setList]=useState<element[]>([]);
+    const[reqList,setReqList]=useState<element[]>([]);
     const [name,setName]=useState<string>("");
     const [dob,setDob]=useState<(string | null)>("");
     const [note,setNote]=useState<string>("");
@@ -97,10 +111,12 @@ const navigate=useNavigate();
              
                /*  */
                 if((get.data)==="Please try to login"){
-                   setUpdate("Please try to login");
+                    <InvalidPage message="Please try to login" messageToken={null}/>
+                   /* setUpdate("Please try to login"); */
                }
                else if((get.data)==="User not found"){
-                   setUpdate("User not found");
+                   /* setUpdate("User not found"); */
+                   <InvalidPage message="User not found" messageToken={null}/>
                }
             console.log(get.data.get.details);
             const toSetData=get.data.get.details;
@@ -114,7 +130,8 @@ const navigate=useNavigate();
              const token:string|null=localStorage.getItem("token");
               
              if(!token){
-                setUpdate("Login To Access.")
+                <InvalidPage message="Login To Access." messageToken={null}/>
+                /* setUpdate("Login To Access.") */
                 return "login first";
              }
             const get=await axios.get("https://birthdays-639v.onrender.com/every-month-data",{
@@ -127,10 +144,12 @@ const navigate=useNavigate();
              
                /*  */
                 if((get.data)==="Please try to login"){
-                   setUpdate("Please try to login");
+                    <InvalidPage message="Please try to login" messageToken={null}/>
+                   /* setUpdate("Please try to login"); */
                }
                else if((get.data)==="User not found"){
-                   setUpdate("User not found");
+                <InvalidPage message="User not found" messageToken={null}/>
+                  /*  setUpdate("User not found"); */
                }
             console.log(get.data.get.details);
             const toSetData=get.data.get.everyMonthEvents;
@@ -204,13 +223,15 @@ const saveEveryMonth=async()=>{
     else if((addData.data)==="Please try to login"){
         
         setTimeout(() => {
-            setUpdate("Please try to login");
+            <InvalidPage message="Please try to login" messageToken={null}/>
+            /* setUpdate("Please try to login"); */
         }, 0);
     }
     else if((addData.data)==="User not found"){
         
         setTimeout(() => {
-            setUpdate("User not found");
+            <InvalidPage message="User not found" messageToken={null}/>
+           /*  setUpdate("User not found"); */
         }, 0);
     }
 }
@@ -230,12 +251,13 @@ const saveEveryMonth=async()=>{
             }
         });
         if(sendMail.data==="Only Admins Page"){
-            setUpdate("Login as Admin.");
+            <InvalidPage message="Login As Admin" messageToken={null}/>
             return "login as admin";
         }
         console.log(sendMail);
     }
     else{
+        <InvalidPage message="Login." messageToken={null}/>
         return "Login."
     }
     
@@ -243,7 +265,7 @@ const saveEveryMonth=async()=>{
  }
 
   if(login===null){
-    return <LoginError/>
+    return <InvalidPage message="Session Timed Out. Please Login Again." messageToken={1}/>
   }
   
     return(
@@ -262,7 +284,10 @@ const saveEveryMonth=async()=>{
             }}
             >Logout</button> 
          {  "   "}
-            {(role==="Admin")?<button onClick={sendMails} className={style.logoutBtn}>Send Mails</button>:null}
+            {(role==="Admin")?<button onClick={()=>{
+                sendMails();
+                editAlert("Today Mails Sent.")
+            }} className={style.logoutBtn}>Send Mails</button>:null}
             </div>
             
             {update?<h1 className={style.alert}>{update}</h1>:null}
@@ -283,7 +308,7 @@ const saveEveryMonth=async()=>{
                }
                console.log(sample);
                sample.sort((a,b)=>a.dateOfUser-b.dateOfUser); */
-               setEveryMonthList(everyMonthList.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser));
+               setEveryMonthList(everyMonthList.sort((a:element,b:element)=>a.dateOfUser-b.dateOfUser));
                    
                    
                
@@ -319,7 +344,7 @@ const saveEveryMonth=async()=>{
                }
            }
            console.log(sample);
-           sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+           sample.sort((a:element,b:element)=>a.dateOfUser-b.dateOfUser);
            setReqList(sample);
                
                
@@ -350,7 +375,7 @@ const saveEveryMonth=async()=>{
                     }
                 }
                 console.log(sample);
-                sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+                sample.sort((a:element,b:element)=>a.dateOfUser-b.dateOfUser);
                 setReqList(sample);
                    
                   
@@ -381,7 +406,7 @@ const saveEveryMonth=async()=>{
                }
            }
            console.log(sample);
-           sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+           sample.sort((a:element,b:element)=>a.dateOfUser-b.dateOfUser);
            setReqList(sample);
                
                
@@ -414,7 +439,7 @@ const saveEveryMonth=async()=>{
                    }
                }
                console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:element,b:element)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -447,7 +472,7 @@ const saveEveryMonth=async()=>{
                    }
                }
                console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:element,b:element)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -480,7 +505,7 @@ const saveEveryMonth=async()=>{
                    }
                }
                console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:element,b:element)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -513,7 +538,7 @@ const saveEveryMonth=async()=>{
                    }
                }
                console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:element,b:element)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -546,7 +571,7 @@ const saveEveryMonth=async()=>{
                    }
                }
                console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:element,b:element)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -579,7 +604,7 @@ const saveEveryMonth=async()=>{
                    }
                }
                console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:element,b:element)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -612,7 +637,7 @@ const saveEveryMonth=async()=>{
                    }
                }
                console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:element,b:element)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -645,7 +670,7 @@ const saveEveryMonth=async()=>{
                    }
                }
                console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:element,b:element)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -678,7 +703,7 @@ const saveEveryMonth=async()=>{
                    }
                }
                console.log(sample);
-               sample.sort((a:any,b:any)=>a.dateOfUser-b.dateOfUser);
+               sample.sort((a:element,b:element)=>a.dateOfUser-b.dateOfUser);
                setReqList(sample);
                    
                    
@@ -694,7 +719,7 @@ const saveEveryMonth=async()=>{
 
         {everyMonthClick?
             <>
-            {everyMonthList.map((element:any,index:any)=>{
+            {everyMonthList.map((element:element,index:number)=>{
             return (
     <>
     <div className={style.data}>
@@ -752,9 +777,13 @@ const saveEveryMonth=async()=>{
                                 const editId=element.id;
                                 
                                 const token=localStorage.getItem("token");
+                                 
                                 const deleteRequest=await axios.put("https://birthdays-639v.onrender.com/delete-every-month-event",{
                                     userId,editId,token
                                 });
+                                if(deleteRequest.data.error){
+                                    <InvalidPage message={deleteRequest.data.message} messageToken={null}/>
+                                }
                                 console.log(deleteRequest);
 
                                 
@@ -785,6 +814,9 @@ const saveEveryMonth=async()=>{
 
 
                                     });
+                                    if(editReq.data.error){
+                                        <InvalidPage message={editReq.data.message} messageToken={null}/>
+                                    }
                                     console.log(editReq)
                                      
 
@@ -794,7 +826,7 @@ const saveEveryMonth=async()=>{
                                         setEveryMonthName(e.target.value || editName)
                                         setEditName(e.target.value)
                                     }} required/>
-                                    <input type="date" value={element.dob} onChange={(e)=>{
+                                    <input type="date"   onChange={(e)=>{
                                         setEveryMonthDob(e.target.value)
                                         setEditDob(e.target.value);
                                     }} required/>
@@ -828,12 +860,12 @@ const saveEveryMonth=async()=>{
         {(monthClick[0])?
         
         <>
-            {reqList.map((element:any,index:any)=>{
+            {reqList.map((element:element,index:number)=>{
 
                 console.log(element);
                 return (
                     <>
-                     <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
+                     <Month  element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
                   editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert} month="January"/>
                      
                     </>
@@ -847,12 +879,12 @@ const saveEveryMonth=async()=>{
         {(monthClick[1])?
         
             <>
-                {reqList.map((element:any,index:any)=>{
+                {reqList.map((element:element,index:number)=>{
 
                     console.log(element);
                     return (
                         <>
-                         <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
+                         <Month  element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
                       editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert} month="February"/>
                          
                         </>
@@ -866,12 +898,12 @@ const saveEveryMonth=async()=>{
         {(monthClick[2])?
         
         <>
-            {reqList.map((element:any,index:any)=>{
+            {reqList.map((element:element,index:number)=>{
 
                 console.log(element);
                 return (
                     <>
-                     <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
+                     <Month  element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
                       editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert} month="March"/>
                      
                     </>
@@ -886,13 +918,13 @@ const saveEveryMonth=async()=>{
 {(monthClick[3])?
         
         <>
-            {reqList.map((element:any,index:any)=>{
+            {reqList.map((element:element,index:number)=>{
 
                 console.log(element);
                 return (
                     <>
                      
-                     <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
+                     <Month  element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
                       editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert} month="April"/>
                     </>
                 )
@@ -905,13 +937,13 @@ const saveEveryMonth=async()=>{
     {(monthClick[4])?
         
         <>
-            {reqList.map((element:any,index:any)=>{
+            {reqList.map((element:element,index:number)=>{
 
                 console.log(element);
                 return (
                     <>
                      
-                     <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
+                     <Month  element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
                       editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert} month="May"/>
                     </>
                 )
@@ -924,13 +956,13 @@ const saveEveryMonth=async()=>{
     {(monthClick[5])?
         
         <>
-            {reqList.map((element:any,index:any)=>{
+            {reqList.map((element:element,index:number)=>{
 
                 console.log(element);
                 return (
                     <>
                      
-                     <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
+                     <Month  element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
                       editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert} month="June"/>
                     </>
                 )
@@ -943,13 +975,13 @@ const saveEveryMonth=async()=>{
     {(monthClick[6])?
         
         <>
-            {reqList.map((element:any,index:any)=>{
+            {reqList.map((element:element,index:number)=>{
 
                 console.log(element);
                 return (
                     <>
                      
-                     <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
+                     <Month  element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
                       editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert} month="July"/>
                     </>
                 )
@@ -962,13 +994,19 @@ const saveEveryMonth=async()=>{
     {(monthClick[7])?
         
         <>
-            {reqList.map((element:any,index:any)=>{
+            {reqList.map((element:element,index:number)=>{
 
-                console.log(element);
+                console.log(list,"----",element);
+                for(let i=0;i<list.length;i++){
+                    if((list[i]).id==element.id){
+                        index=i;
+                    }
+                }
+                console.log(index);
                 return (
                     <>
-                     
-                     <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
+                     {console.log("style ",(style),"element ",(element),"setEdit ",typeof(setEdit),"setEditName ",typeof(setEditName),"setEditdob ",typeof(setEditDob),"seteditnote ",typeof(setEditNote),"reqList ",(reqList),"index ",typeof(index),"userID ",typeof(userId),"editname ",(editName)," editdob ",typeof(editDob),"editnote ",typeof(editNote),"today ",typeof(today),"edit ",typeof(edit),"setREqlist",typeof(setReqList),"editAlert ",typeof(editAlert) )}
+                     <Month  element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
                       editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert}  month="August"/>
                     </>
                 )
@@ -981,13 +1019,13 @@ const saveEveryMonth=async()=>{
     {(monthClick[8])?
         
         <>
-            {reqList.map((element:any,index:any)=>{
+            {reqList.map((element:element,index:number)=>{
 
                 console.log(element);
                 return (
                     <>
                      
-                     <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
+                     <Month  element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
                       editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert} month="September"/>
                     </>
                 )
@@ -1000,13 +1038,13 @@ const saveEveryMonth=async()=>{
     {(monthClick[9])?
         
         <>
-            {reqList.map((element:any,index:any)=>{
+            {reqList.map((element:element,index:number)=>{
 
                 console.log(element);
                 return (
                     <>
                      
-                     <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
+                     <Month  element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
                       editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert} month="October"/>
                     </>
                 )
@@ -1019,13 +1057,13 @@ const saveEveryMonth=async()=>{
     {(monthClick[10])?
         
         <>
-            {reqList.map((element:any,index:any)=>{
+            {reqList.map((element:element,index:number)=>{
 
-                console.log(element);
+                console.log(reqList);
                 return (
                     <>
                      
-                     <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
+                     <Month  element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
                       editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert} month="November"/>
                     </>
                 )
@@ -1038,13 +1076,13 @@ const saveEveryMonth=async()=>{
     {(monthClick[11])?
         
         <>
-            {reqList.map((element:any,index:any)=>{
+            {reqList.map((element:element,index:number)=>{
 
                 console.log(element);
                 return (
                     <>
                      
-                     <Month style={style} element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
+                     <Month  element={element} setEdit={setEdit} setEditName={setEditName} setEditDob={setEditDob} setEditNote={setEditNote} reqList={reqList} index={index} userId={userId}
                       editName={editName} editDob={editDob} editNote={editNote} today={today} edit={edit} setReqList={setReqList} editAlert={editAlert} month="December"/>
                     </>
                 )
@@ -1104,6 +1142,9 @@ const saveEveryMonth=async()=>{
                          
                             const addData=await axios.post("https://birthdays-639v.onrender.com/add-data",formData)
                             console.log(addData);
+                            if(addData.data.error){
+                                <InvalidPage message={addData.data.message} messageToken={null}/>
+                            }
                             
                             if(addData.data!="Please try to login" && addData.data!="User not found")
                             {
@@ -1159,7 +1200,7 @@ const saveEveryMonth=async()=>{
                                      
                                     
                                      
-                                    <input type="file"  name="file" formEncType="multipart/form-data" className={ style.monthCard} onChange={(e:any)=>{console.log(e);
+                                    <input type="file"  name="file" formEncType="multipart/form-data" className={ style.monthCard} onChange={(e)=>{console.log(e);
                                     const file = e.target.files?.[0] ;
                                         console.log(file);
                                         setEveryMonthProfile(file);

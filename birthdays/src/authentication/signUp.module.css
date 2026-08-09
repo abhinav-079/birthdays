@@ -1,557 +1,413 @@
-
-*{
-   box-sizing:border-box;
-}
-
-html,
-body{
-   overflow-x:hidden;
-   width:100%;
-}
-.loginContainer{
-   min-height:100vh;
-
-   display:flex;
-   flex-direction:column;
-   justify-content:center;
-   align-items:center;
-
-   position:relative;
-
-   overflow:hidden;
-}
-
-/* PREMIUM AMBIENT GLOW */
-
-.loginContainer::before{
-   content:"";
-
-   position:absolute;
-
-   width:700px;
-   height:700px;
-
-   border-radius:50%;
-
-   background:
-   radial-gradient(
-       circle,
-       rgba(212,175,55,.08),
-       transparent 70%
-   );
-
-   top:-250px;
-   right:-250px;
-
-   animation:floatGlow 12s ease-in-out infinite;
-}
-
-.loginContainer::after{
-   content:"";
-
-   position:absolute;
-
-   width:600px;
-   height:600px;
-
-   border-radius:50%;
-
-   background:
-   radial-gradient(
-       circle,
-       rgba(255,255,255,.03),
-       transparent 70%
-   );
-
-   bottom:-250px;
-   left:-250px;
-
-   animation:floatGlowReverse 15s ease-in-out infinite;
-}
-
-.subtitle{
-   color:white;
-
-   font-size:3rem;
-
-   font-weight:700;
-
-   letter-spacing:1px;
-
-   margin-bottom:10px;
-
-   z-index:2;
-}
-
-.tagline{
-   color:#8c919b;
-
-   margin-bottom:40px;
-
-   z-index:2;
-}
-
-/* CARD */
-
-.loginCard{
-   width:min(440px,92%);
-
-   padding:40px;
-
-   background:
-   linear-gradient(
-       180deg,
-       rgba(15,18,28,.92),
-       rgba(9,11,19,.96)
-   );
-
-   border:1px solid rgba(255,255,255,.06);
-
-   border-radius:32px;
-
-   backdrop-filter:blur(20px);
-
-   box-shadow:
-   0 20px 60px rgba(0,0,0,.35);
-
-   position:relative;
-
-   z-index:2;
-
-   animation:cardAppear .8s ease;
-}
-
-.loginCard::before{
-   content:"";
-
-   position:absolute;
-
-   top:0;
-   left:0;
-
-   width:100%;
-   height:1px;
-
-   background:
-   linear-gradient(
-       90deg,
-       transparent,
-       rgba(212,175,55,.7),
-       transparent
-   );
-}
-
-/* INPUTS */
-
-.input,
-.password,.name{
-   width:100%;
-
-   height:56px;
-
-   padding:0 18px;
-
-   border-radius:16px;
-
-   border:1px solid rgba(255,255,255,.08);
-
-   background:
-   rgba(255,255,255,.03);
-
-   color:white;
-
-   outline:none;
-
-   transition:.3s ease;
-
-   box-sizing:border-box;
-}
-
-.input::placeholder,
-.password::placeholder,.name::placeholder{
-   color:#7f8794;
-}
-
-.input:focus,
-.password:focus,.name:focus{
-   border-color:
-   rgba(212,175,55,.35);
-
-   box-shadow:
-   0 0 0 4px rgba(212,175,55,.08);
-}
-
-/* BUTTON */
-
-.loginBtn{
-   width:100%;
-
-   height:56px;
-
-   border:none;
-
-   border-radius:16px;
-
-   background:
-   linear-gradient(
-       135deg,
-       #d4af37,
-       #f4d03f
-   );
-
-   color:#111;
-
-   font-weight:700;
-
-   cursor:pointer;
-
-   transition:.35s ease;
-}
-
-.loginBtn:hover{
-   transform:translateY(-2px);
-
-   box-shadow:
-   0 10px 30px rgba(212,175,55,.25);
-}
-
-/* ALERT */
-
-.alert {
-
-    
-      pointer-events:none;
+/* ==========================================================================
+   LOGIN PAGE (v2 — includes .name field, .otpWrapper) — restyled to match
+   the Main Page "Onyx" design system exactly. Same class names as the
+   source file; true-black canvas, hairline borders, one system-blue
+   accent, Inter type, quiet hover-lift instead of gold gradients and glow.
+   ========================================================================== */
+
+   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+   :root{
+       --void:#000000;
+       --surface:#1C1C1E;
+       --surface-2:#2C2C2E;
+       --white:#F5F5F7;
+       --gray-70:rgba(245,245,247,.72);
+       --gray-45:rgba(245,245,247,.45);
+       --accent:#0A84FF;
+       --accent-bright:#409CFF;
+       --accent-deep:#0060DF;
+       --hairline:rgba(255,255,255,.12);
+       --hairline-soft:rgba(255,255,255,.07);
    
-   position: fixed;
-
-   top: 20px;
-   left: 50%;
-
-   transform: translateX(-50%);
-
-   width: min(90vw, 420px);
-
-   padding: 16px 24px;
-
-   background: white;
-   color: #111;
-
-   border-radius: 12px;
-
-   font-weight: 600;
-   font-size: 1rem;
-
-   letter-spacing: 0.7px;
-
-   overflow: hidden;
-
-   text-align: center;
-   word-wrap: break-word;
-
-   z-index: 9999;
-
-   animation: toastLife 5.77s forwards;
-}
-
-.alert::after {
-   content: "";
-
-   position: absolute;
-
-   bottom: 0;
-   left: 0;
-
-   height: 4px;
-   width: 100%;
-
-   background: #d4af37;
-
-   animation: progress 5s linear forwards;
-}
-
-@keyframes progress {
-   from {
-       width: 100%;
+       --font-display:'Inter',-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+       --font-body:'Inter',-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
    }
-
-   to {
-       width: 0%;
+   
+   *{
+       box-sizing:border-box;
    }
-}
-
-@keyframes toastLife {
-
-   0% {
-       opacity: 0;
-       transform: translate(-50%, -20px);
+   
+   html,
+   body{
+       overflow-x:hidden;
+       width:100%;
+       font-family:var(--font-body);
+       -webkit-font-smoothing:antialiased;
+       background:var(--void);
    }
-
-   10% {
-       opacity: 1;
-       transform: translate(-50%, 0);
-   }
-
-   85% {
-       opacity: 1;
-       transform: translate(-50%, 0);
-   }
-
-   100% {
-       opacity: 0;
-       transform: translate(-50%, -20px);
-       visibility: hidden;
-   }
-}
-
-@media (max-width: 480px) {
-
-   .alert {
-       width: 95vw;
-
-       padding: 14px 16px;
-
-       font-size: 0.9rem;
-
-       top: 12px;
-   }
-}
-
-/* LINKS */
-
-.footer{
-   margin-top:24px;
-
-   display:flex;
-   justify-content:space-evenly;
-
-   flex-wrap:wrap;
-
-   gap:12px;
-}
-
-.links{
-   color:#9ca3af;
-
-   text-decoration:none;
-
-   transition:.3s ease;
-}
-
-.links:hover{
-   color:#d4af37;
-}
-
-/* MICRO ANIMATIONS */
-
-@keyframes floatGlow{
-
-   0%{
-       transform:
-       translateY(0px)
-       translateX(0px);
-   }
-
-   50%{
-       transform:
-       translateY(30px)
-       translateX(-20px);
-   }
-
-   100%{
-       transform:
-       translateY(0px)
-       translateX(0px);
-   }
-}
-
-@keyframes floatGlowReverse{
-
-   0%{
-       transform:
-       translateY(0px)
-       translateX(0px);
-   }
-
-   50%{
-       transform:
-       translateY(-25px)
-       translateX(20px);
-   }
-
-   100%{
-       transform:
-       translateY(0px)
-       translateX(0px);
-   }
-}
-
-@keyframes cardAppear{
-
-   from{
-       opacity:0;
-       transform:
-       translateY(20px)
-       scale(.98);
-   }
-
-   to{
-       opacity:1;
-       transform:
-       translateY(0)
-       scale(1);
-   }
-}.loginCard{
-   animation:
-   cardAppear .8s ease,
-   breathe 6s ease-in-out infinite;
-}
-
-@keyframes breathe{
-   0%,100%{
-       transform:translateY(0px);
-   }
-
-   50%{
-       transform:translateY(-4px);
-   }
-}
-
-.otpForm{
-   width:100%;
-
-   display:flex;
-   flex-direction:column;
-   align-items:center;
-
-   gap:24px;
-
-   z-index:2;
-}
-
-.otpTitle{
-   color:white;
-
-   font-size:1.5rem;
-
-   font-weight:700;
-
-   text-align:center;
-}
-
-.otpText{
-   color:#8c919b;
-
-   text-align:center;
-
-   font-size:.95rem;
-
-   line-height:1.6;
-}
-
-.otpInputs{
-   display:flex;
-
-   justify-content:center;
-
-   gap:14px;
-
-   width:100%;
-}
-
-.otpInput{
-   margin-bottom: 1rem;
-   width:64px;
-   height:64px;
-
-   border-radius:18px;
-
-   border:1px solid rgba(255,255,255,.08);
-
-   background:rgba(255,255,255,.03);
-
-   color:white;
-
-   text-align:center;
-
-   font-size:1.5rem;
-
-   font-weight:700;
-
-   outline:none;
-
-   transition:.3s ease;
-}
-
-.otpInput:focus{
-   border-color:rgba(212,175,55,.5);
-
-   box-shadow:
-   0 0 0 4px rgba(212,175,55,.08);
-
-   transform:translateY(-2px);
-}
-
-@media (max-width:768px){
-
-   .subtitle{
-       font-size:2rem;
-       text-align:center;
-   }
-
-   .tagline{
-       text-align:center;
-       padding:0 20px;
-   }
-
-   .loginCard{
-       width:95%;
-       padding:24px;
-   }
-
-   .footer{
+   
+   /* ==========================================================================
+      PAGE CANVAS — flat true black, no glow blobs
+      ========================================================================== */
+   
+   .loginContainer{
+       min-height:100vh;
+       background:var(--void);
+       color:var(--white);
+   
+       display:flex;
        flex-direction:column;
+       justify-content:center;
        align-items:center;
+   
+       position:relative;
+       overflow:hidden;
    }
-
-   .alert{
-       width:90%;
-       left:50%;
-       right:auto;
-       transform:translateX(-50%);
-       text-align:center;
-   }
-}
-
-@media (max-width:480px){
-
+   
    .subtitle{
-       font-size:1.6rem;
+       color:var(--white);
+       font-family:var(--font-display);
+       font-size:3rem;
+       font-weight:800;
+       letter-spacing:-.03em;
+       margin-bottom:10px;
+       z-index:2;
    }
-
+   
+   .tagline{
+       color:var(--gray-70);
+       font-family:var(--font-body);
+       font-weight:400;
+       margin-bottom:40px;
+       z-index:2;
+   }
+   
+   /* ==========================================================================
+      CARD — hairline border, soft shadow, no backdrop blur / gold rail
+      ========================================================================== */
+   
    .loginCard{
-       padding:18px;
+       width:min(440px,92%);
+       padding:40px;
+   
+       background:var(--surface);
+       border:1px solid var(--hairline-soft);
+       border-radius:24px;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.04) inset,
+       0 24px 60px rgba(0,0,0,.55);
+   
+       position:relative;
+       z-index:2;
+   
+       animation:cardAppear .5s cubic-bezier(.22,1,.36,1), breathe 6s ease-in-out infinite;
    }
-
+   
+   /* ==========================================================================
+      INPUTS — .name added alongside .input / .password
+      ========================================================================== */
+   
    .input,
    .password,
    .name{
-       height:50px;
-       font-size:14px;
-   }
-
-   .loginBtn{
-       height:50px;
-       font-size:14px;
-   }
-
-   .otpInput{
-       width:44px;
-       height:44px;
+       width:100%;
+       height:56px;
+       padding:0 18px;
+   
+       border-radius:14px;
+       border:1px solid var(--hairline-soft);
+   
+       background:var(--void);
+       color:var(--white);
+   
+       outline:none;
+       font-family:var(--font-body);
        font-size:1rem;
+       font-weight:400;
+   
+       transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
+   
+       box-sizing:border-box;
    }
-}
-
-.otpWrapper{
-   position:relative;
-   z-index:100;
-}
+   
+   .input::placeholder,
+   .password::placeholder,
+   .name::placeholder{
+       color:var(--gray-45);
+   }
+   
+   .input:focus,
+   .password:focus,
+   .name:focus{
+       border-color:var(--accent);
+       box-shadow:0 0 0 4px rgba(10,132,255,.22);
+       background:var(--surface);
+   }
+   
+   /* ==========================================================================
+      PRIMARY CTA — system-blue accent, no gradient
+      ========================================================================== */
+   
+   .loginBtn{
+       width:100%;
+       height:56px;
+   
+       border:none;
+       border-radius:14px;
+   
+       background:var(--accent);
+       color:var(--void);
+   
+       font-family:var(--font-body);
+       font-weight:600;
+       font-size:16px;
+       letter-spacing:-.01em;
+   
+       cursor:pointer;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.18) inset,
+       0 8px 20px rgba(10,132,255,.22);
+   
+       transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease, background .22s ease;
+   }
+   
+   .loginBtn:hover{
+       background:var(--accent-bright);
+       transform:translateY(-2px);
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.2) inset,
+       0 12px 26px rgba(10,132,255,.3);
+   }
+   
+   /* ==========================================================================
+      ALERT / TOAST — dark surface, blue progress bar; pointer-events:none kept
+      ========================================================================== */
+   
+   .alert{
+       pointer-events:none;
+   
+       position:fixed;
+       top:20px;
+       left:50%;
+       transform:translateX(-50%);
+   
+       width:min(90vw,420px);
+       padding:16px 24px;
+   
+       background:var(--surface-2);
+       color:var(--white);
+   
+       border:1px solid var(--hairline);
+       border-radius:14px;
+   
+       font-family:var(--font-body);
+       font-weight:600;
+       font-size:1rem;
+       letter-spacing:0;
+   
+       overflow:hidden;
+       text-align:center;
+       word-wrap:break-word;
+   
+       z-index:9999;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.05) inset,
+       0 18px 44px rgba(0,0,0,.6);
+   
+       animation:toastLife 5.77s forwards;
+   }
+   
+   .alert::after{
+       content:"";
+       position:absolute;
+       bottom:0;
+       left:0;
+       height:2px;
+       width:100%;
+       background:var(--accent);
+       animation:progress 5s linear forwards;
+   }
+   
+   @keyframes progress{
+       from{ width:100%; }
+       to{ width:0%; }
+   }
+   
+   @keyframes toastLife{
+       0%{ opacity:0; transform:translate(-50%,-16px); }
+       10%{ opacity:1; transform:translate(-50%,0); }
+       85%{ opacity:1; transform:translate(-50%,0); }
+       100%{ opacity:0; transform:translate(-50%,-16px); visibility:hidden; }
+   }
+   
+   @media (max-width:480px){
+       .alert{
+           width:95vw;
+           padding:14px 16px;
+           font-size:.9rem;
+           top:12px;
+       }
+   }
+   
+   /* ==========================================================================
+      LINKS
+      ========================================================================== */
+   
+   .footer{
+       margin-top:24px;
+       display:flex;
+       justify-content:space-evenly;
+       flex-wrap:wrap;
+       gap:12px;
+   }
+   
+   .links{
+       color:var(--gray-70);
+       text-decoration:none;
+       transition:color .2s ease;
+   }
+   
+   .links:hover{
+       color:var(--accent-bright);
+   }
+   
+   /* ==========================================================================
+      MOTION — quiet entrance + a very subtle idle lift on the card
+      ========================================================================== */
+   
+   @keyframes cardAppear{
+       from{
+           opacity:0;
+           transform:translateY(16px);
+       }
+       to{
+           opacity:1;
+           transform:translateY(0);
+       }
+   }
+   
+   @keyframes breathe{
+       0%,100%{
+           transform:translateY(0px);
+       }
+       50%{
+           transform:translateY(-4px);
+       }
+   }
+   
+   /* ==========================================================================
+      OTP
+      ========================================================================== */
+   
+   .otpForm{
+       width:100%;
+       display:flex;
+       flex-direction:column;
+       align-items:center;
+       gap:24px;
+       z-index:2;
+   }
+   
+   .otpTitle{
+       color:var(--white);
+       font-family:var(--font-display);
+       font-size:1.5rem;
+       font-weight:800;
+       letter-spacing:-.03em;
+       text-align:center;
+   }
+   
+   .otpText{
+       color:var(--gray-70);
+       text-align:center;
+       font-size:.95rem;
+       line-height:1.6;
+   }
+   
+   .otpInputs{
+       display:flex;
+       justify-content:center;
+       gap:14px;
+       width:100%;
+   }
+   
+   .otpInput{
+       margin-bottom:1rem;
+   
+       width:64px;
+       height:64px;
+   
+       border-radius:14px;
+       border:1px solid var(--hairline-soft);
+   
+       background:var(--void);
+       color:var(--white);
+   
+       text-align:center;
+       font-family:var(--font-display);
+       font-size:1.5rem;
+       font-weight:700;
+   
+       outline:none;
+       transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+   }
+   
+   .otpInput:focus{
+       border-color:var(--accent);
+       box-shadow:0 0 0 4px rgba(10,132,255,.22);
+       background:var(--surface);
+       transform:translateY(-2px);
+   }
+   
+   .otpWrapper{
+       position:relative;
+       z-index:100;
+   }
+   
+   /* ==========================================================================
+      RESPONSIVE
+      ========================================================================== */
+   
+   @media (max-width:768px){
+       .subtitle{
+           font-size:2rem;
+           text-align:center;
+       }
+       .tagline{
+           text-align:center;
+           padding:0 20px;
+       }
+       .loginCard{
+           width:95%;
+           padding:24px;
+       }
+       .footer{
+           flex-direction:column;
+           align-items:center;
+       }
+       .alert{
+           width:90%;
+           left:50%;
+           right:auto;
+           transform:translateX(-50%);
+           text-align:center;
+       }
+   }
+   
+   @media (max-width:480px){
+       .subtitle{
+           font-size:1.6rem;
+       }
+       .loginCard{
+           padding:18px;
+       }
+       .input,
+       .password,
+       .name{
+           height:50px;
+           font-size:14px;
+       }
+       .loginBtn{
+           height:50px;
+           font-size:14px;
+       }
+       .otpInput{
+           width:44px;
+           height:44px;
+           font-size:1rem;
+       }
+   }

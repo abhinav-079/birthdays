@@ -35,4 +35,4 @@ let schema=mongoose.Schema({
 })
 let dbModel=new mongoose.model("Birthday",schema);
 
-module.exports=dbModel
+module.exports={dbModel}

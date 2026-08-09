@@ -51,7 +51,7 @@ function LoginForm( ) {
 
     try {
       const response = await axios.post(
-        "https://birthdays-639v.onrender.com/login",
+        "http://localhost:4000/login",
         {
             
           "username":usernameForm,
@@ -161,7 +161,7 @@ useEffect(() => {
             <>
             {inValidUserName?
                
-              <h1 className={style.alert}>Invalid Username, Please Try Again. </h1> 
+              <h1 className={style.alert}>Invalid Credentials, Please Try Again</h1> 
                
               :
                <>
@@ -171,7 +171,7 @@ useEffect(() => {
                 
                 </>
                 :
-                <h1 className={style.alert}>  Wrong Password, Please Try Again..</h1> 
+                <h1 className={style.alert}>Invalid Credentials, Please Try Again</h1> 
                  
               }
               </>
@@ -237,8 +237,8 @@ useEffect(() => {
       <div className={style.loginContainer}> 
       <h1 className={style.subtitle}>Login</h1>
       <br />
-      <p className={style.tagline}>
-        Access the private network.
+      <p className={style.tagline} style={{fontFamily:"Inter",fontWeight:650}}>
+        All Your Memories At One Place.
       </p>
       
       
@@ -262,7 +262,7 @@ useEffect(() => {
      ? ""
      : <>{
           inValidUserName
-          ? <h1 className={style.alert}>Invalid Username</h1>
+          ? <h1 className={style.alert}>Invalid Credentials, Please Try Again</h1>
           : 
           <>
             {console.log(validPassword," password correctness")}
@@ -271,7 +271,7 @@ useEffect(() => {
                 <h1 className={style.alert}>Redirecting...</h1>
                  
                 </>
-                : <h1 className={style.alert}>Wrong Password</h1>
+                : <h1 className={style.alert}>Invalid Credentials, Please Try Again</h1>
               }
             </>
         }

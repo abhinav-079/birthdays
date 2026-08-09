@@ -1,12 +1,13 @@
 const jwt=require("jsonwebtoken");
+const {generateJwtToken}=require("../jwt.js");
 
 const secretToken=process.env.JWTSECRET
-const generateJwtToken=(user)=>{
+/* const generateJwtToken=(user)=>{
 
     return jwt.sign(user,secretToken,{
         expiresIn:"7d"
     })
-}
+} */
 
 const verifyUser=(token)=>{
     try{

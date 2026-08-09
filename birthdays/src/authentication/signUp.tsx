@@ -2,7 +2,7 @@ import style from "./signUp.module.css"
 import { useState } from "react";
  import {Link} from "react-router-dom"
 import { axiosManager } from "./axiosManager";
- import {Otp} from "../Otp"
+ import {Otp} from "../component/Otp"
  import type { FormEvent } from "react";
  
 function SignUpForm() {
@@ -289,7 +289,7 @@ const sendingOtp=await axiosManager.post("/signup-checkpost-two",{
             }
             
             
-            <Otp stylist={style} setOtp={setOtp}/>
+            <Otp  setOtp={setOtp}/>
             <button onClick={sendOtp} className={style.loginBtn} type="button">verify otp</button>
             <Link to={"/login"} className={style.links}> 
             Account created? 

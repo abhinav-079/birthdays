@@ -1,621 +1,464 @@
-
-*{
-    box-sizing:border-box;
-}
-
-html,
-body{
-    overflow-x:hidden;
-    width:100%;
-}
-.loginContainer{
-   min-height:100vh;
-
-   display:flex;
-   flex-direction:column;
-   justify-content:center;
-   align-items:center;
-
-   position:relative;
-
-   overflow:hidden;
-}
-
-/* PREMIUM AMBIENT GLOW */
-
-.loginContainer::before{
-   content:"";
-
-   position:absolute;
-
-   width:700px;
-   height:700px;
-
-   border-radius:50%;
-
-   background:
-   radial-gradient(
-       circle,
-       rgba(212,175,55,.08),
-       transparent 70%
-   );
-
-   top:-250px;
-   right:-250px;
-
-   animation:floatGlow 12s ease-in-out infinite;
-}
-
-.loginContainer::after{
-   content:"";
-
-   position:absolute;
-
-   width:600px;
-   height:600px;
-
-   border-radius:50%;
-
-   background:
-   radial-gradient(
-       circle,
-       rgba(255,255,255,.03),
-       transparent 70%
-   );
-
-   bottom:-250px;
-   left:-250px;
-
-   animation:floatGlowReverse 15s ease-in-out infinite;
-}
-
-.subtitle{
-   color:white;
-
-   font-size:3rem;
-
-   font-weight:700;
-
-   letter-spacing:1px;
-
-   margin-bottom:10px;
-
-   z-index:2;
-}
-
-.tagline{
-   color:#8c919b;
-
-   margin-bottom:40px;
-
-   z-index:2;
-}
-
-/* CARD */
-
-.loginCard{
-   width:min(440px,92%);
-
-   padding:40px;
-
-   background:
-   linear-gradient(
-       180deg,
-       rgba(15,18,28,.92),
-       rgba(9,11,19,.96)
-   );
-
-   border:1px solid rgba(255,255,255,.06);
-
-   border-radius:32px;
-
-   backdrop-filter:blur(20px);
-
-   box-shadow:
-   0 20px 60px rgba(0,0,0,.35);
-
-   position:relative;
-
-   z-index:2;
-
-   animation:cardAppear .8s ease;
-}
-
-.loginCard::before{
-   content:"";
-
-   position:absolute;
-
-   top:0;
-   left:0;
-
-   width:100%;
-   height:1px;
-
-   background:
-   linear-gradient(
-       90deg,
-       transparent,
-       rgba(212,175,55,.7),
-       transparent
-   );
-}
-
-/* INPUTS */
-
-.input,
-.password{
-   width:100%;
-
-   height:56px;
-
-   padding:0 18px;
-
-   border-radius:16px;
-
-   border:1px solid rgba(255,255,255,.08);
-
-   background:
-   rgba(255,255,255,.03);
-
-   color:white;
-
-   outline:none;
-
-   transition:.3s ease;
-
-   box-sizing:border-box;
-}
-
-.input::placeholder,
-.password::placeholder{
-   color:#7f8794;
-}
-
-.input:focus,
-.password:focus{
-   border-color:
-   rgba(212,175,55,.35);
-
-   box-shadow:
-   0 0 0 4px rgba(212,175,55,.08);
-}
-
-/* BUTTON */
-
-.loginBtn{
-   width:100%;
-
-   height:56px;
-
-   border:none;
-
-   border-radius:16px;
-
-   background:
-   linear-gradient(
-       135deg,
-       #d4af37,
-       #f4d03f
-   );
-
-   color:#111;
-
-   font-weight:700;
-
-   cursor:pointer;
-
-   transition:.35s ease;
-}
-
-.loginBtn:hover{
-   transform:translateY(-2px);
-
-   box-shadow:
-   0 10px 30px rgba(212,175,55,.25);
-}
-
-/* ALERT */
-
-.alert {
-   position: fixed;
-
-   top: 20px;
-   left: 50%;
-
-   transform: translateX(-50%);
-
-   width: min(90vw, 420px);
-
-   padding: 16px 24px;
-
-   background: white;
-   color: #111;
-
-   border-radius: 12px;
-
-   font-weight: 600;
-   font-size: 1rem;
-
-   letter-spacing: 0.7px;
-
-   overflow: hidden;
-
-   text-align: center;
-   word-wrap: break-word;
-
-   z-index: 9999;
-
-   animation: toastLife 5.77s forwards;
-}
-
-.alert::after {
-   content: "";
-
-   position: absolute;
-
-   bottom: 0;
-   left: 0;
-
-   height: 4px;
-   width: 100%;
-
-   background: #d4af37;
-
-   animation: progress 5s linear forwards;
-}
-
-@keyframes progress {
-   from {
-       width: 100%;
+/* ==========================================================================
+   LOGIN PAGE — restyled to match the Main Page "Onyx" design system exactly
+   Same class names as before (loginContainer, loginCard, subtitle, tagline,
+   input, password, loginBtn, alert, footer, links, otpForm, otpInput,
+   verifyBtn, resendOtp, resendLink) — the visual language underneath is now
+   identical to the main page: true-black canvas, hairline borders, one
+   restrained system-blue accent, Inter type, and the same quiet hover-lift
+   instead of gold gradients and glow blobs.
+   ========================================================================== */
+
+   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+   :root{
+       --void:#000000;
+       --surface:#1C1C1E;
+       --surface-2:#2C2C2E;
+       --white:#F5F5F7;
+       --gray-70:rgba(245,245,247,.72);
+       --gray-45:rgba(245,245,247,.45);
+       --accent:#0A84FF;
+       --accent-bright:#409CFF;
+       --accent-deep:#0060DF;
+       --hairline:rgba(255,255,255,.12);
+       --hairline-soft:rgba(255,255,255,.07);
+   
+       --font-display:'Inter',-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+       --font-body:'Inter',-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
    }
-
-   to {
-       width: 0%;
+   
+   *{
+       box-sizing:border-box;
    }
-}
-
-@keyframes toastLife {
-
-   0% {
-       opacity: 0;
-       transform: translate(-50%, -20px);
+   
+   html,
+   body{
+       overflow-x:hidden;
+       width:100%;
+       font-family:var(--font-body);
+       -webkit-font-smoothing:antialiased;
+       background:var(--void);
    }
-
-   10% {
-       opacity: 1;
-       transform: translate(-50%, 0);
-   }
-
-   85% {
-       opacity: 1;
-       transform: translate(-50%, 0);
-   }
-
-   100% {
-       opacity: 0;
-       transform: translate(-50%, -20px);
-       visibility: hidden;
-   }
-}
-
-@media (max-width: 480px) {
-
-   .alert {
-       width: 95vw;
-
-       padding: 14px 16px;
-
-       font-size: 0.9rem;
-
-       top: 12px;
-   }
-}
-
-/* LINKS */
-
-.footer{
-   margin-top:24px;
-
-   display:flex;
-   justify-content:space-between;
-
-   flex-wrap:wrap;
-
-   gap:12px;
-}
-
-.links{
-   color:#9ca3af;
-
-   text-decoration:none;
-
-   transition:.3s ease;
-}
-
-.links:hover{
-   color:#d4af37;
-}
-
-/* MICRO ANIMATIONS */
-
-@keyframes floatGlow{
-
-   0%{
-       transform:
-       translateY(0px)
-       translateX(0px);
-   }
-
-   50%{
-       transform:
-       translateY(30px)
-       translateX(-20px);
-   }
-
-   100%{
-       transform:
-       translateY(0px)
-       translateX(0px);
-   }
-}
-
-@keyframes floatGlowReverse{
-
-   0%{
-       transform:
-       translateY(0px)
-       translateX(0px);
-   }
-
-   50%{
-       transform:
-       translateY(-25px)
-       translateX(20px);
-   }
-
-   100%{
-       transform:
-       translateY(0px)
-       translateX(0px);
-   }
-}
-
-@keyframes cardAppear{
-
-   from{
-       opacity:0;
-       transform:
-       translateY(20px)
-       scale(.98);
-   }
-
-   to{
-       opacity:1;
-       transform:
-       translateY(0)
-       scale(1);
-   }
-}.loginCard{
-   animation:
-   cardAppear .8s ease,
-   breathe 6s ease-in-out infinite;
-}
-
-@keyframes breathe{
-   0%,100%{
-       transform:translateY(0px);
-   }
-
-   50%{
-       transform:translateY(-4px);
-   }
-}
-
-
-/* otp */
-.otpForm{
-   width:100%;
-
-   display:flex;
-   flex-direction:column;
-   align-items:center;
-
-   gap:24px;
-
-   z-index:2;
-}
-
-.otpTitle{
-   color:white;
-
-   font-size:1.5rem;
-
-   font-weight:700;
-
-   text-align:center;
-}
-
-.otpText{
-   color:#8c919b;
-
-   text-align:center;
-
-   font-size:.95rem;
-
-   line-height:1.6;
-}
-
-.otpInputs{
-   display:flex;
-
-   justify-content:center;
-
-   gap:14px;
-
-   width:100%;
-}
-
-.otpInput{
-   width:64px;
-   height:64px;
-
-   border-radius:18px;
-
-   border:1px solid rgba(255,255,255,.08);
-
-   background:rgba(255,255,255,.03);
-
-   color:white;
-
-   text-align:center;
-
-   font-size:1.5rem;
-
-   font-weight:700;
-
-   outline:none;
-
-   transition:.3s ease;
-}
-
-.otpInput:focus{
-   border-color:rgba(212,175,55,.5);
-
-   box-shadow:
-   0 0 0 4px rgba(212,175,55,.08);
-
-   transform:translateY(-2px);
-}
-
-.verifyBtn{
-   width:100%;
-   height:56px;
-
-   border:none;
-
-   border-radius:16px;
-
-   background:
-   linear-gradient(
-       135deg,
-       #d4af37,
-       #f4d03f
-   );
-
-   color:#111;
-
-   font-size:1rem;
-
-   font-weight:700;
-
-   cursor:pointer;
-
-   transition:.35s ease;
-}
-
-.verifyBtn:hover{
-   transform:translateY(-2px);
-
-   box-shadow:
-   0 10px 30px rgba(212,175,55,.25);
-}
-
-.resendOtp{
-   color:#9ca3af;
-
-   font-size:.95rem;
-
-   text-align:center;
-}
-
-.resendLink{
-   color:#d4af37;
-
-   cursor:pointer;
-
-   font-weight:600;
-
-   margin-left:5px;
-
-   transition:.3s ease;
-}
-
-.resendLink:hover{
-   opacity:.8;
-}
-
-/* MOBILE */
-
-@media(max-width:500px){
-
-   .otpInputs{
-       gap:10px;
-   }
-
-   .otpInput{
-       width:52px;
-       height:52px;
-
-       font-size:1.25rem;
-   }
-
-   .otpTitle{
-       font-size:1.3rem;
-   }
-}
-
-
-@media (max-width:768px){
-
-   .subtitle{
-       font-size:2rem;
-       text-align:center;
-   }
-
-   .tagline{
-       text-align:center;
-       padding:0 20px;
-   }
-
-   .loginCard{
-       width:95%;
-       padding:24px;
-       border-radius:24px;
-   }
-
-   .footer{
+   
+   /* ==========================================================================
+      PAGE CANVAS — flat true black, no glow blobs
+      ========================================================================== */
+   
+   .loginContainer{
+       min-height:100vh;
+       background:var(--void);
+       color:var(--white);
+   
+       display:flex;
        flex-direction:column;
+       justify-content:center;
        align-items:center;
+   
+       position:relative;
+       overflow:hidden;
    }
-
-   .alert{
-       width:90%;
-       left:50%;
-       right:auto;
-       transform:translateX(-50%);
-       text-align:center;
-   }
-}
-
-@media (max-width:480px){
-
+   
    .subtitle{
-       font-size:1.6rem;
+       color:var(--white);
+       font-family:var(--font-display);
+       font-size:3rem;
+       font-weight:800;
+       letter-spacing:-.03em;
+       margin-bottom:10px;
+       z-index:2;
    }
-
+   
+   .tagline{
+       color:var(--gray-70);
+       font-family:var(--font-body);
+       font-weight:400;
+       margin-bottom:40px;
+       z-index:2;
+   }
+   
+   /* ==========================================================================
+      CARD — hairline border, soft shadow, no backdrop blur / gold rail
+      ========================================================================== */
+   
    .loginCard{
-       padding:18px;
+       width:min(440px,92%);
+       padding:40px;
+   
+       background:var(--surface);
+       border:1px solid var(--hairline-soft);
+       border-radius:24px;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.04) inset,
+       0 24px 60px rgba(0,0,0,.55);
+   
+       position:relative;
+       z-index:2;
+   
+       animation:cardAppear .5s cubic-bezier(.22,1,.36,1);
    }
-
+   
+   /* ==========================================================================
+      INPUTS
+      ========================================================================== */
+   
    .input,
    .password{
-       height:50px;
-       font-size:14px;
+       width:100%;
+       height:56px;
+       padding:0 18px;
+   
+       border-radius:14px;
+       border:1px solid var(--hairline-soft);
+   
+       background:var(--void);
+       color:var(--white);
+   
+       outline:none;
+       font-family:var(--font-body);
+       font-size:1rem;
+       font-weight:400;
+   
+       transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
+   
+       box-sizing:border-box;
    }
-
+   
+   .input::placeholder,
+   .password::placeholder{
+       color:var(--gray-45);
+   }
+   
+   .input:focus,
+   .password:focus{
+       border-color:var(--accent);
+       box-shadow:0 0 0 4px rgba(10,132,255,.22);
+       background:var(--surface);
+   }
+   
+   /* ==========================================================================
+      PRIMARY CTA — system-blue accent, no gradient
+      ========================================================================== */
+   
    .loginBtn{
-       height:50px;
-       font-size:14px;
+       width:100%;
+       height:56px;
+   
+       border:none;
+       border-radius:14px;
+   
+       background:var(--accent);
+       color:var(--void);
+   
+       font-family:var(--font-body);
+       font-weight:600;
+       font-size:16px;
+       letter-spacing:-.01em;
+   
+       cursor:pointer;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.18) inset,
+       0 8px 20px rgba(10,132,255,.22);
+   
+       transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease, background .22s ease;
    }
-}
+   
+   .loginBtn:hover{
+       background:var(--accent-bright);
+       transform:translateY(-2px);
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.2) inset,
+       0 12px 26px rgba(10,132,255,.3);
+   }
+   
+   .loginBtn:active{
+       background:var(--accent-deep);
+       transform:scale(.97) translateY(0);
+   }
+   
+   /* ==========================================================================
+      ALERT / TOAST — dark surface, blue progress bar, matches main page's toast
+      ========================================================================== */
+   
+   .alert{
+       position:fixed;
+       top:20px;
+       left:50%;
+       transform:translateX(-50%);
+   
+       width:min(90vw,420px);
+       padding:16px 24px;
+   
+       background:var(--surface-2);
+       color:var(--white);
+   
+       border:1px solid var(--hairline);
+       border-radius:14px;
+   
+       font-family:var(--font-body);
+       font-weight:600;
+       font-size:1rem;
+       letter-spacing:0;
+   
+       overflow:hidden;
+       text-align:center;
+       word-wrap:break-word;
+   
+       z-index:9999;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.05) inset,
+       0 18px 44px rgba(0,0,0,.6);
+   
+       animation:toastLife 5.77s forwards;
+   }
+   
+   .alert::after{
+       content:"";
+       position:absolute;
+       bottom:0;
+       left:0;
+       height:2px;
+       width:100%;
+       background:var(--accent);
+       animation:progress 5s linear forwards;
+   }
+   
+   @keyframes progress{
+       from{ width:100%; }
+       to{ width:0%; }
+   }
+   
+   @keyframes toastLife{
+       0%{ opacity:0; transform:translate(-50%,-16px); }
+       10%{ opacity:1; transform:translate(-50%,0); }
+       85%{ opacity:1; transform:translate(-50%,0); }
+       100%{ opacity:0; transform:translate(-50%,-16px); visibility:hidden; }
+   }
+   
+   @media (max-width:480px){
+       .alert{
+           width:95vw;
+           padding:14px 16px;
+           font-size:.9rem;
+           top:12px;
+       }
+   }
+   
+   /* ==========================================================================
+      LINKS
+      ========================================================================== */
+   
+   .footer{
+       margin-top:24px;
+       display:flex;
+       justify-content:space-between;
+       flex-wrap:wrap;
+       gap:12px;
+   }
+   
+   .links{
+       color:var(--gray-70);
+       text-decoration:none;
+       transition:color .2s ease;
+   }
+   
+   .links:hover{
+       color:var(--accent-bright);
+   }
+   
+   /* ==========================================================================
+      MOTION — quiet entrance only, no floating glow / breathing card
+      ========================================================================== */
+   
+   @keyframes cardAppear{
+       from{
+           opacity:0;
+           transform:translateY(16px);
+       }
+       to{
+           opacity:1;
+           transform:translateY(0);
+       }
+   }
+   
+   /* ==========================================================================
+      OTP
+      ========================================================================== */
+   
+   .otpForm{
+       width:100%;
+       display:flex;
+       flex-direction:column;
+       align-items:center;
+       gap:24px;
+       z-index:2;
+   }
+   
+   .otpTitle{
+       color:var(--white);
+       font-family:var(--font-display);
+       font-size:1.5rem;
+       font-weight:800;
+       letter-spacing:-.03em;
+       text-align:center;
+   }
+   
+   .otpText{
+       color:var(--gray-70);
+       text-align:center;
+       font-size:.95rem;
+       line-height:1.6;
+   }
+   
+   .otpInputs{
+       display:flex;
+       justify-content:center;
+       gap:14px;
+       width:100%;
+   }
+   
+   .otpInput{
+       width:64px;
+       height:64px;
+   
+       border-radius:14px;
+       border:1px solid var(--hairline-soft);
+   
+       background:var(--void);
+       color:var(--white);
+   
+       text-align:center;
+       font-family:var(--font-display);
+       font-size:1.5rem;
+       font-weight:700;
+   
+       outline:none;
+       transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+   }
+   
+   .otpInput:focus{
+       border-color:var(--accent);
+       box-shadow:0 0 0 4px rgba(10,132,255,.22);
+       background:var(--surface);
+       transform:translateY(-2px);
+   }
+   
+   .verifyBtn{
+       width:100%;
+       height:56px;
+   
+       border:none;
+       border-radius:14px;
+   
+       background:var(--accent);
+       color:var(--void);
+   
+       font-family:var(--font-body);
+       font-size:1rem;
+       font-weight:600;
+       letter-spacing:-.01em;
+   
+       cursor:pointer;
+   
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.18) inset,
+       0 8px 20px rgba(10,132,255,.22);
+   
+       transition:transform .22s cubic-bezier(.22,1,.36,1), box-shadow .22s ease, background .22s ease;
+   }
+   
+   .verifyBtn:hover{
+       background:var(--accent-bright);
+       transform:translateY(-2px);
+       box-shadow:
+       0 1px 0 rgba(255,255,255,.2) inset,
+       0 12px 26px rgba(10,132,255,.3);
+   }
+   
+   .verifyBtn:active{
+       background:var(--accent-deep);
+       transform:scale(.97) translateY(0);
+   }
+   
+   .resendOtp{
+       color:var(--gray-70);
+       font-size:.95rem;
+       text-align:center;
+   }
+   
+   .resendLink{
+       color:var(--accent-bright);
+       cursor:pointer;
+       font-weight:600;
+       margin-left:5px;
+       transition:opacity .2s ease;
+   }
+   
+   .resendLink:hover{
+       opacity:.8;
+   }
+   
+   /* ==========================================================================
+      MOBILE
+      ========================================================================== */
+   
+   @media(max-width:500px){
+       .otpInputs{
+           gap:10px;
+       }
+       .otpInput{
+           width:52px;
+           height:52px;
+           font-size:1.25rem;
+       }
+       .otpTitle{
+           font-size:1.3rem;
+       }
+   }
+   
+   @media (max-width:768px){
+       .subtitle{
+           font-size:2rem;
+           text-align:center;
+       }
+       .tagline{
+           text-align:center;
+           padding:0 20px;
+       }
+       .loginCard{
+           width:95%;
+           padding:24px;
+           border-radius:20px;
+       }
+       .footer{
+           flex-direction:column;
+           align-items:center;
+       }
+       .alert{
+           width:90%;
+           left:50%;
+           right:auto;
+           transform:translateX(-50%);
+           text-align:center;
+       }
+   }
+   
+   @media (max-width:480px){
+       .subtitle{
+           font-size:1.6rem;
+       }
+       .loginCard{
+           padding:18px;
+       }
+       .input,
+       .password{
+           height:50px;
+           font-size:14px;
+       }
+       .loginBtn{
+           height:50px;
+           font-size:14px;
+       }
+   }

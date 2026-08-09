@@ -4,7 +4,7 @@ import {Link } from "react-router-dom"
 import { axiosManager } from "./axiosManager";
 import { useNavigate } from "react-router-dom";
 import style from "./loginForm.module.css"
-import {Otp } from "../Otp"
+import {Otp } from "../component/Otp"
 const ForgotPassword=()=>{
 
 const navigate=useNavigate();
@@ -160,7 +160,7 @@ const navigate=useNavigate();
           setUsername(e.target.value)
         }
       />
-      {startState?null:<>{otpError?null:<Otp stylist={style} setOtp={setOtp}/> }</>}
+      {startState?null:<>{otpError?null:<Otp   setOtp={setOtp}/> }</>}
 
       <br />
       <br />

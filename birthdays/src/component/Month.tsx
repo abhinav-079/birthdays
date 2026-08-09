@@ -1,27 +1,46 @@
  import axios from "axios";
  import { useState, type FormEvent } from "react";
- 
+ import { InvalidPage } from "../pages/InvalidPage";
+ import style from "../pages/pageOne.module.css"
+ import {saveAs} from "file-saver"
+interface memory{
+    fileName:string,
+    uploadTimeLine:string
+}
+ interface element {
+    id: string;
+    profile: string;
+    nameOfPerson: string;
+    yearOfUser: number;
+    monthOfUser: number;
+    dateOfUser: number;
+    memories: memory[];
+    note: string | null;
+}
  type MonthProps = {
-    style : any;
-    element : any;
-    setEdit : any;
-    setEditName : any;
-    setEditDob : any;
-    setEditNote : any;
-    reqList : any;
+    
+    element : element;
+    setEdit : React.Dispatch<React.SetStateAction<string|boolean|null>>;
+    setEditName : React.Dispatch<React.SetStateAction<string>>;
+    setEditDob : React.Dispatch<React.SetStateAction<string>>;
+    setEditNote : React.Dispatch<React.SetStateAction<string>>;
+    reqList : element[];
     index: number;
     userId: string;
-    editName : any;
-    editDob : any;
-    editNote : any;
+    editName : null |string;
+    editDob : string|boolean|null;
+    editNote : null |string;
     today: string;
-    edit : any;
-    setReqList : any;
+    edit : boolean|null|string;
+    setReqList : React.Dispatch<React.SetStateAction<element[]>>;
     editAlert: (msg:string) => void;
     month: string;
   };
   
-   
+   type MemoryObj={
+    fileName:string,
+    uploadTimeLine:string;
+   }
  const Month=(props:MonthProps)=>{
     const [name,setName]=useState<string|null>("");
     const [dob,setDob]=useState<string|null>("");
@@ -29,7 +48,7 @@
     const [newMemory,setnewMemory]=useState<null|boolean>(null);
     const [secondDelete,setSecondDelete]=useState<boolean|null>(null);
 
-    const[memoryImg,setMemoryImg]=useState<any>([]);
+    const[memoryImg,setMemoryImg]=useState<MemoryObj[]>([]);
     console.log(props.today);
     let setToday:string=(props.today);
     if((setToday.slice(1,2))=='-'){
@@ -56,7 +75,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
     const showMemories=()=>{
         setnewMemory(false)
         props.setEdit(false);
-        console.log("Memories");
+        console.log("Memories",(props.element).memories[0]);
         setAddMemory(true);
         const memoryHolder=[];
         for(let i=0;i<(props.element.memories.length);i++){
@@ -71,40 +90,41 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
     return(
         (props.element.nameOfPerson)? 
     <>
-     <div className={props.style.data}>
-        <div className={props.style.eventHeader}>
+     <div className={style.data}>
+        <div className={style.eventHeader}>
         {(props.element.profile)?
-              <div className={props.style.profileAvatar}>
+              <div className={style.profileAvatar}>
             <img src={props.element.profile} ></img>
             </div>
         
 
             :
             <>
-            <div className={props.style.commentAvatar}>
+            <div className={style.commentAvatar}>
                 {props.element.nameOfPerson.charAt(0).toUpperCase()}
             </div>
              
             </>
         }      
      
-                        <h3 className={props.style.h3}>{props.element.nameOfPerson}</h3>
+                        <h3 className={style.h3}>{props.element.nameOfPerson}</h3>
         </div>
         
 
-                        <p className={props.style.date}>
+                        <p className={style.date}>
                         • {props.element.dateOfUser}-{props.month}
                             {(`${props.element.dateOfUser}-${props.element.monthOfUser}-${props.element.yearOfUser}`==setToday)?"/   Today":null}
                         </p>
 
-                        <p className={props.style.note}>
+                        <p className={style.note}>
                             {props.element.note}
                         </p>
-                        <button className={props.style.goldBtn} 
+                        <button className={style.goldBtn} 
                             onClick={()=>{
                                 setnewMemory(false)
                                 setAddMemory(false);
-                                setMemoryImg(false)
+                                setSecondDelete(false)
+                                //setMemoryImg(false);
                                 props.setEdit(false);
                                 props.setEditName(props.element.nameOfPerson);
                                 setTimeout(()=>{props.setEdit(props.element.id);},1)
@@ -114,14 +134,15 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                         >Edit </button>
                         <button onClick={()=>{
                             setSecondDelete(true);
-                        }} className={props.style.deleteBtn1}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#F19E39"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></button>
+                            props.setEdit(false)
+                        }} className={style.deleteBtn1}><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#F19E39"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></button>
                         {secondDelete?
                         <>
                        <br />
                        
                        <button onClick={()=>{
                         setSecondDelete(false)
-                       }} style={{cursor:"pointer"}} className={props.style.cancelBtn}>cancel </button>
+                       }} style={{cursor:"pointer"}} className={style.cancelBtn}>cancel </button>
                         <span   onClick={async()=>{
                             console.log(props.reqList);
                             const sample=[...(props.reqList)];
@@ -135,11 +156,14 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                             const deleteRequest=await axios.put("https://birthdays-639v.onrender.com/delete-event",{
                                 userId,editId,token
                             });
+                            if(deleteRequest.data.error){
+                                <InvalidPage message={deleteRequest.data.message} messageToken={null}/>
+                            }
                             console.log(deleteRequest)
 
                              
 
-                        }} style={{cursor:"pointer"}} className={props.style.delete}>
+                        }} style={{cursor:"pointer"}} className={style.delete}>
                              
                              Confirm Delete</span>
                             </>
@@ -150,7 +174,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
 
                             <hr>
                             </hr>
-                            <button className={props.style.goldBtn} onClick={showMemories}>Memories</button>
+                            <button className={style.goldBtn} onClick={showMemories}>Memories</button>
                             {addMemory?
                             
                                 <>
@@ -167,7 +191,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                             {newMemory?
                             
                             <>
-                                <form className={props.style.formCard}
+                                <form className={style.formCard}
                                 onSubmit={async(e:React.FormEvent<HTMLFormElement>)=>{
                                     e.preventDefault();
                                     console.log("Prevented Default")
@@ -181,12 +205,17 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                                     formData.append("userId",userId);
                                     const eventId=props.element.id
                                     formData.append("eventId",eventId)
+                                    const token=localStorage.getItem("token");
+                                    formData.append("token",token);
                                     const saveMemory=await axios.post("https://birthdays-639v.onrender.com/new-memory",formData)
                                     console.log((saveMemory));
+                                    if(saveMemory.data.error){
+                                        <InvalidPage message={saveMemory.data.message} messageToken={null}/>
+                                    }
                                     props.editAlert("Memory Saved, Please refersh the page to see changes.");
                                 }}>
-                                    <input type="file"   formEncType="multipart/form-data" className={props.style.monthCard}/>
-                                    <button type="submit" className={props.style.goldBtn}>Upload</button>
+                                    <input type="file"   formEncType="multipart/form-data" className={style.monthCard}/>
+                                    <button type="submit" className={style.goldBtn}>Upload</button>
                                  
                                 </form>
                             </>
@@ -194,30 +223,42 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                             null
                         
                             }
-                            <div className={`${props.style.memoryContainer} `}>
+                            <div className={`${style.memoryContainer} `}>
                             {memoryImg?
-                                memoryImg.map((element:any,index:number)=>{
+                                memoryImg.map((element:MemoryObj,index:number)=>{
                                     console.log(element.fileName);
-                                   return( <div className={props.style.image}>
-                                   <h4 className={props.style.memoryDelete}
-                                   
+                                   return( 
+                                     <>
+                                   <div className={style.image}>
+                                   <h4 className={style.memoryDelete}
+                                   title= "Delete Memory"
                                    onClick={()=>{
                                     const eventIndex=props.index;
                                     deleteMemory(index,eventIndex);
                                    }}
-                                   > <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></h4>
+                                   > <svg  xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e3e3e3"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg></h4>
+                                   <h4 className={style.memoryDownload} 
+                                   onClick={()=>{
+                                    console.log("Downloading File...")
+                                     saveAs(element.fileName,"memory.png")
+                                   }}
+                                     >
+                                     Download
+                                   </h4>
                                     <img src={element.fileName} alt={element.uploadTimeLine} ></img>
-                                    <h4 className={props.style.text}> {element.uploadTimeLine}</h4>
+                                    <h4 className={style.text}> {element.uploadTimeLine}</h4>
                                     
                                     
-                                   </div>)
+                                   </div>
+                                   </>
+                                   )
                                 })
                                 :null
                             }
                             </div>
                             {(props.edit==props.element.id)?
                                 <>
-                                <div className={props.style.formCard}>
+                                <div className={style.formCard}>
                                     <form onSubmit={async(e:FormEvent<HTMLFormElement>)=>{
                                         e.preventDefault();
                                         console.log("editDone");
@@ -233,6 +274,9 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
 
 
                                         });
+                                        if(editReq.data.error){
+                                            <InvalidPage message={editReq.data.message} messageToken={null}/>
+                                        }
                                         console.log(editReq)
                                         
 
@@ -242,7 +286,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                                             setName(e.target.value || props.editName);
                                             props.setEditName(e.target.value)
                                         }} required/>
-                                        <input type="date" value={props.element.dob} onChange={(e)=>{
+                                        <input type="date"  onChange={(e)=>{
                                             setDob(e.target.value);
                                             props.setEditDob(e.target.value);
                                         }} required/>
@@ -257,7 +301,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                                                 props.editAlert("Event Edited, Please refersh the page to see changes.");
                                             }
                                             
-                                        }} className={props.style.goldBtn}>Confirm Changes</button>
+                                        }} className={style.goldBtn}>Confirm Changes</button>
                                     </form>
                                 </div>
                                 </>
