@@ -27,9 +27,9 @@ interface memory{
     reqList : element[];
     index: number;
     userId: string;
-    editName : null |string;
+    editName : null |string |boolean;
     editDob : string|boolean|null;
-    editNote : null |string;
+    editNote : null |string|boolean;
     today: string;
     edit : boolean|null|string;
     setReqList : React.Dispatch<React.SetStateAction<element[]>>;
@@ -285,7 +285,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
 
                                     }} >
 
-                                        <input type="text" placeholder={`previous Name: ${props.element.nameOfPerson}`} value={props.editName ?? ""} onChange={(e)=>{
+                                        <input type="text" placeholder={`previous Name: ${props.element.nameOfPerson}`} value={props.editName??""} onChange={(e)=>{
                                             setName(e.target.value || props.editName);
                                             props.setEditName(e.target.value)
                                         }} required/>
