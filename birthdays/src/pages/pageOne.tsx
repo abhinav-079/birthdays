@@ -1203,7 +1203,10 @@ const saveEveryMonth=async()=>{
                                     <input type="file"  name="file" formEncType="multipart/form-data" className={ style.monthCard} onChange={(e)=>{console.log(e);
                                     const file = e.target.files?.[0] ;
                                         console.log(file);
-                                        setEveryMonthProfile(file);
+                                        if(file){
+                                            setEveryMonthProfile(file);
+                                        }
+                                      
                                     }}/>
                                      
                                  
