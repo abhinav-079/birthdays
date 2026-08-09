@@ -2,7 +2,7 @@
  import { useState, type FormEvent } from "react";
  import { InvalidPage } from "../pages/InvalidPage";
  import style from "../pages/pageOne.module.css"
-  
+ import { saveAs } from "file-saver";
 interface memory{
     fileName:string,
     uploadTimeLine:string
@@ -206,7 +206,10 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                                     const eventId=props.element.id
                                     formData.append("eventId",eventId)
                                     const token=localStorage.getItem("token");
-                                    formData.append("token",token);
+                                    if(token){
+                                        formData.append("token",token);
+                                    }
+                                    
                                     const saveMemory=await axios.post("https://birthdays-639v.onrender.com/new-memory",formData)
                                     console.log((saveMemory));
                                     if(saveMemory.data.error){
@@ -282,7 +285,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
 
                                     }} >
 
-                                        <input type="text" placeholder={`previous Name: ${props.element.nameOfPerson}`} value={props.editName} onChange={(e)=>{
+                                        <input type="text" placeholder={`previous Name: ${props.element.nameOfPerson}`} value={props.editName ?? ""} onChange={(e)=>{
                                             setName(e.target.value || props.editName);
                                             props.setEditName(e.target.value)
                                         }} required/>
