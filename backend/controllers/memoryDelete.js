@@ -2,7 +2,7 @@ const {dbModel}=require("../models/userModel.js");
 const dbManager=dbModel;
 
 const memoryDelete=async(req,res)=>{
-    const {userId,eventId,eventIndex,memoryIndex}=req.query;
+    const {userId,eventId,memoryIndex}=req.query;
      console.log(userId)
     const findingDoc=(await dbManager.find({_id:(userId)}))[0];
     console.log(findingDoc);
