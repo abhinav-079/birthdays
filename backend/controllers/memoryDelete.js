@@ -5,8 +5,15 @@ const memoryDelete=async(req,res)=>{
     const {userId,eventId,eventIndex,memoryIndex}=req.query;
      console.log(userId)
     const findingDoc=(await dbManager.find({_id:(userId)}))[0];
-    console.log(findingDoc)
-    let event=(findingDoc.details)[eventIndex];
+    console.log(findingDoc);
+    let event;
+    for( let i=0;i<findingDoc.details.length;i++){
+        if((findingDoc.details[i].id)===(eventId)){
+            console.log(findingDoc.details[i].nameOfPerson);
+            event=(findingDoc.details)[i];
+        }
+    }
+     
     console.log("Event: ", event);
     if((event.id)==eventId){
         console.log("-----------------------------");

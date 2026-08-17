@@ -59,11 +59,11 @@ interface memory{
 
 
 const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
-    console.log(memoryIndex);
+    console.log(props.userId);
     const userId=props.userId;
     const eventId=props.element.id;
     console.log(userId,eventId,eventIndex,memoryIndex);
-    const deleteMemoryReq=await axios.delete("https://birthdays-639v.onrender.com/deleteMemory",{params:{userId,eventId,eventIndex,memoryIndex}});
+    const deleteMemoryReq=await axios.delete("http://localhost:4000/deleteMemory",{params:{userId,eventId,eventIndex,memoryIndex}});
     console.log(deleteMemoryReq);
     if((deleteMemoryReq.data.message)=="Some Error Occured, Please Try Again Later."){
         props.editAlert("Some Error Occured, Please Try Again Later.")
@@ -236,6 +236,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                                    <h4 className={style.memoryDelete}
                                    title= "Delete Memory"
                                    onClick={()=>{
+                                    console.log("Deleting.")
                                     const eventIndex=props.index;
                                     deleteMemory(index,eventIndex);
                                    }}
