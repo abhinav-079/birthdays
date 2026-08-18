@@ -97,7 +97,7 @@ const countDown=(date,month)=>{
             }
 
           }
-          let daysInMonth;
+          
           count+=Number(date);
           return(`/ ${count} days to go.`)
     }
