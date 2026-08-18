@@ -57,8 +57,8 @@ interface memory{
     console.log(setToday);
     console.log(props.element.dateOfUser,"date of user");
 //18-08-2026 settoday
-const countDown=(date,month)=>{
-   
+const countDown=(date:number,month: number)=>{
+   console.log(typeof(date))
      if((Number(setToday.slice(3,5)))>Number(month)){
         return("/ Completed.")
      }
@@ -159,7 +159,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
 
                         <p className={style.date}>
                         • {props.element.dateOfUser}-{props.month}
-                            {(`${props.element.dateOfUser}-${props.element.monthOfUser}-${props.element.yearOfUser}`==setToday)?"/   Today":countDown(props.element.dateOfUser,props.element.monthOfUser)}
+                            {(`${props.element.dateOfUser}-${props.element.monthOfUser}-${props.element.yearOfUser}`==setToday)?"/   Today":countDown(Number(props.element.dateOfUser),Number(props.element.monthOfUser))}
                         </p>
 
                         <p className={style.note}>
