@@ -207,7 +207,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                             }
                             console.log(deleteRequest)
 
-                             
+                            props.editAlert("Event Deleted, Please refresh to the page see changes.");
 
                         }} style={{cursor:"pointer"}} className={style.delete}>
                              
