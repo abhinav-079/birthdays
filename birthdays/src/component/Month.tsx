@@ -203,6 +203,9 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                             const deleteRequest=await axios.put("https://birthdays-639v.onrender.com/delete-event",{
                                 userId,editId,token
                             });
+                            if(deleteRequest.data.status){
+                                props.editAlert("Event Deleted.");
+                            }
                             if(deleteRequest.data.error){
                                 <InvalidPage message={deleteRequest.data.message} messageToken={null}/>
                             }

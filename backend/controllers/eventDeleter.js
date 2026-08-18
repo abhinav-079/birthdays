@@ -17,6 +17,7 @@ const eventDeleter=async(req,res)=>{
     }
     let setObj=await dbManager.updateOne({_id:Object(userId)},{$set:{details:userObj.details}});
     console.log(setObj);
+    res.json({status:"Deleted"});
      
 }
 module.exports={eventDeleter};
