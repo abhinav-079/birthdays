@@ -84,7 +84,7 @@ app.put("/edit-every-month-event",authoriseMiddleWarePut,everyMonthEventEditor)
 app.post("/new-memory",upload.single("file"),authoriseMiddleWarePost,newMemoryAdder);
  
 app.delete("/deleteMemory",memoryDelete);
-
+ 
 app.get("/errorcheck",(req,res)=>{
     console.log("ee")
     res.json({message:"error found"})

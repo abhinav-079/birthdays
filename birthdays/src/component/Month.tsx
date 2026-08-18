@@ -56,8 +56,54 @@ interface memory{
     }
     console.log(setToday);
     console.log(props.element.dateOfUser,"date of user");
+//18-08-2026 settoday
+const countDown=(date,month)=>{
+   
+     if((Number(setToday.slice(3,5)))>Number(month)){
+        return("/ Completed.")
+     }
+    else if((Number(setToday.slice(3,5)))==Number(month)){
+        if(Number(setToday.slice(0,2))>date){
+            return("/ Completed.")
+        }
+         else if(Number(setToday.slice(0,2))<date){
+            return(`/ ${date-Number(setToday.slice(0,2))} days to go.`)
+         }
+    }
+    else {
+        let count;
+         const days31=[1, 3, 5, 7, 8, 10, 12];
+          if(days31.includes((Number(setToday.slice(3,5))))){
+            count=31-(Number(setToday.slice(0,2)));
+          }
+          else{
+            count=30-(Number(setToday.slice(0,2)));
+          }
+          for(let i=(Number(setToday.slice(3,5)))+1;i<month;i++){
+            if(i==2){
+                if(Number(setToday.slice(6))%4==0){
+                    count+=29;
+                }
+                else{
+                    count+=28;
+                }
+                
+            }
+            if(days31.includes(i)){
+                count+=31;
+            }
+            else{
+                count+=30;
+            }
 
+          }
+          let daysInMonth;
+          count+=Number(date);
+          return(`/ ${count} days to go.`)
+    }
 
+}
+ 
 const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
     console.log(props.userId);
     const userId=props.userId;
@@ -113,7 +159,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
 
                         <p className={style.date}>
                         • {props.element.dateOfUser}-{props.month}
-                            {(`${props.element.dateOfUser}-${props.element.monthOfUser}-${props.element.yearOfUser}`==setToday)?"/   Today":null}
+                            {(`${props.element.dateOfUser}-${props.element.monthOfUser}-${props.element.yearOfUser}`==setToday)?"/   Today":countDown(props.element.dateOfUser,props.element.monthOfUser)}
                         </p>
 
                         <p className={style.note}>

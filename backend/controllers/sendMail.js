@@ -87,8 +87,29 @@ const sendMail=async(req,res)=>{
                         <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
                             ${todayEvents[l].profile
                                 ? `<img src="${todayEvents[l].profile}" width="44" height="44" style="border-radius:50%;object-fit:cover;display:block;border:2px solid #0A84FF;" />`
-                                : `<div style="width:36px;height:36px;border-radius:50%;background:#0A84FF;color:#1C1C1E;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">${todayEvents[l].nameOfPerson.charAt(0).toUpperCase()}</div>`
-                            }
+                                : `<div style="width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    margin: 0.3rem;
+
+     
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.01em;
+
+    background: #0A84FF;
+    color: #1C1C1E;
+
+    text-align: center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">${todayEvents[l].wishes.charAt(0).toUpperCase()}</div>`
+                            } 
                             <span style="font-size:17px;font-weight:600;color:#F5F5F7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
                                 ${todayEvents[l].wishes}
                             </span>
@@ -134,7 +155,7 @@ const sendMail=async(req,res)=>{
                         <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px;">
                             ${everyMonthEventsArr[l].profile
                                 ? `<img src="${everyMonthEventsArr[l].profile}" width="44" height="44" style="border-radius:50%;object-fit:cover;display:block;border:2px solid #0A84FF;" />`
-                                : `<div style="width:36px;height:36px;border-radius:50%;background:#0A84FF;color:#1C1C1E;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">${everyMonthEventsArr[l].nameOfPerson.charAt(0).toUpperCase()}</div>`
+                                : `<div style="width:36px;height:36px;border-radius:50%;background:#0A84FF;color:#1C1C1E;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">${everyMonthEventsArr[l].wishes.charAt(0).toUpperCase()}</div>`
                             }
                             <span style="font-size:17px;font-weight:600;color:#F5F5F7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;">
                                 ${everyMonthEventsArr[l].wishes}
