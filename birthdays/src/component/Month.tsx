@@ -199,6 +199,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                             const editId=props.element.id;
                             const userId=props.userId;
                             const token=localStorage.getItem("token");
+                            props.editAlert("Deleting Event...");
                             const deleteRequest=await axios.put("https://birthdays-639v.onrender.com/delete-event",{
                                 userId,editId,token
                             });
@@ -207,7 +208,7 @@ const deleteMemory=async(memoryIndex:number,eventIndex:number)=>{
                             }
                             console.log(deleteRequest)
 
-                            props.editAlert("Event Deleted, Please refresh to the page see changes.");
+                            
 
                         }} style={{cursor:"pointer"}} className={style.delete}>
                              
